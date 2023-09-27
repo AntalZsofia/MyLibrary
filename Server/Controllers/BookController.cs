@@ -1,17 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MyLibrary.Server.Models;
-using MyLibrary.Server.Models.Entities;
 using MyLibrary.Server.Models.Enums;
 using MyLibrary.Server.Models.RequestDto;
 using MyLibrary.Server.Models.ResponseDto;
-using MyLibrary.Server.Models.Result;
 using MyLibrary.Server.Services;
 
-namespace MyLibrary.Controllers;
+namespace MyLibrary.Server.Controllers;
 
-    [Authorize]
+    [Authorize(Roles = "User")]
 public class BookController : Controller
 {
     private readonly IBookService _bookService;
@@ -19,6 +15,31 @@ public class BookController : Controller
     public BookController(IBookService bookService)
     {
         _bookService = bookService;
+    }
+//Get all book
+    [HttpGet]
+    public async Task<ActionResult<BookListResponseDto>> GetAllBook()
+    {
+        try
+        {
+            var userName = HttpContext.User.Identity!.Name;
+            var allBooks = await _bookService.GetAllBooksAsync(userName!);
+            if (allBooks == null)
+            {
+                return NotFound(new Response() { Message = "No books found." });
+            }
+
+            var responseDto = new BookListResponseDto
+            {
+                Books = allBooks.ToList()
+            };
+            return Ok(responseDto);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, new Response() { Message = "An error occurred on the server." });
+        }
     }
 
 //Create new book
@@ -55,7 +76,7 @@ public class BookController : Controller
         try
         {
             var username = HttpContext.User.Identity!.Name;
-            var result = await _bookService.UpdateBookAsync(updateBookDto, id, username);
+            var result = await _bookService.UpdateBookAsync(updateBookDto, id, username!);
 
             if (result.Succeeded)
             {
@@ -82,7 +103,7 @@ public class BookController : Controller
                 return BadRequest("Invalid book id");
             }
 
-            var deleteBookResult = await _bookService.DeleteBookAsync(id, username);
+            var deleteBookResult = await _bookService.DeleteBookAsync(id, username!);
 
             if (!deleteBookResult.Succeeded)
             {
@@ -96,7 +117,7 @@ public class BookController : Controller
                     return NotFound(new Response() { Message = "User not found" });
                 }
 
-                return StatusCode(500, new Response() { Message = "An errror occured on the server" });
+                return StatusCode(500, new Response() { Message = "An error occured on the server" });
             }
 
             return Ok(new Response() { Message = "Book deleted" });
