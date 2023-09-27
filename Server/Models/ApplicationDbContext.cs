@@ -13,7 +13,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
    
     public DbSet<Author> Authors { get; set; }
     public DbSet<Book> Books { get; set; }
-
+    public DbSet<ApplicationUser> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -33,6 +33,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<Book>()
             .HasIndex(b => b.AuthorId);
+        
+        modelBuilder.Entity<Book>()
+            .HasOne(b => b.User)
+            .WithMany(u => u.MyBooks)
+            .HasForeignKey(b => b.UserId);
     }
     
 }
