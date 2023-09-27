@@ -116,4 +116,32 @@ public class BookService : IBookService
             throw new Exception("An error occurred on the server");
         }
     }
+
+    public async Task<IEnumerable<Book>> GetAllBooksAsync(string username)
+    {
+        try
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            var userBooks = await _context.Books
+                .Where(b => b.UserId == user.Id)
+                .ToListAsync();
+            
+            if (userBooks == null || !userBooks.Any())
+            {
+                throw new Exception("User has no books.");
+            }
+            
+            return userBooks;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new Exception("An error occurred on the server");
+        }
+    }
 }
