@@ -30,7 +30,8 @@ public class BookService : IBookService
                 Author = createBookDto.Author,
                 Title = createBookDto.Title,
                 Genre = createBookDto.Genre,
-                PublishDate = createBookDto.PublishDate
+                PublishDate = createBookDto.PublishDate,
+                UserId = username
 
             };
             await _context.Books.AddAsync(newBook);
@@ -128,7 +129,7 @@ public class BookService : IBookService
             }
 
             var userBooks = await _context.Books
-                .Where(b => b.UserId == user.Id)
+                .Where(b => b.UserId == username)
                 .ToListAsync();
             
             if (userBooks == null || !userBooks.Any())

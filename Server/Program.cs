@@ -11,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 // Add services to the container.
+builder.Services.AddControllers();
+
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
@@ -56,7 +58,7 @@ builder.Services.AddAuthentication(options =>
             };
         });
 
-builder.Services.AddControllers();
+
 
 
 // Entity Framework DbContext Configuration

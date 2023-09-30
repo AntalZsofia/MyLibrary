@@ -14,7 +14,13 @@ public class AuthService : IAuthService
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IConfiguration _configuration;
-   
+
+    public AuthService(UserManager<ApplicationUser> userManager, IConfiguration configuration)
+    {
+        _userManager = userManager;
+        _configuration = configuration;
+    }
+
     //Login
     public async Task<LoginResult> LoginAsync(LoginUserDto loginUserDto)
     {
@@ -39,13 +45,15 @@ public class AuthService : IAuthService
         }
     }
 
-    public Task<IList<string>> GetRolesAsync(string userName)
+    public async Task<IList<string>> GetRolesAsync(string userName)
     {
-        throw new NotImplementedException();
+        var user = await _userManager.FindByNameAsync(userName);
+        var roles = await _userManager.GetRolesAsync(user);
+        return roles;
     }
-    
-    
-    public async Task<string> GetJwtTokenAsync(ApplicationUser user, string password)
+
+
+    private async Task<string> GetJwtTokenAsync(ApplicationUser user, string password)
     {
         var claims = new List<Claim>
         {
@@ -65,7 +73,7 @@ public class AuthService : IAuthService
         var token = new JwtSecurityToken(
             issuer: _configuration["JWT:ValidIssuer"],
             audience:_configuration["JWT:ValidAudience"],
-            expires: DateTime.Now.AddDays(14),
+            expires: DateTime.Now.AddDays(1),
             claims:claims,
             signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
         );

@@ -7,7 +7,7 @@ using MyLibrary.Server.Services;
 
 namespace MyLibrary.Server.Controllers;
 
-    [Authorize(Roles = "User")]
+    //[Authorize(Roles = "User")]
 public class BookController : Controller
 {
     private readonly IBookService _bookService;
