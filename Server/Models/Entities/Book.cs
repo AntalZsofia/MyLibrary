@@ -9,7 +9,7 @@ public class Book
     public int Id { get; set; }
     
     [Required]
-    public string Title { get; set; }
+    public string? Title { get; set; }
     
     [Required]
     public Genre Genre { get; set; }
@@ -20,7 +20,7 @@ public class Book
     public int AuthorId { get; set; }
     
     [Required]
-    public Author Author { get; set; }
+    public Author? Author { get; set; }
     
     public string UserId { get; set; }
     public ApplicationUser User { get; set; }

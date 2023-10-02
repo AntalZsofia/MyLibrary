@@ -5,11 +5,11 @@ namespace MyLibrary.Server.Models.ResponseDto;
 
 public class BookPreviewResponseDto
 {
-    public string Title { get; set; }
+    public string? Title { get; set; }
     
     public Genre Genre { get; set; }
     
     public DateTime PublishDate { get; set; }
     
-    public Author Author { get; set; }
+    public Author? Author { get; set; }
 }
