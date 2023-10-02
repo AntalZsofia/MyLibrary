@@ -3,21 +3,26 @@ using Microsoft.AspNetCore.Mvc;
 using MyLibrary.Server.Models.Enums;
 using MyLibrary.Server.Models.RequestDto;
 using MyLibrary.Server.Models.ResponseDto;
+using MyLibrary.Server.Models.Result;
 using MyLibrary.Server.Services;
 
 namespace MyLibrary.Server.Controllers;
 
     //[Authorize(Roles = "User")]
-public class BookController : Controller
+[ApiController]
+[Route("[controller]")]
+public class BookController : ControllerBase
 {
     private readonly IBookService _bookService;
+    private readonly IConfiguration _configuration;
 
-    public BookController(IBookService bookService)
+    public BookController(IBookService bookService, IConfiguration configuration)
     {
         _bookService = bookService;
+        _configuration = configuration;
     }
 //Get all book
-    [HttpGet]
+    [HttpGet("allbooks")]
     public async Task<ActionResult<BookListResponseDto>> GetAllBook()
     {
         try
@@ -70,19 +75,19 @@ public class BookController : Controller
     
     //Update book
 
-    [HttpPut]
+    [HttpPut("{id}")]
     public async Task<IActionResult> UpdateBook(UpdateBookDto updateBookDto, int id)
     {
         try
         {
             var username = HttpContext.User.Identity!.Name;
-            var result = await _bookService.UpdateBookAsync(updateBookDto, id, username!);
+            var updateBookResult = await _bookService.UpdateBookAsync(updateBookDto, id, username!);
 
-            if (result.Succeeded)
+            if (updateBookResult.Succeeded)
             {
-                return Ok(result.Data);
+                return Ok(updateBookResult.Data);
             }
-            return BadRequest(result.Message);
+            return BadRequest(updateBookResult.Message);
         }
         catch(Exception e)
         {
@@ -91,7 +96,8 @@ public class BookController : Controller
         }
     }
 
-    [HttpDelete]
+    //Delete a book
+    [HttpDelete("delete-book/{id}")]
     public async Task<IActionResult> DeleteBook(int id)
     {
         try
@@ -126,6 +132,29 @@ public class BookController : Controller
         {
             Console.WriteLine(e);
             return StatusCode(500, new Response() { Message = "An error occured on the server" });
+        }
+    }
+    
+    //Search books on Google
+    [HttpGet]
+    public async Task<ActionResult<SearchBookResult>>SearchGoogleBooks([FromQuery] string query)
+    {
+        try
+        {
+            var searchResult = await _bookService.SearchGoogleBooksAsync(query, _configuration);
+
+            var bookSearchResultDtos = searchResult as BookSearchResultDto[] ?? searchResult.ToArray();
+            if (!bookSearchResultDtos.Any())
+            {
+                return SearchBookResult.Fail();
+            }
+
+            return SearchBookResult.Success(bookSearchResultDtos);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, new Response() { Message = "An error occurred while searching for books." });
         }
     }
 }
