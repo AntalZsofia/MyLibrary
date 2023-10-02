@@ -11,4 +11,5 @@ public interface IBookService
     Task<DeleteBookResult> DeleteBookAsync(int id, string username);
 
     Task<IEnumerable<Book>> GetAllBooksAsync(string username);
+    Task<IEnumerable<BookSearchResultDto>> SearchGoogleBooksAsync(string query, IConfiguration configuration);
 }
