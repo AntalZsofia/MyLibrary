@@ -1,10 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 
-import Layout from "./Layout";
+
+import Layout from "./Layout/Layout";
+import Home from "./Pages/Home/Home.jsx"
+import Login from "./Pages/Login/Login.jsx";
+import Signup from "./Pages/SignUp/Signup.jsx";
+import MyBooks from "./Pages/MyBooks/MyBooks.jsx";
+import AddBook from "./Pages/AddBook/AddBook.jsx";
+
 import ErrorPage from "./Pages/ErrorPage/ErrorPage";
 
 
@@ -46,3 +52,12 @@ const router = createBrowserRouter([
   
 
 ])
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);
+
+
+reportWebVitals();
