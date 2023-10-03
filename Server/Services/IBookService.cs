@@ -12,4 +12,5 @@ public interface IBookService
 
     Task<IEnumerable<Book>> GetAllBooksAsync(string username);
     Task<IEnumerable<BookSearchResultDto>> SearchGoogleBooksAsync(string query, IConfiguration configuration);
+    Task<AddToCollectionResult> AddToUserCollectionAsync(BookDto bookDto, string? username);
 }

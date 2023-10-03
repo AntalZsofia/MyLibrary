@@ -157,4 +157,29 @@ public class BookController : ControllerBase
             return StatusCode(500, new Response() { Message = "An error occurred while searching for books." });
         }
     }
+    [HttpPost("add-to-collection")]
+    public async Task<IActionResult> AddToCollection([FromBody] BookDto bookDto)
+    {
+        try
+        {
+            var username = HttpContext.User.Identity!.Name;
+            
+            var addToCollectionResult = await _bookService.AddToUserCollectionAsync(bookDto, username);
+
+            if (!addToCollectionResult.Succeeded)
+            {
+                return BadRequest(new Response() { Message = "Failed to add the book to the collection" });
+
+            }
+            else
+            {
+               return Ok(new Response() { Message = "Book added to collection successfully" });
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, new Response() { Message = "An error occurred while adding the book to the collection" });
+        }
+    }
 }

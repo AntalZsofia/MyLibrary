@@ -192,4 +192,37 @@ public class BookService : IBookService
             }
         }
     }
+
+    public async Task<AddToCollectionResult> AddToUserCollectionAsync(BookDto bookDto, string? username)
+    {
+            try
+            {
+                if (string.IsNullOrEmpty(username))
+                {
+                    return AddToCollectionResult.Failed("User not found");
+                }
+
+                // Create a new Book entity and populate it with data from the BookDto
+                var newBook = new Book
+                {
+                    Author = bookDto.Author,
+                    Title = bookDto.Title,
+                    Genre = bookDto.Genre,
+                    PublishDate = bookDto.PublishDate,
+                    UserId = username // Associate the book with the user
+                };
+
+                // Add the book to the database
+                await _context.Books.AddAsync(newBook);
+                await _context.SaveChangesAsync();
+
+                return AddToCollectionResult.Succeed("Book added to collection successfully");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return AddToCollectionResult.Failed("An error occurred while adding the book to the collection");
+            }
+        
+    }
 }
