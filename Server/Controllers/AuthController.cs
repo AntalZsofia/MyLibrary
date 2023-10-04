@@ -17,6 +17,40 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
     
+    //Registration
+    [HttpPost]
+    [Route("/api/signup")]
+    public async Task<IActionResult> Signup([FromBody]RegisterUserDto registerUserDto)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(e => e.Errors.Select(err => err.ErrorMessage));
+                return BadRequest(new { Errors = errors });
+            }
+            
+            var registrationResult = await _authService.RegisterAsync(registerUserDto);
+
+            if (registrationResult.Succeeded)
+            {
+                return Ok(new RegisterResponseDto
+                {
+                    Message = registrationResult.Message,
+                    User = registerUserDto
+                });
+            }
+
+            return BadRequest(new RegisterResponseDto { Message = registrationResult.Message });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, new Response { Message = "An error occured on the server." });
+        }
+
+
+    }
     //Login
     [HttpPost]
     [Route(("api/login"))]

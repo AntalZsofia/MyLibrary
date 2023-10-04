@@ -14,13 +14,59 @@ public class AuthService : IAuthService
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IConfiguration _configuration;
+    private readonly RoleManager<IdentityRole<Guid>> _roleManager;
 
-    public AuthService(UserManager<ApplicationUser> userManager, IConfiguration configuration)
+    public AuthService(UserManager<ApplicationUser> userManager, IConfiguration configuration, RoleManager<IdentityRole<Guid>> roleManager)
     {
         _userManager = userManager;
         _configuration = configuration;
+        _roleManager = roleManager;
     }
+    
+    //Register
+    public async Task<RegisterResult> RegisterAsync(RegisterUserDto registerUserDto)
+    {
+        try
+        {
+            var user = new ApplicationUser()
+            {
+                UserName = registerUserDto.Username,
+                Email = registerUserDto.Email
+            };
+            await _roleManager.CreateAsync(new IdentityRole<Guid>("User"));
+            var registerResult = await _userManager.CreateAsync(user, registerUserDto.Password);
+            var asignRoleResult = await _userManager.AddToRoleAsync(user, "User");
 
+            if (registerResult.Succeeded && asignRoleResult.Succeeded)
+            {
+                return (new RegisterResult()
+                {
+                    Succeeded = true,
+                    Message = new List<string>
+                    {
+                        "Registration successful"
+                    }
+                });
+            }
+
+            if (registerResult.Succeeded)
+            {
+                await _userManager.DeleteAsync(user);
+            }
+
+            return (new RegisterResult()
+            {
+                Succeeded = false,
+                Message = registerResult.Errors.Select(e => e.Description).ToList()
+            });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
     //Login
     public async Task<LoginResult> LoginAsync(LoginUserDto loginUserDto)
     {
