@@ -4,16 +4,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace MyLibrary.Server.Models.Entities;
 
-public class ApplicationUser : IdentityUser
+public class ApplicationUser : IdentityUser<Guid>
 {
     
-    [Required]
-    [Display(Name = "First Name")]
-    public string FirstName { get; set; }
-
-    [Required]
-    [Display(Name = "Last Name")]
-    public string LastName { get; set; }
-
     public List<Book> MyBooks { get; set; }
 }

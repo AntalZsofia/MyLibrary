@@ -8,18 +8,21 @@ using MyLibrary.Server.Services;
 
 namespace MyLibrary.Server.Controllers;
 
-    //[Authorize(Roles = "User")]
+[Authorize]//(Roles = "User")
+          
 [ApiController]
 [Route("[controller]")]
 public class BookController : ControllerBase
 {
     private readonly IBookService _bookService;
     private readonly IConfiguration _configuration;
+    private readonly IGenreService _genreService;
 
-    public BookController(IBookService bookService, IConfiguration configuration)
+    public BookController(IBookService bookService, IConfiguration configuration, IGenreService genreService)
     {
         _bookService = bookService;
         _configuration = configuration;
+        _genreService = genreService;
     }
 //Get all book
     [HttpGet("allbooks")]
@@ -181,5 +184,13 @@ public class BookController : ControllerBase
             Console.WriteLine(e);
             return StatusCode(500, new Response() { Message = "An error occurred while adding the book to the collection" });
         }
+    }
+    
+    //Get all genres
+    [HttpGet("genres")]
+    public async Task<ActionResult<IEnumerable<GenreDto>>>GetGenres()
+    {
+        var genres = await _genreService.GetAllGenresAsync();
+        return Ok(genres);
     }
 }

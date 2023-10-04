@@ -26,7 +26,7 @@ public class BookService : IBookService
     {
         try
         {
-            var user = _userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByNameAsync(username);
 
             var newBook = new Book()
             {
@@ -34,7 +34,7 @@ public class BookService : IBookService
                 Title = createBookDto.Title,
                 Genre = createBookDto.Genre,
                 PublishDate = createBookDto.PublishDate,
-                UserId = username
+                User = user
 
             };
             await _context.Books.AddAsync(newBook);
@@ -133,7 +133,7 @@ public class BookService : IBookService
             }
 
             var userBooks = await _context.Books
-                .Where(b => b.UserId == username)
+                .Where(b => b.User == user)
                 .ToListAsync();
 
             if (userBooks == null || !userBooks.Any())
@@ -201,7 +201,7 @@ public class BookService : IBookService
                 {
                     return AddToCollectionResult.Failed("User not found");
                 }
-
+                var user = await _userManager.FindByNameAsync(username);
                 // Create a new Book entity and populate it with data from the BookDto
                 var newBook = new Book
                 {
@@ -209,7 +209,7 @@ public class BookService : IBookService
                     Title = bookDto.Title,
                     Genre = bookDto.Genre,
                     PublishDate = bookDto.PublishDate,
-                    UserId = username // Associate the book with the user
+                    User = user 
                 };
 
                 // Add the book to the database
