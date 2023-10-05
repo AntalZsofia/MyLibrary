@@ -72,7 +72,7 @@ public class AuthService : IAuthService
     {
         try
         {
-            var user = await _userManager.FindByNameAsync(loginUserDto.UserName);
+            var user = await _userManager.FindByNameAsync(loginUserDto.Username);
             if (user != null)
             { 
                 var isPasswordValid = await _userManager.CheckPasswordAsync(user, loginUserDto.Password);
@@ -114,7 +114,7 @@ public class AuthService : IAuthService
             claims.Add(new Claim(ClaimTypes.Role, role));
         }
         
-        var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+        var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("JWTAuthenticationHighlySecuredSecretKey12345"));
         
         var token = new JwtSecurityToken(
             issuer: _configuration["JWT:ValidIssuer"],

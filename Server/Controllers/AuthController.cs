@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using MyLibrary.Server.Models.RequestDto;
 using MyLibrary.Server.Models.ResponseDto;
 using MyLibrary.Server.Models.Result;
 using MyLibrary.Server.Services;
 
 namespace MyLibrary.Controllers;
-
+[EnableCors("_myAllowSpecificOrigins")]
 [ApiController]
 [Route("[controller]")]
 public class AuthController : ControllerBase
@@ -53,7 +54,7 @@ public class AuthController : ControllerBase
     }
     //Login
     [HttpPost]
-    [Route(("api/login"))]
+    [Route(("/api/login"))]
     public async Task<IActionResult> Login([FromBody] LoginUserDto loginUserDto)
     {
         try
@@ -75,12 +76,12 @@ public class AuthController : ControllerBase
                     HttpOnly = true
                 });
 
-                var roles = await _authService.GetRolesAsync(loginUserDto.UserName!);
+                var roles = await _authService.GetRolesAsync(loginUserDto.Username!);
 
                 return Ok(new LoginResponseDto
                 {
                     Roles = roles,
-                    UserName = loginUserDto.UserName
+                    Username = loginUserDto.Username
                 });
             }
 

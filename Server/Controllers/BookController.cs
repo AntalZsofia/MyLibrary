@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using MyLibrary.Server.Models.Enums;
 using MyLibrary.Server.Models.RequestDto;
@@ -8,8 +9,8 @@ using MyLibrary.Server.Services;
 
 namespace MyLibrary.Server.Controllers;
 
-[Authorize]//(Roles = "User")
-          
+[EnableCors("_myAllowSpecificOrigins")]
+[Authorize]//(Roles = "User")          
 [ApiController]
 [Route("[controller]")]
 public class BookController : ControllerBase
@@ -79,7 +80,7 @@ public class BookController : ControllerBase
     //Update book
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateBook(UpdateBookDto updateBookDto, int id)
+    public async Task<IActionResult> UpdateBook(UpdateBookDto updateBookDto, Guid id)
     {
         try
         {
@@ -100,18 +101,13 @@ public class BookController : ControllerBase
     }
 
     //Delete a book
-    [HttpDelete("delete-book/{id}")]
-    public async Task<IActionResult> DeleteBook(int id)
+    [HttpDelete("/delete-book/{id}")]
+    public async Task<IActionResult> DeleteBook(Guid id)
     {
         try
         {
             var username = HttpContext.User.Identity!.Name;
-
-            if (id <= 0)
-            {
-                return BadRequest("Invalid book id");
-            }
-
+            
             var deleteBookResult = await _bookService.DeleteBookAsync(id, username!);
 
             if (!deleteBookResult.Succeeded)
@@ -160,7 +156,7 @@ public class BookController : ControllerBase
             return StatusCode(500, new Response() { Message = "An error occurred while searching for books." });
         }
     }
-    [HttpPost("add-to-collection")]
+    [HttpPost("/add-to-collection")]
     public async Task<IActionResult> AddToCollection([FromBody] BookDto bookDto)
     {
         try
@@ -187,7 +183,7 @@ public class BookController : ControllerBase
     }
     
     //Get all genres
-    [HttpGet("genres")]
+    [HttpGet("/genres")]
     public async Task<ActionResult<IEnumerable<GenreDto>>>GetGenres()
     {
         var genres = await _genreService.GetAllGenresAsync();

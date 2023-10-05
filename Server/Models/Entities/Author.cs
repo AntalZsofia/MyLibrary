@@ -5,7 +5,7 @@ namespace MyLibrary.Server.Models.Entities;
 public class Author
 {
     [Required]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     
     [Required]
     [Display(Name = "First Name")]

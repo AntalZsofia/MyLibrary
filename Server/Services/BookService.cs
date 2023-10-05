@@ -48,7 +48,7 @@ public class BookService : IBookService
         }
     }
 
-    public async Task<UpdateBookResult> UpdateBookAsync(UpdateBookDto updateBookDto, int id, string username)
+    public async Task<UpdateBookResult> UpdateBookAsync(UpdateBookDto updateBookDto, Guid id, string username)
     {
         try
         {
@@ -91,11 +91,11 @@ public class BookService : IBookService
 
     }
 
-    public async Task<DeleteBookResult> DeleteBookAsync(int id, string username)
+    public async Task<DeleteBookResult> DeleteBookAsync(Guid id, string username)
     {
         try
         {
-            if (id <= 0 || string.IsNullOrEmpty(username))
+            if (string.IsNullOrEmpty(username))
             {
                 return DeleteBookResult.ServerError();
             }

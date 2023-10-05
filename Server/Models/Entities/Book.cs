@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MyLibrary.Server.Models.Enums;
 
 namespace MyLibrary.Server.Models.Entities;
 
 public class Book
 {
-    
-    public int Id { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid Id { get; set; }
     
     [Required]
     public string? Title { get; set; }
@@ -17,7 +18,7 @@ public class Book
     [Required]
     public DateTime PublishDate { get; set; }
     
-    public int AuthorId { get; set; }
+    public Guid AuthorId { get; set; }
     
     [Required]
     public Author? Author { get; set; }
