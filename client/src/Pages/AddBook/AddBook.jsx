@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import "./AddBook.css";
 
 const AddBook = () => {
     const [bookTitle, setBookTitle] = useState ('');
@@ -12,7 +13,7 @@ const AddBook = () => {
     const [genreOptions, setGenreOptions] = useState([]);
     
     const fetchGenreOptions = () => {
-        fetch('http://localhost:5000/book/genres')
+        fetch('http://localhost:7276/genres')
           .then((res) => res.json())
           .then((data) => {
             setGenreOptions(data);
@@ -26,7 +27,7 @@ const AddBook = () => {
     }, []);
     const handleAddBook = async () => {
         try{
-            const response = await fetch('http://localhost:5000/book/add-to-collection', {
+            const response = await fetch('http://localhost:7276/add-to-collection', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,11 +46,12 @@ const AddBook = () => {
         }
     };
     return <>
-    <div>
-      <h2>Add a New Book to Your Collection</h2>
+    <div className="add-book-container">
+      <h2 className="add-book-header">Add a New Book to Your Collection</h2>
       <div>
-        <label htmlFor="bookTitle">Title:</label>
+        <label className="add-book-label" htmlFor="bookTitle">Title:</label>
         <input
+        className="add-book-input"
           type="text"
           id="bookTitle"
           value={bookTitle}
@@ -59,6 +61,7 @@ const AddBook = () => {
       <div>
         <label htmlFor="bookAuthor">Author:</label>
         <input
+        className="add-book-input"
           type="text"
           id="bookAuthor"
           value={bookAuthor}
@@ -68,6 +71,7 @@ const AddBook = () => {
       <div>
         <label htmlFor="bookGenre">Genre:</label>
         <select
+        className="add-book-select"
           id="bookGenre"
           value={bookGenre}
           onChange={(e) => setBookGenre(e.target.value)}
@@ -83,6 +87,7 @@ const AddBook = () => {
       <div>
         <label htmlFor="bookDescription">Description:</label>
         <textarea
+        className="add-book-textarea"
           type="text"
           id="bookDescription"
           value={bookDescription}
@@ -93,6 +98,7 @@ const AddBook = () => {
       <div>
         <label htmlFor="bookPublished">Published:</label>
         <input
+        className="add-book-input"
           type="text"
           id="bookPublished"
           value={bookPublished}
@@ -102,13 +108,14 @@ const AddBook = () => {
       <div>
         <label htmlFor="bookCover">Cover:</label>
         <input
+        className="add-book-cover-input"
           type="file"
           id="bookCover"
           value={bookCover}
           onChange={(e) => setBookCover(e.target.files[0])}
         />
       </div>
-      <button onClick={handleAddBook}>Add Book</button>
+      <button className="add-book-button" onClick={handleAddBook}>Add Book</button>
     </div>
     </>
 }
