@@ -3,5 +3,5 @@
 public class LoginResponseDto
 {
     public IList<string> Roles { get; set; }
-    public string UserName { get; set; }
+    public string Username { get; set; }
 }
