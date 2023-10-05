@@ -96,6 +96,13 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetService<ApplicationDbContext>();
+    var userManager = scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
+    RoleManager<IdentityRole<Guid>>? roleManager = scope.ServiceProvider.GetService<RoleManager<IdentityRole<Guid>>>();
+    await ApplicationDbContext.Seed(db!, userManager!, roleManager!);
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -103,8 +110,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-app.UseCors(MyAllowSpecificOrigins);
+//app.UseHttpsRedirection();
+app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
