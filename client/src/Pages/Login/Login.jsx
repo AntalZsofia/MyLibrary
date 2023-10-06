@@ -1,60 +1,86 @@
-import useAuth from 'Hooks/useAuth'
-import React, { useState } from 'react'
-//import { Input, PrimaryButton, XIcon } from 'Components'
+import React, { useState } from 'react';
+import { useAuth } from './../../Context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { AiOutlineUser } from 'react-icons/ai'
+import './Login.css';
+import Account from './../../Icons/account.png';
 
-import './Auth.css'
-
-export default function Login() {
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+function Login() {
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const { setUser } = useAuth();
   const navigate = useNavigate();
-  const { setUser } = useAuth()
 
-  const handleSubmit = () => {
+  const handleLogin = () => {
     const userData = {
       userName,
       password
-    };
-
-    fetch('http://localhost:5000/api/login', {
-      method: "POST",
-      credentials: "include",
+    }
+    fetch('https://localhost:7276/api/login', {
+      method: 'POST',
+      credentials: 'include',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(userData)
+      body: JSON.stringify(userData),
     })
-    .then(res => {
-      if (!res.ok) {
-        return res.json().then(data => {
+    .then(response => {
+      if (!response.ok) {
+        return response.json().then(data => {
           throw new Error(data.errorMessage);
         });
       }
-      return res.json();
+      return response.json();
     })
-    .then(data => {
-      setUser(data)
-      console.log(data)
-      navigate("/")
-    })
-    .catch((error) => {
-      setError(error.message);
-    });
-  }
-
+      .then((data) => {
+        setUser(userData);
+        console.log(data);
+        navigate('/');
+      })
+      .catch((error) => {
+        console.error("There was some error while logging in", error)})
+      }
+      // useEffect(() => {
+      //   If the user is already logged in, redirect them to MyBooks
+      //   if (userName && password) {
+      //     navigate('/');
+      //   }
+      // }, [userName, password, navigate]);
   return (
-    <div className='auth-card'>
-      <div className='auth-header-container'>
-        <AiOutlineUser className='auth-icon'/>
-        <h1 className='auth-heading'>Login</h1>
+    <div className="login-container">
+      <div className="login-card">
+        <div className="icon-container">
+          <img src={Account} alt="Account" className="account-icon" />
+        </div>
+        <h2>Login</h2>
+        <input
+          type="text"
+          className="login-input"
+          id='Username'
+          placeholder="Username"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+        />
+        <input
+          type="password"
+          className="login-input"
+          id='Password'
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button className="login-button" onClick={handleLogin}>
+          Log In
+        </button>
+        {userName && password && (
+          <div className="login-info">
+            <p>Logged in as: {userName}</p>
+            <p>Password: {password}</p>
+          </div>
+        )}
       </div>
-      <Input label={"Username"} inputValue={userName} setInputValue={setUserName} setError={setError}/>
-      <Input label={"Password"} type={"password"} inputValue={password} setInputValue={setPassword} setError={setError}/>
-      <PrimaryButton text={"Login"} clickHandler={handleSubmit} />
-      {error ? <p className='error'><XIcon />{error}</p> : null}
     </div>
-  )
-}
+  );
+
+        }
+export default Login;
+
