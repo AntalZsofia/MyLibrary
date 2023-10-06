@@ -13,7 +13,7 @@ const AddBook = () => {
     const [genreOptions, setGenreOptions] = useState([]);
     
     const fetchGenreOptions = () => {
-        fetch('http://localhost:7276/genres')
+        fetch('https://localhost:7276/genres')
           .then((res) => res.json())
           .then((data) => {
             setGenreOptions(data);
@@ -27,7 +27,7 @@ const AddBook = () => {
     }, []);
     const handleAddBook = async () => {
         try{
-            const response = await fetch('http://localhost:7276/add-to-collection', {
+            const response = await fetch('https://localhost:7276/add-to-collection', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
