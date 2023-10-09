@@ -1,0 +1,19 @@
+.welcome {
+    font-family: 'Libre Basketville', serif;
+    position: relative;
+    text-align: center;
+  }
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh; /* Make sure the container covers the entire viewport height */
+  }
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px; /* Adjust this value to position the logo vertically */
+    width: 300px;
+    height: auto;
+  }
