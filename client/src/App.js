@@ -6,7 +6,7 @@ import { Route,
 import reportWebVitals from "./reportWebVitals";
 
 
-import { AuthProvider } from './Context/AuthContext';
+import AuthContext from './Context/AuthProvider';
 
 import Layout from "./Layout/Layout";
 import Home from "./Pages/Home/Home.jsx"
@@ -14,6 +14,7 @@ import Login from "./Pages/Login/Login.jsx";
 import Signup from "./Pages/SignUp/Signup.jsx";
 import MyBooks from "./Pages/MyBooks/MyBooks.jsx";
 import AddBook from "./Pages/AddBook/AddBook.jsx";
+
 
 //import ErrorPage from "./Pages/ErrorPage/ErrorPage";
 
@@ -31,14 +32,16 @@ const router = createBrowserRouter(
   )
 )
 export default function App(){
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
+  
+  
 
 return(
-  <React.StrictMode>
-    <AuthProvider value={{ user, setUser }}>
+  
+    <AuthContext.Provider value={{ user, setUser }}>
     <RouterProvider router={router} />
-    </AuthProvider>
-  </React.StrictMode>
+    </AuthContext.Provider>
+  
 )
 }
 
