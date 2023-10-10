@@ -17,7 +17,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy  =>
         {
-            policy.WithOrigins("http://localhost:3000", "*")
+            policy.WithOrigins("http://localhost:3000")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials();
@@ -38,12 +38,13 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
 builder.Services.Configure<IdentityOptions>(options => options.SignIn.RequireConfirmedEmail = false);
 
 //Add Api key
-// IConfiguration configurationA = new ConfigurationBuilder()
-//     .SetBasePath(Directory.GetCurrentDirectory())
-//     .AddJsonFile("appsettings.json") 
-//     .Build();
-//
-// string? apiKey = configurationA.GetSection("GoogleBooksApi")["ApiKey"];
+ // IConfiguration configurationA = new ConfigurationBuilder()
+ //     .SetBasePath(Directory.GetCurrentDirectory())
+ //     .AddJsonFile("appsettings.json") 
+ //     .Build();
+ //
+ // string? apiKey = configurationA.GetSection("GoogleBooksApi")["ApiKey"];
+
 
 builder.Services.AddAuthentication(options =>
     {
@@ -108,7 +109,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseCors();
 app.UseAuthentication();
