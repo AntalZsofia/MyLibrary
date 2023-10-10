@@ -93,7 +93,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
             if (!context.Books.Any())
             {
                 var author = await context.Authors.FirstOrDefaultAsync();
-                var user = await userManager.Users.FirstOrDefaultAsync();
+                var user = await userManager.Users.FirstOrDefaultAsync(u => u.UserName == "Zsofi");
 
                 //int usersNumber = users.Count;
 
