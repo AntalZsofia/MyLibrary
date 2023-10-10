@@ -1,4 +1,4 @@
-﻿using MyLib.Models.Result.GoogleSearchResult;
+﻿
 
 namespace MyLib.Models.Result;
 

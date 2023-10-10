@@ -1,4 +1,6 @@
-﻿namespace MyLib.Models.Enums;
+﻿using System.Runtime.Serialization;
+
+namespace MyLib.Models.Enums;
 
 public enum Genre
 {
@@ -6,6 +8,7 @@ public enum Genre
     Nonfiction,
     ShortStory,
     ScienceFiction,
+[EnumMember(Value = "Mystery")]
     Mystery,
     Horror,
     HistoricalFiction,

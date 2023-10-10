@@ -1,6 +1,6 @@
 ﻿using MyLib.Models.Entities;
 using MyLib.Models.Enums;
-using MyLib.Models.Result.GoogleSearchResult;
+
 
 namespace MyLib.Models.RequestDto;
 
