@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Route, 
+  Routes,
   createBrowserRouter, 
   createRoutesFromElements, 
   RouterProvider } from "react-router-dom";
@@ -20,15 +21,21 @@ import AddBook from "./Pages/AddBook/AddBook.jsx";
 
 
 import "./index.css";
+import AddBookSearch from "./Pages/AddBook/AddBookSearch";
+import AddBookManual from "./Pages/AddBook/AddBookManual";
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<Layout />}>
+  <Route path='/' element={<Layout />}>
       <Route index element={< Home />} />
       <Route path='/mybooks' element={< MyBooks />} />
       <Route path='/addbook' element={< AddBook />} />
+      <Route path='/addbook-search' element={<AddBookSearch />} />
+      <Route path='/addbook-manual' element={<AddBookManual />} />
       <Route path='/login' element={< Login />} />
       <Route path='/signup' element={< Signup />} />
-    </Route>
+  </Route>
+    
+      
   )
 )
 export default function App(){

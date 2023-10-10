@@ -7,10 +7,11 @@ const MyBooks = () => {
   const [userBooks, setUserBooks] = useState([]);
 
   useEffect(() => {
-    fetch('https://localhost:7276/all-books')
+    fetch('https://localhost:7276/all-books', {credentials: "include"})
       .then((res) => res.json())
       .then((data) => {
-        setUserBooks(data);
+        console.log(data);
+        setUserBooks(data.books);
       })
       .catch((err) => console.error("Error fetching user books", err));
   }, []);

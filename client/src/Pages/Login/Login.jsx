@@ -32,7 +32,7 @@ function Login() {
       return response.json();
     })
       .then((data) => {
-        setUser(userData);
+        setUser(data);
         console.log(data);
         navigate('/');
       })
