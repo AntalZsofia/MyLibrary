@@ -5,8 +5,8 @@ using MyLib.Models.Entities;
 using MyLib.Models.RequestDto;
 using MyLib.Models.ResponseDto;
 using MyLib.Models.Result;
-using MyLib.Models.Result.GoogleSearchResult;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace MyLib.Services;
 
@@ -137,6 +137,7 @@ public class BookService : IBookService
             }
 
             var userBooks = await _context.Books
+                .Include(b => b.Author)
                 .Where(b => b.User == user)
                 .ToListAsync();
 
@@ -154,81 +155,96 @@ public class BookService : IBookService
         }
     }
 
-    public async Task<IEnumerable<BookSearchResultDto>> SearchGoogleBooksAsync(string query, IConfiguration configuration)
+    public async Task<IEnumerable<BookSearchResultDto>> SearchGoogleBooksAsync(string query,
+        IConfiguration configuration)
     {
+        try
         {
-            try
+            string? apiKey = configuration.GetSection("GoogleBooksApi")["ApiKey"];
+            // Define the Google Books API endpoint
+            string apiUrl = $"https://www.googleapis.com/books/v1/volumes?q={Uri.EscapeDataString(query)}&key={apiKey}";
+
+            // Make the HTTP request to the Google Books API
+            HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
+
+            if (response.IsSuccessStatusCode)
             {
-                string? apiKey = configuration.GetSection("GoogleBooksApi")["ApiKey"];
-                // Define the Google Books API endpoint
-                string apiUrl = $"https://www.googleapis.com/books/v1/volumes?q={Uri.EscapeDataString(query)}&={apiKey}";
+                string json = await response.Content.ReadAsStringAsync();
+                var searchResult = JsonConvert.DeserializeObject<GoogleBooksApiResponse>(json);
 
-                // Make the HTTP request to the Google Books API
-                HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
-
-                if (response.IsSuccessStatusCode)
+                if (searchResult.Items != null && searchResult.Items.Count > 0)
                 {
-                    string json = await response.Content.ReadAsStringAsync();
-                    var searchResult = JsonConvert.DeserializeObject<GoogleBookSearchResult>(json);
-
                     // Extract the relevant information from the API response
-                    var books = searchResult?.Items?.Select(item => new BookSearchResultDto
-                    {
-                        Title = item.VolumeInfo.Title,
-                        Author = item.VolumeInfo.Authors.FirstOrDefault(),
-                        PublishedDate = item.VolumeInfo.PublishedDate,
-                        Genre = item.VolumeInfo.Categories.FirstOrDefault(),
-                        Description = item.VolumeInfo.Description,
-                        SmallCoverImage = item.VolumeInfo.ImageLinks,
-                    });
+                    var books = new List<BookSearchResultDto>();
 
-                    return books ?? Enumerable.Empty<BookSearchResultDto>();
-                }
-                else
-                {
-                    throw new Exception("Google Books API request failed.");
+                    foreach (var item in searchResult.Items)
+                    {
+                        var book = new BookSearchResultDto
+                        {
+                            Title = item.VolumeInfo.Title,
+                            Author =
+                                item.VolumeInfo.Authors != null ? string.Join(", ", item.VolumeInfo.Authors) : null,
+                            PublishedDate = item.VolumeInfo.PublishedDate,
+                            Genre = item.VolumeInfo.Categories != null
+                                ? string.Join(", ", item.VolumeInfo.Categories)
+                                : null,
+                            Description = item.VolumeInfo.Description,
+                            SmallCoverImage = item.VolumeInfo.ImageLinks?.SmallThumbnail
+                        };
+
+                        books.Add(book);
+                    }
+
+                    return books;
                 }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw new Exception("An error occurred while searching for books.");
-            }
+
+            // Handle API errors or no results found
+            return null;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new Exception("An error occurred while searching for books.");
         }
     }
 
+
+
+
     public async Task<AddToCollectionResult> AddToUserCollectionAsync(BookDto bookDto, string? username)
     {
-            try
+        try
+        {
+            if (string.IsNullOrEmpty(username))
             {
-                if (string.IsNullOrEmpty(username))
-                {
-                    return AddToCollectionResult.Failed("User not found");
-                }
-                var user = await _userManager.FindByNameAsync(username);
-                // Create a new Book entity and populate it with data from the BookDto
-                var newBook = new Book
-                {
-                    Author = bookDto.Author,
-                    Title = bookDto.Title,
-                    Genre = bookDto.Genre,
-                    PublishDate = bookDto.PublishDate,
-                    User = user,
-                    Description = bookDto.Description,
-                    SmallCoverImage = bookDto.SmallCoverImage
-                };
-
-                // Add the book to the database
-                await _context.Books.AddAsync(newBook);
-                await _context.SaveChangesAsync();
-
-                return AddToCollectionResult.Succeed("Book added to collection successfully");
+                return AddToCollectionResult.Failed("User not found");
             }
-            catch (Exception e)
+
+            var user = await _userManager.FindByNameAsync(username);
+            // Create a new Book entity and populate it with data from the BookDto
+            var newBook = new Book
             {
-                Console.WriteLine(e);
-                return AddToCollectionResult.Failed("An error occurred while adding the book to the collection");
-            }
-        
+                Author = bookDto.Author,
+                Title = bookDto.Title,
+                Genre = bookDto.Genre,
+                PublishDate = bookDto.PublishDate,
+                User = user,
+                Description = bookDto.Description,
+                SmallCoverImage = bookDto.SmallCoverImage
+            };
+
+            // Add the book to the database
+            await _context.Books.AddAsync(newBook);
+            await _context.SaveChangesAsync();
+
+            return AddToCollectionResult.Succeed("Book added to collection successfully");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return AddToCollectionResult.Failed("An error occurred while adding the book to the collection");
+        }
+
     }
 }
