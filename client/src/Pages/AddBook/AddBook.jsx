@@ -42,12 +42,8 @@ const AddBook = () => {
                 <Link to="/addbook-manual" className='link'>Manual entry</Link>
       </div>
       
-      <div className="add-book-container">
-        <Route path="/addbook-search" element={<AddBookSearch />} />
-        <Route path="/addbook-manual" element={<AddBookManual />} />
-       
-      </div>
-  
+     
+   
     </>
     )
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './AddBookManual.css';
 
 const AddBookManual = () => {
     const [bookTitle, setBookTitle] = useState ('');
@@ -8,27 +9,6 @@ const AddBookManual = () => {
     const [bookPublished, setBookPublished] = useState('');
     const[bookCover, setBookCover] = useState('');
 
-    const [genreOptions, setGenreOptions] = useState([]);
-    
-    const fetchGenreOptions = () => {
-        fetch('https://localhost:7276/genres')
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(`HTTP error! Status: ${res.status}`);
-          }
-          return res.json();
-        })
-
-          .then((data) => {
-            setGenreOptions(data);
-          })
-          .catch((err) => {
-            console.error('Error fetching genre options:', err);
-          });
-      };
-    useEffect(() => {
-    fetchGenreOptions();
-    }, []);
     const handleAddBook = async () => {
         try{
             const response = await fetch('https://localhost:7276/add-to-collection', {
@@ -44,7 +24,14 @@ const AddBookManual = () => {
                     published: bookPublished,
                     cover: bookCover
                 }),
-        } );}
+        } );
+        if (response.ok) {
+          const responseData = await response.json();
+          console.log('Book added successfully:', responseData); // Log the response data
+      } else {
+          console.error('Error adding book to collection:', response.statusText);
+      }
+      }
         catch(err){
         console.error("Error adding book to collection", err);
         }
@@ -52,14 +39,10 @@ const AddBookManual = () => {
 
   return (
     <>
-   
-    <div>
-      <h2>Add a Book Manually</h2>
-      {/* Form for manual book entry */}
-      {/* Input fields for book details */}
-      <button onClick={handleAddBook}>Add Book</button>
-    </div>
+  
+     <div className='add-book-container'>
      <h2 className="add-book-header">Add a New Book to Your Collection</h2>
+
      <div>
        <label className="add-book-label" htmlFor="bookTitle">Title:</label>
        <input
@@ -82,19 +65,12 @@ const AddBookManual = () => {
      </div>
      <div>
        <label htmlFor="bookGenre">Genre:</label>
-       <select
-       className="add-book-select"
+       <input
+       className="add-book-input"
          id="bookGenre"
          value={bookGenre}
          onChange={(e) => setBookGenre(e.target.value)}
-       >
-         <option value="">Select</option>
-         {genreOptions.map((genre) => (
-           <option key={genre.id} value={genre.id}>
-             {genre.name}
-           </option>
-         ))}
-       </select>
+       />
      </div>
      <div>
        <label htmlFor="bookDescription">Description:</label>
@@ -128,6 +104,7 @@ const AddBookManual = () => {
        />
      </div>
      <button className="add-book-button" onClick={handleAddBook}>Add Book</button>
+     </div>
      </>
   );
 };
