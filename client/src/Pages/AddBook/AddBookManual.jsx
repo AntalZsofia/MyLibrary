@@ -11,8 +11,17 @@ const AddBookManual = () => {
 
     const handleAddBook = async () => {
         try{
-            const response = await fetch('https://localhost:7276/add-to-collection', {
+        const bookToSave = {
+              bookTitle,
+              bookAuthor,
+              bookGenre,
+              bookDescription,
+              bookPublished}
+
+              console.log(bookToSave);
+            const response = await fetch('https://localhost:7276/create-book', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -22,7 +31,7 @@ const AddBookManual = () => {
                     genre: bookGenre,
                     description: bookDescription,
                     published: bookPublished,
-                    cover: bookCover
+                    //cover: bookCover
                 }),
         } );
         if (response.ok) {
