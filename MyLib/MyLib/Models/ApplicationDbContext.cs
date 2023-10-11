@@ -82,8 +82,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
             {
                 var defaultAuthor = new Author()
                 {
-                    FirstName = "John",
-                    LastName = "Doe"
+                    Name = "John Doe"
+                    
                 };
                 context.Authors.Add(defaultAuthor);
                 await context.SaveChangesAsync();
@@ -105,7 +105,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
                     {
                         Title = "Meet me in Milan",
                         Author = author,
-                        Genre = Genre.Mystery,
+                        Genre = "Mystery",
                         PublishDate = DateTime.Today.ToUniversalTime(),
                         User = user,
                         Description = "Test description",

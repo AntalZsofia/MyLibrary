@@ -12,7 +12,7 @@ export default function Home() {
     <img src={Logo} alt='logo' className='logo'></img>
     </div>
     <div className='welcome'>
-    <h2>Welcome { user.username ? user.username : '' } to MyLibrary App</h2>
+    <h2>Welcome to MyLibrary App</h2>
     <div>a book management application</div>
     </div>
     </>
