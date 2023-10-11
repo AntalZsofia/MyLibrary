@@ -1,5 +1,6 @@
 import React, { useState} from 'react'
 import './AddBookSearch.css';
+import './../../Components/BookCard/BookCard.css';
 import BookCard from '../../Components/BookCard/BookCard';
 
 export default function AddBookSearch() {
@@ -36,11 +37,8 @@ return (
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <button className='add-book-button' onClick={handleSearch}>Search</button>
+      <button className='search-book-button' onClick={handleSearch}>Search</button>
 
-      {/* Display search results here 
-      classname: book card container, card
-      */}
       </div>
 
       <div className='book-card-container'>
