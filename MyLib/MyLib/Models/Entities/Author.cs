@@ -7,14 +7,11 @@ public class Author
 {
     [Required]
     public Guid Id { get; set; }
+
+   
+    public string Name { get; set; }
     
-    [Required]
-    [Display(Name = "First Name")]
-    public string FirstName { get; set; }
-    
-    [Required]
-    [Display(Name = "Last Name")]
-    public string LastName { get; set; }
+
     [JsonIgnore]
     public List<Book> Books { get; set; }
     

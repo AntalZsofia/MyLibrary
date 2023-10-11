@@ -17,7 +17,7 @@ public class Book
     
     [Required]
    
-    public Genre? Genre { get; set; }
+    public string? Genre { get; set; }
     
     [Required]
     public DateTime? PublishDate { get; set; }
