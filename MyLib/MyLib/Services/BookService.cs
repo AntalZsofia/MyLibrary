@@ -27,16 +27,25 @@ public class BookService : IBookService
         try
         {
             var user = await _userManager.FindByNameAsync(username);
+            var author = await _context.Authors.FirstOrDefaultAsync(a => a.Name == createBookDto.Author);
+            if (author == null)
+            {
+                author = new Author
+                {
+                    Name = createBookDto.Author
+                };
+            }
+                
 
             var newBook = new Book()
             {
-                Author = createBookDto.Author,
+                Author = author,
                 Title = createBookDto.Title,
                 Genre = createBookDto.Genre,
                 PublishDate = createBookDto.PublishDate,
                 User = user,
                 Description = createBookDto.Description,
-                SmallCoverImage = createBookDto.SmallCoverImage
+                //SmallCoverImage = createBookDto.SmallCoverImage
 
             };
             await _context.Books.AddAsync(newBook);
@@ -55,6 +64,14 @@ public class BookService : IBookService
         try
         {
             var user = await _userManager.FindByNameAsync(username);
+            var author = await _context.Authors.FirstOrDefaultAsync(a => a.Name == updateBookDto.Author);
+            if (author == null)
+            {
+                author = new Author
+                {
+                    Name = updateBookDto.Author
+                };
+            }
             var bookFound = await _context.Books
                 .Include(b => b.Genre)
                 .Include(b => b.Author)
@@ -63,7 +80,7 @@ public class BookService : IBookService
 
             if (bookFound != null)
             {
-                bookFound.Author = updateBookDto.Author;
+                bookFound.Author = author;
                 bookFound.Title = updateBookDto.Title;
                 bookFound.Genre = updateBookDto.Genre;
                 bookFound.PublishDate = updateBookDto.PublishDate;
@@ -223,9 +240,17 @@ public class BookService : IBookService
 
             var user = await _userManager.FindByNameAsync(username);
             // Create a new Book entity and populate it with data from the BookDto
+            var author = await _context.Authors.FirstOrDefaultAsync(a => a.Name == bookDto.Author);
+            if (author == null)
+            {
+                author = new Author
+                {
+                    Name = bookDto.Author
+                };
+            }
             var newBook = new Book
             {
-                Author = bookDto.Author,
+                Author = author,
                 Title = bookDto.Title,
                 Genre = bookDto.Genre,
                 PublishDate = bookDto.PublishDate,
