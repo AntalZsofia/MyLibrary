@@ -1,7 +1,8 @@
 
 import React, { useEffect, useState } from 'react';
 import './MyBooks.css';
-import BookCard from './../../Components/BookCard/BookCard'; // Import the BookCard component
+//import BookCard from './../../Components/BookCard/BookCard'; // Import the BookCard component
+import BookCardColl from './../../Components/BookCardColl/BookCardColl.jsx'
 
 const MyBooks = () => {
   const [userBooks, setUserBooks] = useState([]);
@@ -17,13 +18,21 @@ const MyBooks = () => {
   }, []);
 
   return (
+    <>
     <div className="my-books-container">
+        My Collection</div>
       <div className="my-books-list">
-        {userBooks.map((book) => (
-          <BookCard key={book.id} book={book} />
+        {userBooks.map((book, index) => (
+          <BookCardColl key={index}
+          title={book.title}
+          author={book.author.name}
+          genre={book.genre}
+          publishYear={book.publishDate}
+          imageUrl={book.smallCoverImage} />
         ))}
       </div>
-    </div>
+    </>
+    
   );
 };
 
