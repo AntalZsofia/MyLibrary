@@ -1,0 +1,32 @@
+.buttons-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-content: space-between;
+}
+.update-book-button{
+    background-color: #2A9D8F;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+}
+.delete-book-button{
+    background-color: #2A9D8F;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px; 
+}
+
+.update-book-button:hover {
+    background-color: #228075;
+    }
+.delete-book-button:hover {
+     background-color: #228075;
+}
