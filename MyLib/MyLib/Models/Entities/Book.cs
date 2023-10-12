@@ -12,20 +12,20 @@ public class Book
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
     
-    [Required]
+    
     public string? Title { get; set; }
     
-    [Required]
+ 
    
     public string? Genre { get; set; }
     
-    [Required]
-    public DateTime? PublishDate { get; set; }
+    
+    public string? PublishDate { get; set; }
     public string? Description { get; set; }
     public string? SmallCoverImage { get; set; }
     public Guid AuthorId { get; set; }
     
-    [Required]
+    
     
     public Author? Author { get; set; }
     

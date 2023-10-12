@@ -45,12 +45,12 @@ public class BookService : IBookService
                 PublishDate = createBookDto.PublishDate,
                 User = user,
                 Description = createBookDto.Description,
-                //SmallCoverImage = createBookDto.SmallCoverImage
+                SmallCoverImage = createBookDto.SmallCoverImage
 
             };
             await _context.Books.AddAsync(newBook);
             await _context.SaveChangesAsync();
-            return BookActionResult.Succeed("Book created succesfully");
+            return BookActionResult.Succeed("Book created succesfully and added to the collection");
         }
         catch (Exception e)
         {
@@ -201,7 +201,7 @@ public class BookService : IBookService
                             Title = item.VolumeInfo.Title,
                             Author =
                                 item.VolumeInfo.Authors != null ? string.Join(", ", item.VolumeInfo.Authors) : null,
-                            PublishedDate = item.VolumeInfo.PublishedDate,
+                            PublishDate = item.VolumeInfo.PublishedDate,
                             Genre = item.VolumeInfo.Categories != null
                                 ? string.Join(", ", item.VolumeInfo.Categories)
                                 : null,

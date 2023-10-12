@@ -106,7 +106,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
                         Title = "Meet me in Milan",
                         Author = author,
                         Genre = "Mystery",
-                        PublishDate = DateTime.Today.ToUniversalTime(),
+                        PublishDate = "2023-10-12",
                         User = user,
                         Description = "Test description",
                         SmallCoverImage = "link to cover image"
