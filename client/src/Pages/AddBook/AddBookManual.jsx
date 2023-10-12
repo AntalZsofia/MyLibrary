@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './AddBookManual.css';
 
 const AddBookManual = () => {
@@ -27,11 +27,11 @@ const AddBookManual = () => {
                 },
                 body: JSON.stringify({
                     title: bookTitle,
-                    author: bookAuthor,
                     genre: bookGenre,
+                    publishDate: bookPublished,
+                    author: bookAuthor,
                     description: bookDescription,
-                    published: bookPublished,
-                    //cover: bookCover
+                    smallCoverImage: bookCover
                 }),
         } );
         if (response.ok) {
