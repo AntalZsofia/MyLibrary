@@ -49,8 +49,8 @@ return (
             title={result.title}
             author={result.author}
             genre={result.genre}
-            publishYear={result.publishedDate}
-            imageUrl={result.smallCoverImage}
+            publishDate={result.publishDate}
+            smallCoverImage={result.smallCoverImage}
           />
         ))}
       </div>
