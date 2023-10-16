@@ -50,6 +50,29 @@ public class BookController : ControllerBase
             return StatusCode(500, new Response() { Message = "An error occurred on the server." });
         }
     }
+    
+    //Get book by id
+    
+    [HttpGet("/get-book/{id}")]
+    public async Task<IActionResult> GetBookById(Guid id)
+    {
+        try
+        {
+            var userName = HttpContext.User.Identity!.Name;
+            var book = await _bookService.GetBookByIdAsync(userName, id);
+
+            if (book != null)
+            {
+                return Ok(book);
+            }
+            return NotFound();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, new Response() { Message = "An error occurred on the server." });
+        }
+    }
 
 //Create new book
 
