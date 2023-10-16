@@ -24,6 +24,7 @@ const MyBooks = () => {
       <div className="my-books-list">
         {userBooks.map((book, index) => (
           <BookCardColl key={index}
+          id={book.id}
           title={book.title}
           author={book.author.name}
           genre={book.genre}
