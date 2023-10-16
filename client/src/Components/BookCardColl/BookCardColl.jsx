@@ -1,7 +1,10 @@
 import React from 'react';
 import './BookCardColl.css';
+import { NavLink } from "react-router-dom";
 
-const BookCardColl = ({title, author, genre, imageUrl, publishYear}) => {
+
+const BookCardColl = ({title, author, genre, imageUrl, publishYear, id}) => {
+  
 
   const handleDeleteBook = async () => {
     try{
@@ -44,7 +47,9 @@ return(
     <p className="book-genre">Genre: {genre}</p>
     <p className="book-publish-year">Published: {publishYear}</p>
     <div className='buttons-container'>
-    <button className="update-book-button" onClick={handleDeleteBook}>Update</button>
+      <NavLink to={`/update-book/${id}`}>
+    <button className="update-book-button">Update</button>
+      </NavLink>
     <button className="delete-book-button" onClick={handleDeleteBook}>Delete</button>
     </div>
 

@@ -4,6 +4,14 @@
     justify-content: flex-end;
     align-content: space-between;
 }
+
+.book-form-buttons-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+   
+
+}
 .update-book-button{
     background-color: #2A9D8F;
     color: #fff;
