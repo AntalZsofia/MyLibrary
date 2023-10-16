@@ -172,6 +172,35 @@ public class BookService : IBookService
         }
     }
 
+    public async Task<List<Book>> GetBookByIdAsync(string username, Guid id)
+    {
+        try
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            var getBook = await _context.Books
+                .Include(b => b.Author)
+                .Where(b => b.Id == id)
+                .ToListAsync();
+
+            if (getBook == null)
+            {
+                throw new Exception("There is no book with this id.");
+            }
+
+            return getBook;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new Exception("An error occurred on the server");
+        }
+    }
+
     public async Task<IEnumerable<BookSearchResultDto>> SearchGoogleBooksAsync(string query,
         IConfiguration configuration)
     {
