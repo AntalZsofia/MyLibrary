@@ -29,6 +29,7 @@ const MyBooks = () => {
           author={book.author.name}
           genre={book.genre}
           publishYear={book.publishDate}
+          description={book.description}
           imageUrl={book.smallCoverImage} />
         ))}
       </div>
