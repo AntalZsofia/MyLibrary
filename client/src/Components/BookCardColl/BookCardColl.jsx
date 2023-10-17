@@ -3,7 +3,7 @@ import './BookCardColl.css';
 import { NavLink } from "react-router-dom";
 
 
-const BookCardColl = ({title, author, genre, imageUrl, publishYear, id}) => {
+const BookCardColl = ({title, author, genre, imageUrl, publishYear, description, id}) => {
   
 
   const handleDeleteBook = async () => {
@@ -13,6 +13,7 @@ const BookCardColl = ({title, author, genre, imageUrl, publishYear, id}) => {
         author,
         genre,
         publishYear,
+        description,
         imageUrl
       }
       const response = await fetch(`https://localhost:7276/delete-book`, {
@@ -50,7 +51,11 @@ return(
       <NavLink to={`/update-book/${id}`}>
     <button className="update-book-button">Update</button>
       </NavLink>
-    <button className="delete-book-button" onClick={handleDeleteBook}>Delete</button>
+    <button className="delete-book-button" onClick={() => {
+    if (window.confirm("Are you sure you want to delete?")) {
+      handleDeleteBook();
+    }
+  }}>Delete</button>
     </div>
 
     </div>
