@@ -1,38 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const BookForm = ({ bookData, onFormSubmit }) => {
+const BookForm = ({ book, onFormSubmit }) => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState(bookData?.title || '');
-  const [author, setAuthor] = useState(bookData?.author || '');
-  const [genre, setGenre] = useState(bookData?.genre || '');
-  const [publishDate, setPublishDate] = useState(bookData?.publishDate || '');
-  const [description, setDescription] = useState(bookData?.description || '');
-  const [smallCoverImage, setSmallCoverImage] = useState(bookData?.smallCoverImage || '');
+  console.log(book);
+  const [title, setTitle] = useState(book?.title || '');
+  const [author, setAuthor] = useState(book?.author || '');
+  const [genre, setGenre] = useState(book?.genre || '');
+  const [publishDate, setPublishDate] = useState(book?.publishDate || '');
+  const [description, setDescription] = useState(book?.description || '');
+  const [smallCoverImage, setSmallCoverImage] = useState(book?.smallCoverImage || '');
 
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    switch (name) {
-      case "title":
-        setTitle(value);
-        break;
-      case "author":
-        setAuthor(value);
-        break;
-      case "genre":
-        setGenre(value);
-        break;
-      case "publishDate":
-        setPublishDate(value);
-        break;
-      case "description":
-        setDescription(value);
-        break;
-      default:
-        break;
-    }
-  };
 
   const handleCancel = () => {
     navigate('/mybooks');
@@ -45,10 +23,12 @@ const BookForm = ({ bookData, onFormSubmit }) => {
       genre,
       publishDate,
       description,
-      smallCoverImage
+      smallCoverImage,
+    };
+  
+    onFormSubmit(updatedBook);
+    navigate('/mybooks');
   };
-  onFormSubmit(updatedBook);
-}
 
   return (
     <form className='add-book-container'>
@@ -56,22 +36,25 @@ const BookForm = ({ bookData, onFormSubmit }) => {
         <label>Title:</label>
         <input className="add-book-input" 
         type="text" name="title" 
-        defaultValue={bookData ? bookData.title : null} 
-        onChange={handleChange} />
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+         />
       </div>
       <div>
         <label>Author:</label>
         <input className="add-book-input" 
         type="text" name="author" 
-        defaultValue={bookData ? bookData.author : null} 
-        onChange={handleChange} />
+        value={author} 
+        onChange={e => setAuthor(e.target.value)}
+       />
       </div>
       <div>
         <label>Genre:</label>
         <input className="add-book-input" 
         type="text" name="genre" 
-        defaultValue={bookData ? bookData.genre : null} 
-        onChange={handleChange} />
+        value={genre} 
+        onChange={e => setGenre(e.target.value)}
+         />
       </div>
       <div>
         <label>Description:</label>
@@ -79,8 +62,8 @@ const BookForm = ({ bookData, onFormSubmit }) => {
         className="add-book-textarea"
           type="text"
           name="description"
-          defaultValue={bookData ? bookData.description : null} 
-          onChange={handleChange}
+          value={description} 
+          onChange={e => setDescription(e.target.value)}
           rows={4}
         />
       </div>
@@ -89,22 +72,24 @@ const BookForm = ({ bookData, onFormSubmit }) => {
         <input className="add-book-input" 
         type="text" 
         name="publishDate" 
-        defaultValue={bookData ? bookData.publishDate : null} 
-        onChange={handleChange} />
+        value={publishDate} 
+        onChange={e => setPublishDate(e.target.value)}
+         />
       </div>
       <div>
         <label>Cover:</label>
         <input className="add-book-cover-input"
-        type="file" 
+        type="text" 
         name="imageUrl" 
-        defaultValue={bookData ? bookData.smallCoverImage : null}  
-        onChange={handleChange} />
+        value={smallCoverImage}
+        onChange={e => setSmallCoverImage(e.target.value)}  
+         />
       </div>
       <div className='book-form-buttons-container'>
       <button className="add-book-button"
       type="button" 
       onClick={handleFormSubmit}>
-        Save
+        Update
       </button>
       <button className="add-book-button"
       type="button" 
