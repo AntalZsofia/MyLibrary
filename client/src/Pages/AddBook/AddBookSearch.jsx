@@ -50,6 +50,7 @@ return (
             author={result.author}
             genre={result.genre}
             publishDate={result.publishDate}
+            description ={result.description}
             smallCoverImage={result.smallCoverImage}
           />
         ))}
