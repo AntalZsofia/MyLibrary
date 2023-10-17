@@ -73,9 +73,7 @@ public class BookService : IBookService
                 };
             }
             var bookFound = await _context.Books
-                .Include(b => b.Genre)
                 .Include(b => b.Author)
-                .Include(b => b.Title)
                 .FirstOrDefaultAsync(b => b.Id == id);
 
             if (bookFound != null)
@@ -96,6 +94,7 @@ public class BookService : IBookService
                     Author = updateBookDto.Author,
                     Title = updateBookDto.Title,
                     Genre = updateBookDto.Genre,
+                    Description= updateBookDto.Description,
                     PublishDate = updateBookDto.PublishDate
                 };
                 return UpdateBookResult.Success(resultBook);
@@ -123,7 +122,7 @@ public class BookService : IBookService
 
             var user = await _userManager.FindByNameAsync(username);
             var bookToDelete = await _context.Books
-                .Include(b => b.Title)
+                .Include(b => b.Author)
                 .FirstOrDefaultAsync(e => e.Id == id);
             if (bookToDelete != null)
             {
@@ -172,7 +171,7 @@ public class BookService : IBookService
         }
     }
 
-    public async Task<List<Book>> GetBookByIdAsync(string username, Guid id)
+    public async Task<BookDto> GetBookByIdAsync(string username, Guid id)
     {
         try
         {
@@ -184,15 +183,27 @@ public class BookService : IBookService
 
             var getBook = await _context.Books
                 .Include(b => b.Author)
-                .Where(b => b.Id == id)
-                .ToListAsync();
+                .FirstOrDefaultAsync(b => b.Id == id);
+                
 
             if (getBook == null)
             {
                 throw new Exception("There is no book with this id.");
             }
 
-            return getBook;
+            var getBookById = new BookDto()
+            {
+                Title = getBook.Title,
+                Author = getBook.Author!.Name,
+                Genre = getBook.Genre,
+                Description = getBook.Description,
+                PublishDate = getBook.PublishDate,
+                SmallCoverImage = getBook.SmallCoverImage
+
+
+            };
+
+            return getBookById;
         }
         catch (Exception e)
         {
