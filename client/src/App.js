@@ -23,6 +23,7 @@ import "./index.css";
 import AddBookSearch from "./Pages/AddBook/AddBookSearch";
 import AddBookManual from "./Pages/AddBook/AddBookManual";
 import UpdateBook from "./Pages/UpdateBook/UpdateBook";
+import BookCardColl from "./Components/BookCardColl/BookCardColl";
 const router = createBrowserRouter(
   createRoutesFromElements(
   <Route path='/' element={<Layout />}>
@@ -32,6 +33,7 @@ const router = createBrowserRouter(
       <Route path='/addbook-search' element={<AddBookSearch />} />
       <Route path='/addbook-manual' element={<AddBookManual />} />
       <Route path='/update-book/:id' element={<UpdateBook />} />
+      <Route path='/delete-book/:id' element={<BookCardColl />} />
       <Route path='/login' element={< Login />} />
       <Route path='/signup' element={< Signup />} />
   </Route>

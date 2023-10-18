@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
 import './MyBooks.css';
-//import BookCard from './../../Components/BookCard/BookCard'; // Import the BookCard component
 import BookCardColl from './../../Components/BookCardColl/BookCardColl.jsx'
 
 const MyBooks = () => {
