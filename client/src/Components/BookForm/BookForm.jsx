@@ -32,6 +32,7 @@ const BookForm = ({ book, onFormSubmit }) => {
 
   return (
     <form className='add-book-container'>
+      <h1 className='update-book-header'>Update Book</h1>
       <div>
         <label>Title:</label>
         <input className="add-book-input" 
