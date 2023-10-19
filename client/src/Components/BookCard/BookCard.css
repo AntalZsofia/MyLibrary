@@ -1,0 +1,79 @@
+
+.book-card-container {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap; 
+  padding: 0;
+  margin: 0;
+  /* justify-content: flex-start; */
+  list-style: none;
+  
+}
+
+/* Styles for individual book cards */
+.book-card {
+  display: flex;
+  flex: 0 0 350px;
+  width: 350px; /* Set a fixed width for the card */
+  background-color: #E1E5F2;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+}
+
+/* Book image styles */
+.book-image {
+  width: 100px; /* Set a fixed width for the image */
+  height: 150px; /* Set a fixed height for the image */
+  border-radius: 5px;
+  margin-right: 10px; /* Add a gap between image and details */
+}
+
+/* Styles for book details */
+.book-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column; /* Display book details in a vertical stack */
+  text-align: center;
+}
+
+/* Title styles */
+.book-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+/* Author styles */
+.book-author {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+/* Genre styles */
+.book-genre {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+/* Publish year styles */
+.book-publish-year {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.add-book-button {
+  background-color: #2A9D8F;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.add-book-button:hover {
+  background-color: #228075;
+}
