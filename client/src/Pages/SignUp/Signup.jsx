@@ -93,7 +93,7 @@ function Registration() {
           Register
         </button>
         {isRegistrationSuccessful ? <p className="success-message">Registration successful</p> : null}
-        {error ? <p>Error</p> : null}
+        {error ? <p>{error}</p> : null}
 
       </div>
     </div>
