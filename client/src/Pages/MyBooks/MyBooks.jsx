@@ -5,17 +5,22 @@ import BookCardColl from './../../Components/BookCardColl/BookCardColl.jsx'
 
 const MyBooks = () => {
   const [userBooks, setUserBooks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch('https://localhost:7276/all-books', {credentials: "include"})
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        setIsLoading(false);
         setUserBooks(data.books);
       })
       .catch((err) => console.error("Error fetching user books", err));
   }, []);
 
+  if(isLoading){
+    <div>Loading...</div>
+  }
   return (
     <>
     <div className="my-books-container">
