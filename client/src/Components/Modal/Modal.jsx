@@ -3,8 +3,8 @@ import './Modal.css';
 
 const Modal = ({ children, onClose }) => {
   return (
-    <div className="modal">
-      <div className="modal-content">
+    <div className="modal-overlay">
+      <div className="modal">
         <button className="close-modal" onClick={onClose}>
           &times;
         </button>
