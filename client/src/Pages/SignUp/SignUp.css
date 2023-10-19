@@ -1,0 +1,69 @@
+.registration-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fff;
+    font-family: 'Libre Basketville', serif;
+  }
+.registration-card .icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px; /* Add some margin to separate the icon from the heading */
+  }
+  .registration-card .account-icon {
+    width: 60px; /* Adjust the width as needed to make the icon smaller */
+    height: 60px; /* Adjust the height proportionally if needed */
+    margin-right: 10px;
+  }
+  
+  /* Registration Card */
+  .registration-card {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    justify-content: center; /* Center items horizontally */
+  }
+  
+  /* Title */
+  .registration-card h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Input Fields */
+  .registration-input {
+    width: 100%; /* Make sure the input fields take the full width of the card */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box; /* Include padding and border in the width calculation */
+    font-family: 'Libre Basketville', serif;
+  }
+  
+  /* Registration Button */
+  .registration-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #2A9D8F;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: 'Libre Basketville', serif;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  /* Registration Button Hover Effect */
+  .registration-button:hover {
+    background-color: #228075;
+  }
