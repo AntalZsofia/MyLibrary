@@ -1,0 +1,104 @@
+/* Container for the form */
+.add-book-container {
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    font-family: 'Libre Basketville',serif;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Form header */
+  .add-book-header {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Form input labels */
+  .add-book-label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+  }
+  
+  /* Form input fields */
+  .add-book-input {
+  
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    padding-right: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  /* Textarea */
+  .add-book-textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    box-sizing: border-box;
+  }
+  
+  /* Select dropdown */
+  .add-book-select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .add-book-cover-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #ffffff;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+  
+  /* Submit button */
+  .add-book-button {
+  background-color: #2A9D8F;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .add-book-button:hover {
+  background-color: #228075;
+  }
+
+  /*add-book links */
+  .add-book-links {
+    display: flex;
+    justify-content:flex-start;
+    margin-top: 50px;
+    margin-bottom: 20px;
+   
+}
+
+.link {
+  
+    text-decoration: none;
+    color: #000; /* Set the default color for links */
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.link:hover {
+    text-decoration: underline; /* Add underline on hover */
+}

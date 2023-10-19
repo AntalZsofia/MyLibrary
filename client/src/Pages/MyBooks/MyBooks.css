@@ -1,0 +1,35 @@
+.my-books-container {
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-family: 'Libre Basketville', serif;
+    font-size:25px;
+    font-weight: bolder;
+  }
+  
+  /* List styles */
+  .my-books-list {
+    font-family: 'Libre Basketville', serif;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .my-books-item {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #ffffff;
+  }
+  
+  .my-books-item:hover {
+    background-color: #f0f0f0;
+  }
