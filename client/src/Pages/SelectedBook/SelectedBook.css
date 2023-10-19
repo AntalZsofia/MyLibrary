@@ -1,0 +1,71 @@
+.selected-book-card {
+    display: flex;
+  background-color: #E1E5F2;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 5px;
+  }
+  
+  .selected-book-image-container {
+    margin-right: 20px;
+    border: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 150px; /* Minimum width to prevent the image from getting too thin */
+  }
+  
+  .selected-book-image {
+    max-width: 100%;
+    max-height: 200px; 
+    object-fit: contain; 
+    padding-right: 10px;
+    border-radius: 5px;
+  }
+  
+  .selected-book-details {
+    flex: 1;
+  }
+  
+  .selected-book-title {
+    font-size: 24px;
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  
+  .selected-book-author,
+  .selected-book-genre,
+  .selected-book-publish-year {
+    font-size: 16px;
+    margin: 0;
+    margin-bottom: 5px;
+  }
+  
+  .selected-book-description {
+    font-size: 14px;
+    text-align: justify; 
+  line-height: 1.4;
+  }
+  
+  buttons-container {
+    display: flex;
+    margin-top: 10px;
+  }
+  
+  .update-book-button,
+  .delete-book-button {
+    background-color: #2A9D8F;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .update-book-button:hover,
+  .delete-book-button:hover {
+    background-color: #228075;
+  }
