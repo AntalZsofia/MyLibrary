@@ -7,10 +7,10 @@ import BookCard from '../../Components/BookCard/BookCard';
 export default function AddBookSearch() {
 const [search, setSearch] = useState('');
 const [searchResults, setSearchResults] = useState([]);
-const [isLoading, setIsLoading] = useState(true);
+
 
 const handleSearch = async () => {
-  setIsLoading(true);
+  
 try {
   const apiUrl = `https://localhost:7276/search-book-with-google?query=${search}`;
 
@@ -20,7 +20,6 @@ try {
     const {data} = await response.json();
     console.log(data);
     setSearchResults(data);
-    setIsLoading(false);
   } else {
     console.error('Error searching for books:', response.statusText);
   }
@@ -28,11 +27,7 @@ try {
   console.error('Error searching for books:', err);
   }
 };
-if(isLoading){
-  return(
-    <div>Loading...</div>
-  )
-}
+
 return (
   <>
  
