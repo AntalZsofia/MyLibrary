@@ -35,7 +35,7 @@ public class BookService : IBookService
                     Name = createBookDto.Author
                 };
             }
-                
+
 
             var newBook = new Book()
             {
@@ -72,6 +72,7 @@ public class BookService : IBookService
                     Name = updateBookDto.Author
                 };
             }
+
             var bookFound = await _context.Books
                 .Include(b => b.Author)
                 .FirstOrDefaultAsync(b => b.Id == id);
@@ -94,7 +95,7 @@ public class BookService : IBookService
                     Author = updateBookDto.Author,
                     Title = updateBookDto.Title,
                     Genre = updateBookDto.Genre,
-                    Description= updateBookDto.Description,
+                    Description = updateBookDto.Description,
                     PublishDate = updateBookDto.PublishDate
                 };
                 return UpdateBookResult.Success(resultBook);
@@ -184,7 +185,7 @@ public class BookService : IBookService
             var getBook = await _context.Books
                 .Include(b => b.Author)
                 .FirstOrDefaultAsync(b => b.Id == id);
-                
+
 
             if (getBook == null)
             {
@@ -266,9 +267,7 @@ public class BookService : IBookService
         }
     }
 
-
-
-
+    
     public async Task<AddToCollectionResult> AddToUserCollectionAsync(BookDto bookDto, string? username)
     {
         try
@@ -288,6 +287,7 @@ public class BookService : IBookService
                     Name = bookDto.Author
                 };
             }
+
             var newBook = new Book
             {
                 Author = author,
@@ -312,4 +312,52 @@ public class BookService : IBookService
         }
 
     }
+
+
+    public async Task<List<BookDto>> SearchBookAsync(string? query, string? username)
+    {
+        try
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            var queryToLower = (query ?? "").ToLower();
+            var books = await _context.Books
+                .Include(b => b.Author)
+                .Where(b =>
+                    b.Title!.ToLower().Contains(queryToLower) ||
+                    b.Genre!.ToLower().Contains(queryToLower) ||
+                    b.Author!.Name.ToLower().Contains(queryToLower) ||
+                    b.Description!.ToLower().Contains(queryToLower)
+                )
+                .ToListAsync();
+            
+
+            var bookDtos = books.Select(b => MapBookToDto(b)).ToList();
+            return bookDtos;
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new Exception("An error occurred on the server");
+        }
+    }
+
+    private BookDto MapBookToDto(Book book)
+    {
+        return new BookDto
+        {
+            Title = book.Title,
+            Author = book.Author.Name,
+            Genre = book.Genre,
+            Description = book.Description,
+            PublishDate = book.PublishDate,
+            SmallCoverImage = book.SmallCoverImage
+        };
+    }
+
 }
