@@ -215,4 +215,33 @@ public class BookController : ControllerBase
         var genres = await _genreService.GetAllGenresAsync();
         return Ok(genres);
     }
+    
+    
+    //Search book by query
+    [HttpGet("/search-book/")]
+    public async Task<IActionResult> SearchBookByQuery([FromQuery] string query)
+    {
+        try
+        {
+            var username = HttpContext.User.Identity!.Name;
+            var booksQuery = await _bookService.SearchBookAsync(query, username);
+
+            if (booksQuery.Count > 0)
+            {
+               
+                return Ok(booksQuery);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, new Response() { Message = "An error occurred on the server." });
+        }
+    } 
+    
+    
 }
