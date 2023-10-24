@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using MyLib.Models.RequestDto;
 using MyLib.Models.ResponseDto;
@@ -100,4 +101,24 @@ public class AuthController : ControllerBase
         }
         
 } 
+    //User Profile
+   // [Authorize]
+   // [HttpGet("/api/user/me")]
+    // public async Task<IActionResult> GetProfile()
+    // {
+    //     var username = User.Identity?.Name;
+    //     var user = await _authService.GetUserByUsername(username!);
+    //
+    //     if (user == null)
+    //     {
+    //         return NotFound("User not found");
+    //     }
+    //
+    //     return Ok(new UserProfileDto
+    //     {
+    //         Username = user.UserName,
+    //         Email = user.Email,
+    //         Password = user.PasswordHash
+    //     });
+    // }
 }
