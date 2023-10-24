@@ -25,10 +25,10 @@ function SearchBooks({ searchQuery }) {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <ul>
-          {searchResults.map((book) => (
+        <ul className="my-books-list">
+          {searchResults.map((book, index) => (
             <BookCardColl
-              key={book.id}
+              key={index}
               id={book.id}
               title={book.title}
               author={book.author.name}
