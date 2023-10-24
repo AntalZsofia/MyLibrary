@@ -98,6 +98,11 @@ public class AuthService : IAuthService
         return roles;
     }
 
+    public async Task<ApplicationUser> GetUserByUsername(string username)
+    {
+        var user = await _userManager.FindByNameAsync(username);
+        return user!;
+    }
 
     private async Task<string> GetJwtTokenAsync(ApplicationUser user, string password)
     {
