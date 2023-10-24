@@ -314,7 +314,7 @@ public class BookService : IBookService
     }
 
 
-    public async Task<List<BookDto>> SearchBookAsync(string? query, string? username)
+    public async Task<List<Book>> SearchBookAsync(string? query, string? username)
     {
         try
         {
@@ -325,7 +325,7 @@ public class BookService : IBookService
             }
 
             var queryToLower = (query ?? "").ToLower();
-            var books = await _context.Books
+            var filteredBooks = await _context.Books
                 .Include(b => b.Author)
                 .Where(b =>
                     b.Title!.ToLower().Contains(queryToLower) ||
@@ -335,9 +335,9 @@ public class BookService : IBookService
                 )
                 .ToListAsync();
             
-
-            var bookDtos = books.Select(b => MapBookToDto(b)).ToList();
-            return bookDtos;
+                return filteredBooks;
+           // var bookDtos = books.Select(b => MapBookToDto(b)).ToList();
+           // return bookDtos;
 
         }
         catch (Exception e)
@@ -351,6 +351,7 @@ public class BookService : IBookService
     {
         return new BookDto
         {
+            
             Title = book.Title,
             Author = book.Author.Name,
             Genre = book.Genre,

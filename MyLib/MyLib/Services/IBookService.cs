@@ -15,5 +15,5 @@ public interface IBookService
     Task<AddToCollectionResult> AddToUserCollectionAsync(BookDto bookDto, string? username);
     Task<BookDto> GetBookByIdAsync(string username, Guid id);
 
-    Task<List<BookDto>> SearchBookAsync(string? query, string? username);
+    Task<List<Book>> SearchBookAsync(string? query, string? username);
 }
