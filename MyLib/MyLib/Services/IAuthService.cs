@@ -11,4 +11,5 @@ public interface IAuthService
     Task<LoginResult> LoginAsync(LoginUserDto loginUserDto);
     Task<IList<string>> GetRolesAsync(string userName);
     Task<ApplicationUser> GetUserByUsername(string username);
+    Task<UpdateProfileResult> UpdateUserAsync(UpdateProfileDto updateProfileDto, string username);
 }

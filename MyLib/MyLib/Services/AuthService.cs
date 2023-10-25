@@ -104,6 +104,41 @@ public class AuthService : IAuthService
         return user!;
     }
 
+    public async Task<UpdateProfileResult> UpdateUserAsync(UpdateProfileDto updateProfileDto, string username)
+    {
+        var user = await _userManager.FindByNameAsync(username);
+        if (user == null)
+        {
+            return UpdateProfileResult.Fail();
+            
+        }
+        user.UserName = updateProfileDto.Username;
+        user.Email = updateProfileDto.Email;
+        var passwordValidationResult = ValidatePassword(updateProfileDto.Password);
+
+        if(!passwordValidationResult.Succeeded)
+        {
+            return new UpdateProfileResult
+            {
+                Message = "Password validation failed: " + string.Join(", ", passwordValidationResult.Errors);
+            };
+        }
+        var result = await _userManager.UpdateAsync(user);
+        if (result.Succeeded)
+        {
+            return UpdateProfileResult.Success();
+        }
+        else
+        {
+            // You can customize the error message based on the identity result.
+            return new UpdateProfileResult
+            {
+                
+                Message = "Profile update failed. Some error message here."
+            };
+        }
+    }
+
     private async Task<string> GetJwtTokenAsync(ApplicationUser user, string password)
     {
         var claims = new List<Claim>
