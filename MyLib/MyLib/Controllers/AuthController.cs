@@ -13,10 +13,12 @@ namespace MyLib.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly IBookService _bookService;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IAuthService authService, IBookService bookService)
     {
         _authService = authService;
+        _bookService = bookService;
     }
     
     //Registration
@@ -102,23 +104,56 @@ public class AuthController : ControllerBase
         
 } 
     //User Profile
-   // [Authorize]
-   // [HttpGet("/api/user/me")]
-    // public async Task<IActionResult> GetProfile()
-    // {
-    //     var username = User.Identity?.Name;
-    //     var user = await _authService.GetUserByUsername(username!);
-    //
-    //     if (user == null)
-    //     {
-    //         return NotFound("User not found");
-    //     }
-    //
-    //     return Ok(new UserProfileDto
-    //     {
-    //         Username = user.UserName,
-    //         Email = user.Email,
-    //         Password = user.PasswordHash
-    //     });
-    // }
+    [Authorize]
+    [HttpGet("/api/user/me")]
+     public async Task<IActionResult> GetProfile()
+     {
+         var username = User.Identity?.Name;
+         var user = await _authService.GetUserByUsername(username!);
+         var booksCount = await _bookService.GetUserBookCount(username!);
+    
+         if (user == null)
+         {
+             return NotFound("User not found");
+         }
+    
+         return Ok(new UserProfileDto
+         {
+             Username = user.UserName,
+             Email = user.Email,
+             Password = user.PasswordHash,
+             BooksCount = booksCount
+             
+         });
+     }
+
+     [Authorize]
+     [HttpPut("/api/user/me")]
+     public async Task<IActionResult> UpdateProfile()
+     {
+         try
+         {
+         var username = User.Identity?.Name;
+         var user = await _authService.GetUserByUsername(username);
+         if (user == null)
+         {
+             return NotFound("User not found"); 
+         }
+
+         var updateProfileResult = await _authService.UpdateUserAsync(updateProfileDto, username);
+         if (updateProfileResult.Succeeded)
+         {
+             return Ok(updateProfileResult.Message);
+         }
+         return BadRequest(updateProfileResult.Message);
+
+         }
+         
+        catch(Exception e)
+         {
+         Console.WriteLine(e);
+         return StatusCode(500, new Response(){Message = "An error occured on the server."});
+         }
+     }
+     }
 }
