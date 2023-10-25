@@ -16,6 +16,7 @@ import MyBooks from "./Pages/MyBooks/MyBooks.jsx";
 import AddBook from "./Pages/AddBook/AddBook.jsx";
 import SelectedBook from "./Pages/SelectedBook/SelectedBook.jsx";
 import DeleteBook from "./Pages/DeleteBook/DeleteBook.jsx";
+import Profile from "./Pages/Profile/Profile";
 
 
 //import ErrorPage from "./Pages/ErrorPage/ErrorPage";
@@ -31,6 +32,7 @@ const router = createBrowserRouter(
       <Route index element={< Home />} />
       <Route path='/mybooks' element={< MyBooks />} />
       <Route path='/addbook' element={< AddBook />} />
+      <Route path='/profile' element={<Profile />} />
       <Route path='/addbook-search' element={<AddBookSearch />} />
       <Route path='/addbook-manual' element={<AddBookManual />} />
       <Route path='/selected-book/:id' element={<SelectedBook />}/>
