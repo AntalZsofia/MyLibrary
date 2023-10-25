@@ -347,6 +347,34 @@ public class BookService : IBookService
         }
     }
 
+    public async Task<int> GetUserBookCount(string username)
+    {
+        try
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+            var userBooks = await _context.Books
+                .Include(b => b.Author)
+                .Where(b => b.User == user)
+                .ToListAsync();
+
+            if (userBooks == null || !userBooks.Any())
+            {
+                throw new Exception("User has no books.");
+            }
+
+            return userBooks.Count;
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
     private BookDto MapBookToDto(Book book)
     {
         return new BookDto

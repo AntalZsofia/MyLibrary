@@ -16,4 +16,5 @@ public interface IBookService
     Task<BookDto> GetBookByIdAsync(string username, Guid id);
 
     Task<List<Book>> SearchBookAsync(string? query, string? username);
+    Task<int> GetUserBookCount(string username);
 }
