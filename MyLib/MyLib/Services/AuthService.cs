@@ -2,7 +2,10 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MyLib.Models;
 using MyLib.Models.Entities;
 using MyLib.Models.RequestDto;
 using MyLib.Models.Result;
@@ -15,12 +18,14 @@ public class AuthService : IAuthService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IConfiguration _configuration;
     private readonly RoleManager<IdentityRole<Guid>> _roleManager;
+    private readonly ApplicationDbContext _context;
 
-    public AuthService(UserManager<ApplicationUser> userManager, IConfiguration configuration, RoleManager<IdentityRole<Guid>> roleManager)
+    public AuthService(UserManager<ApplicationUser> userManager, IConfiguration configuration, RoleManager<IdentityRole<Guid>> roleManager, ApplicationDbContext context)
     {
         _userManager = userManager;
         _configuration = configuration;
         _roleManager = roleManager;
+        _context = context;
     }
     
     //Register
@@ -31,7 +36,8 @@ public class AuthService : IAuthService
             var user = new ApplicationUser()
             {
                 UserName = registerUserDto.Username,
-                Email = registerUserDto.Email
+                Email = registerUserDto.Email,
+                ProfileCreationDate = registerUserDto.ProfileCreationDate
             };
             await _roleManager.CreateAsync(new IdentityRole<Guid>("User"));
             var registerResult = await _userManager.CreateAsync(user, registerUserDto.Password);
@@ -106,37 +112,41 @@ public class AuthService : IAuthService
 
     public async Task<UpdateProfileResult> UpdateUserAsync(UpdateProfileDto updateProfileDto, string username)
     {
-        var user = await _userManager.FindByNameAsync(username);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
         if (user == null)
         {
-            return UpdateProfileResult.Fail();
+            return UpdateProfileResult.Fail("There is no user with this id");
             
         }
-        user.UserName = updateProfileDto.Username;
-        user.Email = updateProfileDto.Email;
-        var passwordValidationResult = ValidatePassword(updateProfileDto.Password);
-
-        if(!passwordValidationResult.Succeeded)
+        if(updateProfileDto.Username != null)
         {
-            return new UpdateProfileResult
+            var result = await _userManager.SetUserNameAsync(user, updateProfileDto.Username);
+            if (!result.Succeeded)
             {
-                Message = "Password validation failed: " + string.Join(", ", passwordValidationResult.Errors);
-            };
+                return UpdateProfileResult.Fail("Username change was not successful");
+            }
         }
-        var result = await _userManager.UpdateAsync(user);
-        if (result.Succeeded)
+        if(updateProfileDto.Email != null){
+       var result = await _userManager.SetEmailAsync(user, updateProfileDto.Email);
+        if (!result.Succeeded)
         {
-            return UpdateProfileResult.Success();
+            return UpdateProfileResult.Fail("Email change was not successful");
         }
-        else
+        }
+       
+        if (updateProfileDto.NewPassword != null && updateProfileDto.OldPassword != null)
         {
-            // You can customize the error message based on the identity result.
-            return new UpdateProfileResult
+            var result =
+                await _userManager.ChangePasswordAsync(user, updateProfileDto.OldPassword,
+                    updateProfileDto.NewPassword);
+            if (!result.Succeeded)
             {
-                
-                Message = "Profile update failed. Some error message here."
-            };
+                return UpdateProfileResult.Fail("Password change was not successful");
+            }
         }
+        
+       
+        return UpdateProfileResult.Success("Profile updated successfully");
     }
 
     private async Task<string> GetJwtTokenAsync(ApplicationUser user, string password)
@@ -166,4 +176,5 @@ public class AuthService : IAuthService
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+    
 }
