@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router';
+import './Profile.css';
+import Modal from '../../Components/Modal/Modal';
 
 export default function Profile() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const[password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [booksCount, setBooksCount] = useState(0);
+    const [joinedDate, setJoinedDate] = useState('');
+    const [isChangingPassword, setIsChangingPassword] = useState(false);
+    const [showDeleteAllBooks, setShowDeleteAllBooks] = useState(false);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
+    const [userBooks, setUserBooks] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
 fetch('https://localhost:7276/api/user/me', {credentials: 'include'})
@@ -15,57 +24,70 @@ fetch('https://localhost:7276/api/user/me', {credentials: 'include'})
         setIsLoading(false);
         setUsername(data.username);
         setEmail(data.email);
-        setPassword(data.password);
         setBooksCount(data.booksCount);
+        setJoinedDate(data.profileCreationDate);
       })
       .catch((err) => console.error("Error fetching user profile", err));
   }, []);
 
 
   const handleUpdateProfile = () => {
+    navigate('/profile/update');
     
-    fetch('https://localhost:7276/api/user/me', {
-      method: 'PUT', 
+  };
+
+  const handleDeleteBooks = () => {
+    setShowDeleteAllBooks(true);
+    openDeleteConfirmation();
+    setShowDeleteConfirmation(true);
+  }
+const getAllBooks = () => {
+  fetch('https://localhost:7276/all-books', {credentials: "include"})
+  .then((res) => res.json())
+  .then((data) => {
+    console.log(data);
+    setIsLoading(false);
+    setUserBooks(data.books);
+  })
+  .catch((err) => console.error("Error fetching user books", err));
+}
+
+
+  const handleDeleteAllBooks = () => {
+    const booksToDelete = userBooks;
+    fetch('https://localhost:7276/delete-books', {
+      method: 'DELETE', 
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        username: username, 
-        email: email,
-        password: password, // Make sure to validate the password on the server
-      }),
+     
     })
       .then((res) => {
         if (res.ok) {
           
-          console.log('Profile updated successfully');
-        } else {
-          
-          console.error('Profile update failed');
-        }
-      })
-      .catch((err) => console.error('Error updating user profile', err));
-  };
-
-  const handleDeleteBooks = () => {
-    // Send an HTTP request to delete all books in the user's collection
-    fetch('https://localhost:7276/api/delete-books', {
-      method: 'DELETE', // Use the appropriate HTTP method
-      credentials: 'include',
-    })
-      .then((res) => {
-        if (res.ok) {
-          // Handle successful book deletion
           console.log('Books deleted successfully');
-          setBooksCount(0); // Update the UI with the new book count
+          setDeleteConfirmationVisible(false);
+          setShowDeleteConfirmation(false);
+          setBooksCount(0); 
         } else {
-          // Handle error during deletion
           console.error('Books deletion failed');
         }
       })
       .catch((err) => console.error('Error deleting books', err));
   };
+  
+  const openDeleteConfirmation = () => {
+    setDeleteConfirmationVisible(true);
+  };
+  const closeDeleteConfirmation = () => {
+    setDeleteConfirmationVisible(false);
+    setShowDeleteConfirmation(false);
+    navigate(`/profile`);
+  };
+  const toggleChangePassword = () => {
+    setIsChangingPassword(!isChangingPassword);
+};
 
   return (
     <div>
@@ -73,16 +95,54 @@ fetch('https://localhost:7276/api/user/me', {credentials: 'include'})
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <div>
+        <div className='profile-card-container'>
           <p>Username: {username}</p>
           <p>Email: {email}</p>
-          <p>Password: {password}</p>
+          <p>Joined: {joinedDate.slice(0, 10)}</p>
           <p>Books saved in your Collection: {booksCount}</p>
-
-          <button onClick={handleUpdateProfile}>Update Profile</button>
-          <button onClick={handleDeleteBooks}>Delete All Books</button>
+<div className='profile-buttons-container'>
+          <button className='profile-button' onClick={handleUpdateProfile}>Update Profile</button>
+          <button className='profile-button' onClick={handleDeleteBooks}>Delete All Books</button>
+          <button className='profile-button' onClick={toggleChangePassword}>
+                        {isChangingPassword ? 'Cancel Change Password' : 'Change Password'}
+                    </button>
+</div>
+                    {isChangingPassword && <ChangePasswordSection />}
+        
+        {showDeleteAllBooks && showDeleteConfirmation && (
+        <Modal onClose={closeDeleteConfirmation}>
+        <h3>Are you sure you want to delete all your books?</h3>
+        <button className="yesButton" onClick={handleDeleteAllBooks}>Yes</button>
+        <button className="noButton" onClick={closeDeleteConfirmation}>No</button>
+      </Modal>
+      )}
         </div>
       )}
+    </div>
+  );
+        }
+
+
+function ChangePasswordSection() {
+  const [newPassword, setNewPassword] = useState('');
+
+  const handleChangePassword = () => {
+    // Implement password change logic
+    // ...
+  };
+
+
+  return (
+    <div>
+      <h2>Change Password</h2>
+      <input
+      className='update-profile-input'
+        type="password"
+        placeholder="New Password"
+        value={newPassword}
+        onChange={(e) => setNewPassword(e.target.value)}
+      />
+      <button className='profile-button' onClick={handleChangePassword}>Change Password</button>
     </div>
   );
 }
