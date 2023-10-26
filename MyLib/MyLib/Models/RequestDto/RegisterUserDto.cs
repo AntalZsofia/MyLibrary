@@ -20,4 +20,6 @@ public class RegisterUserDto
     [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$", 
         ErrorMessage = "Password must be at least 8 characters long and contain at least 1 special character, 1 capital letter, and 1 number.")]
     public string Password { get; set; }
+    
+    public DateTime ProfileCreationDate { get; set; } = DateTime.UtcNow;
 }

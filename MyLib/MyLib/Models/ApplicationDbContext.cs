@@ -65,9 +65,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
             {
                 var newUsers = new List<ApplicationUser>()
                 {
-                    new() { UserName = "Loci", Email = "loci@gmail.com" },
-                    new() { UserName = "Zsofi", Email = "zsofi@gmail.com" },
-                    new() { UserName = "Bianka", Email = "bianka@gmail.com" }
+                    new() { UserName = "Loci", Email = "loci@gmail.com", ProfileCreationDate = DateTime.UtcNow},
+                    new() { UserName = "Zsofi", Email = "zsofi@gmail.com", ProfileCreationDate = DateTime.UtcNow},
+                    new() { UserName = "Bianka", Email = "bianka@gmail.com", ProfileCreationDate = DateTime.UtcNow}
                 };
 
                 foreach (var newUser in newUsers)
