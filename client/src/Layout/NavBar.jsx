@@ -14,7 +14,7 @@ export default function NavBar() {
         <li><NavLink to="/addbook">Add Book</NavLink></li>
          {!user ? <li className="right-align"><NavLink to="/login">Login</NavLink></li> 
          : <li className="right-align"><NavLink to="/profile">Profile</NavLink></li>}
-        {user ? <li><NavLink to="/signout">Log Out</NavLink></li> : <li><NavLink to="/signup">Sign Up</NavLink></li>}
+        {user ? <li><NavLink to="/logout">Log Out</NavLink></li> : <li><NavLink to="/signup">Sign Up</NavLink></li>}
       </ul>
     </nav>
     
