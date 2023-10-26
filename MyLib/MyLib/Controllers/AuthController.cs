@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using MyLib.Models.RequestDto;
@@ -101,8 +102,32 @@ public class AuthController : ControllerBase
             return StatusCode(500,
                 new LoginResult { Succeeded = false, ErrorMessage = "An error occured on the server." });
         }
-        
 } 
+    [Authorize]
+    [HttpPost]
+    [Route("/api/logout")]
+    public async Task<IActionResult> Logout()
+    {
+        try
+        {
+            HttpContext.Response.Cookies.Append("token", "", new CookieOptions()
+            {
+                SameSite = SameSiteMode.None,
+                Expires = DateTimeOffset.Now.AddDays(-1400),
+                IsEssential = true,
+                Secure = true,
+                HttpOnly = true
+            });
+            return Ok("Signed out successfully");
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, "An error occurred on the server.");
+        }
+    }
+    
     //User Profile
     [Authorize]
     [HttpGet("/api/user/me")]
@@ -122,6 +147,7 @@ public class AuthController : ControllerBase
              Username = user.UserName,
              Email = user.Email,
              Password = user.PasswordHash,
+             ProfileCreationDate = user.ProfileCreationDate,
              BooksCount = booksCount
              
          });
@@ -129,7 +155,7 @@ public class AuthController : ControllerBase
 
      [Authorize]
      [HttpPut("/api/user/me")]
-     public async Task<IActionResult> UpdateProfile()
+     public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileDto updateProfileDto)
      {
          try
          {
@@ -156,4 +182,3 @@ public class AuthController : ControllerBase
          }
      }
      }
-}
