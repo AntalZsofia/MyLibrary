@@ -388,5 +388,32 @@ public class BookService : IBookService
             SmallCoverImage = book.SmallCoverImage
         };
     }
+    public async Task<DeleteBookResult> DeleteAllBooksAsync(string username)
+    {
+        try
+        {
 
+            var user = await _userManager.FindByNameAsync(username);
+            var allBooksToDelete = await _context.Books
+                .Include(b => b.Author)
+                .Where(u => u.User == user)
+                .ToListAsync();
+
+            if (allBooksToDelete == null)
+            {
+                return DeleteBookResult.BookNotFound();
+            }
+
+            _context.Books.RemoveRange(allBooksToDelete);
+                await _context.SaveChangesAsync();
+                return DeleteBookResult.Success();
+            
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new Exception("An error occurred on the server");
+        }
+    }
 }

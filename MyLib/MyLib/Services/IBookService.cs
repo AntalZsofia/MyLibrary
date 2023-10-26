@@ -17,4 +17,5 @@ public interface IBookService
 
     Task<List<Book>> SearchBookAsync(string? query, string? username);
     Task<int> GetUserBookCount(string username);
+    Task<DeleteBookResult> DeleteAllBooksAsync(string username);
 }
