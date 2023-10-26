@@ -160,6 +160,40 @@ public class BookController : ControllerBase
         }
     }
     
+    //Delete all books
+    [HttpDelete("/delete-books")]
+    public async Task<IActionResult> DeleteAllBook()
+    {
+        try
+        {
+            var username = HttpContext.User.Identity!.Name;
+
+            var deleteBooksResult = await _bookService.DeleteAllBooksAsync(username);
+
+            if (!deleteBooksResult.Succeeded)
+            {
+                if (deleteBooksResult.Error == ErrorType.BookNotFound)
+                {
+                    return NotFound(new Response() { Message = "Books not found" });
+                }
+
+                if (deleteBooksResult.Error == ErrorType.UserNotFound)
+                {
+                    return NotFound(new Response() { Message = "User not found" });
+                }
+
+                return StatusCode(500, new Response() { Message = "An error occured on the server" });
+            }
+
+            return Ok(new Response() { Message = "All books deleted" });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, new Response() { Message = "An error occured on the server" });
+        }
+    }
+    
     //Search books on Google
     [HttpGet("/search-book-with-google")]
     public async Task<ActionResult<SearchBookResult>>SearchGoogleBooks([FromQuery] string query)
