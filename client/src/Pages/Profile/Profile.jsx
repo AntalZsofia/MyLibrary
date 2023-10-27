@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
 import './Profile.css';
 import Modal from '../../Components/Modal/Modal';
+import ChangePassword from './ChangePassword';
 
 export default function Profile() {
     const [username, setUsername] = useState('');
@@ -86,16 +87,16 @@ const getAllBooks = () => {
     navigate(`/profile`);
   };
   const toggleChangePassword = () => {
-    setIsChangingPassword(!isChangingPassword);
+    navigate('/profile/password');
 };
 
   return (
     <div>
-      <h1>Profile</h1>
       {isLoading ? (
         <p>Loading...</p>
-      ) : (
-        <div className='profile-card-container'>
+        ) : (
+          <div className='profile-card-container'>
+          <h1 className='profile-header'>Profile</h1>
           <p>Username: {username}</p>
           <p>Email: {email}</p>
           <p>Joined: {joinedDate.slice(0, 10)}</p>
@@ -107,7 +108,7 @@ const getAllBooks = () => {
                         {isChangingPassword ? 'Cancel Change Password' : 'Change Password'}
                     </button>
 </div>
-                    {isChangingPassword && <ChangePasswordSection />}
+                   
         
         {showDeleteAllBooks && showDeleteConfirmation && (
         <Modal onClose={closeDeleteConfirmation}>

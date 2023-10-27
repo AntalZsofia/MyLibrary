@@ -13,6 +13,11 @@
     flex-direction: row;
     
 }
+.profile-header{
+    text-align: center;
+    font-family: 'Libre Basketville',serif;
+}
+.change-password-container,
 .update-profile-container{
     max-width: 400px;
     margin: 0 auto;
@@ -55,3 +60,4 @@
   .profile-button:hover {
     background-color: #228075;
   }
+ 
