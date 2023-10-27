@@ -28,6 +28,7 @@ import AddBookManual from "./Pages/AddBook/AddBookManual";
 import UpdateBook from "./Pages/UpdateBook/UpdateBook";
 import UpdateProfile from "./Pages/Profile/UpdateProfile";
 import Logout from "./Pages/Logout/Logout";
+import ChangePassword from "./Pages/Profile/ChangePassword";
 const router = createBrowserRouter(
   createRoutesFromElements(
   <Route path='/' element={<Layout />}>
@@ -36,6 +37,7 @@ const router = createBrowserRouter(
       <Route path='/addbook' element={< AddBook />} />
       <Route path='/profile' element={<Profile />} />
       <Route path='/profile/update' element={<UpdateProfile />} />
+      <Route path='/profile/password' element={<ChangePassword />} />
       <Route path='/addbook-search' element={<AddBookSearch />} />
       <Route path='/addbook-manual' element={<AddBookManual />} />
       <Route path='/selected-book/:id' element={<SelectedBook />}/>

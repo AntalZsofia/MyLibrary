@@ -9,7 +9,7 @@ const MyBooks = () => {
   const [userBooks, setUserBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const userBooksCount = userBooks.length;
+  
 
   useEffect(() => {
     setIsLoading(true);
@@ -37,8 +37,8 @@ const MyBooks = () => {
       {searchQuery ? (
         <SearchBooks searchQuery={searchQuery} />
       ) : (
-        userBooksCount === 0 ? (
-          <div>You don't have any books in your collection.</div>
+        !userBooks ? (
+          <div className='my-books-message'>You don't have any books in your collection.</div>
         ) : (
           <div className="my-books-list">
             {userBooks.map((book, index) => (
