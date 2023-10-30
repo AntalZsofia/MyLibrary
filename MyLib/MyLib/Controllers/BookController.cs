@@ -35,7 +35,7 @@ public class BookController : ControllerBase
             var allBooks = await _bookService.GetAllBooksAsync(userName!);
             if (allBooks == null)
             {
-                return NotFound(new Response() { Message = "No books found." });
+                return Ok(new Response() { Message = "No books found." });
             }
 
             var responseDto = new BookListResponseDto
