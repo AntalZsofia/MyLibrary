@@ -160,7 +160,7 @@ public class BookService : IBookService
 
             if (userBooks == null || !userBooks.Any())
             {
-                throw new Exception("User has no books.");
+                return new List<Book>();
             }
 
             return userBooks;
@@ -363,7 +363,7 @@ public class BookService : IBookService
 
             if (userBooks == null || !userBooks.Any())
             {
-                throw new Exception("User has no books.");
+                return 0;
             }
 
             return userBooks.Count;
