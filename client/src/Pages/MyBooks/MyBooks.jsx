@@ -16,7 +16,7 @@ const MyBooks = () => {
     fetch('https://localhost:7276/all-books', {credentials: "include"})
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         setIsLoading(false);
         setUserBooks(data.books);
       })
@@ -37,7 +37,7 @@ const MyBooks = () => {
       {searchQuery ? (
         <SearchBooks searchQuery={searchQuery} />
       ) : (
-        !userBooks ? (
+        !userBooks || userBooks.length === 0 ? (
           <div className='my-books-message'>You don't have any books in your collection.</div>
         ) : (
           <div className="my-books-list">
