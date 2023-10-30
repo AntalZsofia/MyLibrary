@@ -68,21 +68,23 @@ useEffect(() => {
     <h2 className='update-profile-header'>Update Profile</h2>
     <h5>After changing your profile details, you need to log in again</h5>
     <div>
-       <label className="update-profile-label" htmlFor="username">Username:</label>
+       <label className="update-profile-label" htmlFor="username"></label>
        <input
        className="update-profile-input"
          type="text"
          id="username"
+         placeholder='Username'
          value={newUsername}
          onChange={(e) => setNewUsername(e.target.value)}
        />
      </div>
      <div>
-       <label className="update-profile-label" htmlFor="email">Email:</label>
+       <label className="update-profile-label" htmlFor="email"></label>
        <input
        className="update-profile-input"
          type="text"
          id="email"
+         placeholder='Email'
          value={newEmail}
          onChange={(e) => setNewEmail(e.target.value)}
        />
