@@ -1,14 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from "react-router-dom";
 import useAuth from '../Hooks/useAuth';
 
+
 export default function NavBar() {
   const { user } = useAuth();
+  const [menuOpen, setMenuOpen] = useState(false);
   console.log(user);
+
    return (
     
-     <nav>
-    <ul className="link-list">
+     <nav className='nav'>
+      
+      <div className='menu' onClick={()=> {
+        setMenuOpen(!menuOpen);
+      }}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+     
+    <ul className={menuOpen ? "open" : ""}>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/mybooks">My Books</NavLink></li>
         <li><NavLink to="/addbook">Add Book</NavLink></li>
