@@ -7,14 +7,16 @@ export default function NavBar() {
   const { user } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   console.log(user);
+  
+  const handleClick = () => {
+    setMenuOpen(!menuOpen);
+  }
 
    return (
     
      <nav className='nav'>
       
-      <div className='menu' onClick={()=> {
-        setMenuOpen(!menuOpen);
-      }}>
+      <div className='menu' onClick={handleClick}>
         <span></span>
         <span></span>
         <span></span>
