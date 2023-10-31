@@ -29,6 +29,7 @@ const handleChangePassword = async () => {
         }
         else{
             console.error('Password update failed');
+            navigate('/profile');
         }
     }catch (err){
 console.error('Error updating password', err);
@@ -42,6 +43,7 @@ const handleCancel = ()=> {
     <div>
       <div className='change-password-container'>
       <h2>Change Password</h2>
+      <h5>After changing your password, you need to log in again</h5>
       <input
       className='update-profile-input'
         type="password"
