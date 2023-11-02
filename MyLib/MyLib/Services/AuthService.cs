@@ -136,16 +136,15 @@ public class AuthService : IAuthService
        
         if (updateProfileDto.NewPassword != null && updateProfileDto.OldPassword != null)
         {
-            var result =
-                await _userManager.ChangePasswordAsync(user, updateProfileDto.OldPassword,
+            var result = await _userManager.ChangePasswordAsync(user, updateProfileDto.OldPassword,
                     updateProfileDto.NewPassword);
             if (!result.Succeeded)
             {
                 return UpdateProfileResult.Fail("Password change was not successful");
             }
         }
-        
-       
+
+        await _context.SaveChangesAsync();
         return UpdateProfileResult.Success("Profile updated successfully");
     }
 

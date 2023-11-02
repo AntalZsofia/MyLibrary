@@ -12,7 +12,8 @@ export default function ChangePassword() {
 const handleChangePassword = async () => {
     try{
         const userData = {
-            password: newPassword ? newPassword : oldPassword
+            oldPassword,
+            newPassword
         }
         const response = await fetch('https://localhost:7276/api/user/me', {
             method: 'PUT',
@@ -24,6 +25,7 @@ const handleChangePassword = async () => {
         });
         if(response.ok){
             console.log('Password updated successfully');
+            
             setUser(null);
             navigate('/login');
         }
