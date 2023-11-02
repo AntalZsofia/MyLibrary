@@ -67,3 +67,7 @@
   .registration-button:hover {
     background-color: #228075;
   }
+ .error-message{
+  color: red;
+  font-weight: bolder;
+ }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './Profile';
 import { useNavigate } from 'react-router';
 import useAuth from '../../Hooks/useAuth';
+import { isValidUsername, isValidEmail } from '../../Utility/Validation';
 
 export default function UpdateProfile() {
 
@@ -11,8 +12,10 @@ export default function UpdateProfile() {
     const [password, setPassword] = useState('');
     const [newEmail, setNewEmail] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [isUpdateSuccessful, setIsUpdateSuccessful] = useState(false);
     const navigate = useNavigate();
     const { setUser } = useAuth();
+    const [error, setError] = useState("");
 
 useEffect(() => {
     fetch('https://localhost:7276/api/user/me', {credentials: 'include'})
@@ -30,6 +33,14 @@ useEffect(() => {
   const handleUpdateProfile = async () => {
 
     try {
+      if(!isValidUsername(newUsername)){
+        setError("Username has to be at least 4 characters long")
+        return
+      };
+      if(!isValidEmail(newEmail)){
+        setError("Please enter a valid email address")
+        return
+      }
         const userData = {
             username: newUsername ? newUsername : null,
             email: newEmail ? newEmail : null,
@@ -46,6 +57,7 @@ useEffect(() => {
 
         if (response.ok) {
             console.log('Profile updated successfully');
+            setIsUpdateSuccessful(true);
             setUser(null);
             navigate('/login');
             
@@ -92,6 +104,8 @@ useEffect(() => {
      <div className='update-profile-button-container'>
      <button className="update-profile-button" onClick={handleUpdateProfile}>Update Profile</button>
      <button className="update-profile-button" onClick={handleCancel}>Cancel</button>
+     {isUpdateSuccessful ? <p className="success-message">Profile update successful</p> : null}
+        {error ? <p className='error-message'>{error}</p> : null}
      </div>
    </div>
   )

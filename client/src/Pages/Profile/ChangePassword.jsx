@@ -2,15 +2,22 @@ import React, { useState } from 'react'
 import './Profile.css';
 import { useNavigate } from 'react-router';
 import useAuth from '../../Hooks/useAuth';
+import { isValidPassword } from '../../Utility/Validation';
 
 export default function ChangePassword() {
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const navigate = useNavigate();
     const { setUser } = useAuth();
+    const [error, setError] = useState("");
+    const[isPasswordChangeSuccessful, setIsPasswordChangeSuccessful] = useState(false);
 
 const handleChangePassword = async () => {
     try{
+      if(!isValidPassword(newPassword)){
+        setError("Password must contain at least one capital letter, one number, and one special character")
+        return
+      };
         const userData = {
             oldPassword,
             newPassword
@@ -25,7 +32,7 @@ const handleChangePassword = async () => {
         });
         if(response.ok){
             console.log('Password updated successfully');
-            
+            setIsPasswordChangeSuccessful(true);
             setUser(null);
             navigate('/login');
         }
@@ -62,6 +69,8 @@ const handleCancel = ()=> {
       />
       <button className='profile-button' onClick={handleChangePassword}>Change Password</button>
       <button className='profile-button' onClick={handleCancel}>Cancel</button>
+      {isPasswordChangeSuccessful ? <p className="success-message">Password change successful</p> : null}
+        {error ? <p className='error-message'>{error}</p> : null}
       </div>
     </div>
   )
