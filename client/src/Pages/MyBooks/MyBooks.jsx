@@ -32,7 +32,7 @@ const MyBooks = () => {
   }
   return (
     <div>
-      <div className="my-books-container">My Collection</div>
+      
       <SearchBar onSearch={handleSearch} />
       {searchQuery ? (
         <SearchBooks searchQuery={searchQuery} />
