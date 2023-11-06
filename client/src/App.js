@@ -29,12 +29,14 @@ import UpdateBook from "./Pages/UpdateBook/UpdateBook";
 import UpdateProfile from "./Pages/Profile/UpdateProfile";
 import Logout from "./Pages/Logout/Logout";
 import ChangePassword from "./Pages/Profile/ChangePassword";
+import Forum from "./Pages/Forum/Forum.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
   <Route path='/' element={<Layout />}>
       <Route index element={< Home />} />
       <Route path='/mybooks' element={< MyBooks />} />
       <Route path='/addbook' element={< AddBook />} />
+      <Route path='/forum' element={< Forum />} />
       <Route path='/profile' element={<Profile />} />
       <Route path='/profile/update' element={<UpdateProfile />} />
       <Route path='/profile/password' element={<ChangePassword />} />
