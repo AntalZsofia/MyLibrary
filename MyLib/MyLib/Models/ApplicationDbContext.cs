@@ -17,6 +17,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
     public DbSet<Author> Authors { get; set; }
     public DbSet<Book> Books { get; set; }
     public DbSet<ApplicationUser> Users { get; set; }
+    public DbSet<DiscussionThread> DiscussionThreads { get; set; }
+    public DbSet<ForumPost> ForumPosts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -41,6 +43,16 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
             .HasOne(b => b.User)
             .WithMany(u => u.MyBooks)
             .HasForeignKey(b => b.UserId);
+
+        modelBuilder.Entity<ForumPost>()
+            .HasOne(fp => fp.User)
+            .WithMany(u => u.ForumPosts)
+            .HasForeignKey(fp => fp.UserId);
+        
+        modelBuilder.Entity<ForumPost>()
+            .HasOne(fp => fp.DiscussionThread)
+            .WithMany(dt => dt.ForumPosts)
+            .HasForeignKey(fp => fp.DiscussionThreadId);
     }
 
     public static async Task Seed(ApplicationDbContext context, UserManager<ApplicationUser> userManager,
@@ -115,7 +127,51 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
                 context.Books.AddRange(books);
                 await context.SaveChangesAsync();
             }
-        }
+            
+            // Seed discussion threads
+            if (!context.DiscussionThreads.Any())
+            {
+                var threads = new List<DiscussionThread>()
+                {
+                    new DiscussionThread()
+                    {
+                        Title = "General Discussion",
+                        // Add other properties for the discussion thread
+                    },
+                    new DiscussionThread()
+                    {
+                        Title = "Book Recommendations",
+                        // Add other properties for the discussion thread
+                    }
+                    
+                };
+
+                context.DiscussionThreads.AddRange(threads);
+                await context.SaveChangesAsync();
+            }
+            
+            // Seed forum posts
+            if (!context.ForumPosts.Any())
+            {
+                var user = await userManager.Users.FirstOrDefaultAsync(u => u.UserName == "Zsofi");
+                var thread = await context.DiscussionThreads.FirstOrDefaultAsync(t => t.Title == "General Discussion");
+
+                var posts = new List<ForumPost>()
+                {
+                    new ForumPost()
+                    {
+                        Content = "This is a forum post in the General Discussion thread.",
+                        User = user,
+                        DiscussionThread = thread,
+                        PostCreationDate = DateTime.UtcNow
+                    },
+                    
+                };
+
+                context.ForumPosts.AddRange(posts);
+                await context.SaveChangesAsync();
+            }
+    }
 
     }
 

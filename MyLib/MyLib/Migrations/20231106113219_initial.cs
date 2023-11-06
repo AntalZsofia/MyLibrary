@@ -63,6 +63,18 @@ namespace MyLib.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DiscussionThreads",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DiscussionThreads", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -198,6 +210,33 @@ namespace MyLib.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ForumPosts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Content = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DiscussionThreadId = table.Column<Guid>(type: "uuid", nullable: false),
+                    PostCreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ForumPosts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ForumPosts_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ForumPosts_DiscussionThreads_DiscussionThreadId",
+                        column: x => x.DiscussionThreadId,
+                        principalTable: "DiscussionThreads",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -244,6 +283,16 @@ namespace MyLib.Migrations
                 name: "IX_Books_UserId",
                 table: "Books",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ForumPosts_DiscussionThreadId",
+                table: "ForumPosts",
+                column: "DiscussionThreadId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ForumPosts_UserId",
+                table: "ForumPosts",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -267,13 +316,19 @@ namespace MyLib.Migrations
                 name: "Books");
 
             migrationBuilder.DropTable(
+                name: "ForumPosts");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Authors");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Authors");
+                name: "DiscussionThreads");
         }
     }
 }
