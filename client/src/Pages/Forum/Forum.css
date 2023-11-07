@@ -1,0 +1,40 @@
+.add-post-container{
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #ECE4B7;
+    font-family: 'Libre Basketville',serif;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.add-content-textarea{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+.post-buttons-container{
+    justify-content: space-around;
+    
+}
+.cancel-button,
+.add-post-button {
+    background-color: #2A9D8F;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .cancel-button:hover,
+    .add-post-button:hover {
+    background-color: #228075;
+    }
