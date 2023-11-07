@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using MyLib.Models.RequestDto;
 using MyLib.Models.ResponseDto;
 using MyLib.Services;
 
 namespace MyLib.Controllers;
-    
+[EnableCors("_myAllowSpecificOrigins")]
     [Authorize]//(Roles = "User")          
     [ApiController]
     [Route("[controller]")]
@@ -46,4 +47,32 @@ public class DiscussionController : ControllerBase
             return StatusCode(500, new Response(){Message = "An error occured on the server."});
         }
     }
+    
+    //Get all posts
+    [HttpGet("/get-all-posts")]
+    public async Task<ActionResult<PostListResponseDto>> GetAllPosts()
+    {
+        try
+        {
+            var username = HttpContext.User.Identity!.Name;
+            var allPosts = await _discussionService.GetAllPostsAsync(username!);
+
+            if (allPosts == null)
+            {
+                return Ok(new Response() { Message = "No posts found." });
+            }
+
+            var responseDto = new PostListResponseDto()
+            {
+                Posts = allPosts.ToList()
+            };
+            return Ok(responseDto);
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, new Response() { Message = "An error occurred on the server." });
+        }
+    }
+    
 }
