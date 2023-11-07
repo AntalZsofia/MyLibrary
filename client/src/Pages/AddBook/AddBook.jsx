@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import "./AddBook.css";
 
 
@@ -9,9 +9,10 @@ const AddBook = () => {
     return (
     <>
      <div className="add-book-links">
-                <Link to="/addbook-search" className='link'>Search</Link>
-                <Link to="/addbook-manual" className='link'>Manual entry</Link>
+                <Link to="/addbook" className='link'>Search</Link>
+                <Link to="addbook-manual" className='link'>Manual entry</Link>
       </div>
+                <Outlet />
       
      
    

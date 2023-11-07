@@ -35,13 +35,14 @@ const router = createBrowserRouter(
   <Route path='/' element={<Layout />}>
       <Route index element={< Home />} />
       <Route path='/mybooks' element={< MyBooks />} />
-      <Route path='/addbook' element={< AddBook />} />
+      <Route path='/addbook' element={< AddBook />} >
+      <Route index element={<AddBookSearch />} />
+      <Route path='addbook-manual' element={<AddBookManual />} />
+         </Route> 
       <Route path='/forum' element={< Forum />} />
       <Route path='/profile' element={<Profile />} />
       <Route path='/profile/update' element={<UpdateProfile />} />
       <Route path='/profile/password' element={<ChangePassword />} />
-      <Route path='/addbook-search' element={<AddBookSearch />} />
-      <Route path='/addbook-manual' element={<AddBookManual />} />
       <Route path='/selected-book/:id' element={<SelectedBook />}/>
       <Route path='/update-book/:id' element={<UpdateBook />} />
       <Route path='/delete-book/:id' element={<DeleteBook />} />

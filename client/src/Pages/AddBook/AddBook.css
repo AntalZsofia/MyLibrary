@@ -1,5 +1,6 @@
 .link {
-  
+  display:flex;
+  flex-direction: row;
     text-decoration: none;
     color: #000; /* Set the default color for links */
     padding-left: 10px;
@@ -7,4 +8,7 @@
     font-size:22px;
     font-weight: bolder;
     font-family: 'Libre Basketville', serif;    
+}
+.link active{
+    text-decoration: underline;
 }
