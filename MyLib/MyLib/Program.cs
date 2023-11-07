@@ -30,6 +30,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddScoped<IDiscussionService, DiscussionService>();
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
     .AddRoles<IdentityRole<Guid>>()
