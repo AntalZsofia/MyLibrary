@@ -9,8 +9,9 @@ public class ForumPost
     public string Content { get; set; }
     public Guid UserId { get; set; }
     public ApplicationUser User { get; set; }
-    public Guid DiscussionThreadId { get; set; }
-    public DiscussionThread DiscussionThread { get; set; }
+    
+    
+    public string DiscussionThread { get; set; }
     public DateTime PostCreationDate { get; set; }
     
 }
