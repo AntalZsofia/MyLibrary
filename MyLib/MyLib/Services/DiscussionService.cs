@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MyLib.Models;
 using MyLib.Models.Entities;
 using MyLib.Models.RequestDto;
@@ -30,6 +31,8 @@ public class DiscussionService : IDiscussionService
                 Content = createPostDto.Content,
                 DiscussionThread = createPostDto.DiscussionThread,
                 PostCreationDate = DateTime.UtcNow,
+                User = user!
+                
             };
             await _context.ForumPosts.AddAsync(newForumPost);
             await _context.SaveChangesAsync();
@@ -40,6 +43,34 @@ public class DiscussionService : IDiscussionService
         {
             Console.WriteLine(e);
             throw new Exception("An error occured on the server");
+        }
+    }
+
+    public async Task<IEnumerable<ForumPost>> GetAllPostsAsync(string username)
+    {
+        try
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            var allPosts = await _context.ForumPosts
+                .Include(u => u.User)
+                .ToListAsync();
+
+            if (allPosts == null || !allPosts.Any())
+            {
+                return new List<ForumPost>();
+            }
+
+            return allPosts;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new Exception("An error occurred on the server");
         }
     }
 }
