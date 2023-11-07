@@ -271,21 +271,6 @@ namespace MyLib.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("MyLib.Models.Entities.DiscussionThread", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DiscussionThreads");
-                });
-
             modelBuilder.Entity("MyLib.Models.Entities.ForumPost", b =>
                 {
                     b.Property<Guid>("Id")
@@ -296,8 +281,9 @@ namespace MyLib.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("DiscussionThreadId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("DiscussionThread")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("PostCreationDate")
                         .HasColumnType("timestamp with time zone");
@@ -307,7 +293,7 @@ namespace MyLib.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DiscussionThreadId");
+                    b.HasIndex("DiscussionThread");
 
                     b.HasIndex("UserId");
 
@@ -386,19 +372,11 @@ namespace MyLib.Migrations
 
             modelBuilder.Entity("MyLib.Models.Entities.ForumPost", b =>
                 {
-                    b.HasOne("MyLib.Models.Entities.DiscussionThread", "DiscussionThread")
-                        .WithMany("ForumPosts")
-                        .HasForeignKey("DiscussionThreadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MyLib.Models.Entities.ApplicationUser", "User")
                         .WithMany("ForumPosts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("DiscussionThread");
 
                     b.Navigation("User");
                 });
@@ -413,11 +391,6 @@ namespace MyLib.Migrations
             modelBuilder.Entity("MyLib.Models.Entities.Author", b =>
                 {
                     b.Navigation("Books");
-                });
-
-            modelBuilder.Entity("MyLib.Models.Entities.DiscussionThread", b =>
-                {
-                    b.Navigation("ForumPosts");
                 });
 #pragma warning restore 612, 618
         }

@@ -63,18 +63,6 @@ namespace MyLib.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DiscussionThreads",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Title = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DiscussionThreads", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -181,6 +169,27 @@ namespace MyLib.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ForumPosts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Content = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DiscussionThread = table.Column<string>(type: "text", nullable: false),
+                    PostCreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ForumPosts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ForumPosts_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Books",
                 columns: table => new
                 {
@@ -208,33 +217,6 @@ namespace MyLib.Migrations
                         principalTable: "Authors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ForumPosts",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Content = table.Column<string>(type: "text", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    DiscussionThreadId = table.Column<Guid>(type: "uuid", nullable: false),
-                    PostCreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ForumPosts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ForumPosts_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ForumPosts_DiscussionThreads_DiscussionThreadId",
-                        column: x => x.DiscussionThreadId,
-                        principalTable: "DiscussionThreads",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -285,9 +267,9 @@ namespace MyLib.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ForumPosts_DiscussionThreadId",
+                name: "IX_ForumPosts_DiscussionThread",
                 table: "ForumPosts",
-                column: "DiscussionThreadId");
+                column: "DiscussionThread");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ForumPosts_UserId",
@@ -326,9 +308,6 @@ namespace MyLib.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "DiscussionThreads");
         }
     }
 }
