@@ -8,6 +8,7 @@ export default function Forum() {
   const [content, setContent] = useState('');
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedPost, setSelectedPost] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,6 +18,7 @@ export default function Forum() {
       .then((data) => {
         console.log(data.posts);
         setPosts(data.posts);
+        setIsLoading(false);
       })
       .catch((err) => console.error("Error fetching posts", err));
   }, [])
@@ -48,14 +50,13 @@ export default function Forum() {
       console.error("Error sending new post", err);
     }
   }
-
-
-
-  const handleCancel = () => {
-    navigate('/forum');
+  const handleReadPost = (post) => {
+    setSelectedPost(post); 
   }
+
+
   if (isLoading) {
-    <div>Loading...</div>
+    return <div>Loading...</div>
   }
   return (
     <>
@@ -83,19 +84,47 @@ export default function Forum() {
         </div>
         <div className='post-buttons-container'>
           <button className="add-post-button" onClick={handleAddPost}>Add Post</button>
-          <button className="cancel-button" onClick={handleCancel}>Cancel</button>
+         
         </div>
       </div>
       <div className='post-list'>
-        {posts.map((post, index) => (
-          <PostCard
-          key = {index}
-          postTitle={post.discussionThread}
-          content={post.content}
-          postCreationDate = {post.postCreationDate}
-          user={post.user.userName}
-/>
-        ))}
+        {selectedPost ? (
+        <PostCard
+        key = {selectedPost.id}
+        postTitle={selectedPost.discussionThread}
+        content={selectedPost.content}
+        postCreationDate = {selectedPost.postCreationDate}
+        user={selectedPost.user.userName}
+        />
+        ) :
+        (
+          // Otherwise, show the list of posts in a table
+          <table className='post-table'>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Content</th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {posts.map((post) => (
+                <tr key={post.id}>
+                  <td>{post.discussionThread}</td>
+                  <td>{post.content}</td>
+                  <td>{post.user.userName}</td>
+                  <td>{post.postCreationDate}</td>
+                  <td>
+                    <button className='read-post-button' onClick={() => <PostCard />}>Read</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        
       </div>
     </>
   )
