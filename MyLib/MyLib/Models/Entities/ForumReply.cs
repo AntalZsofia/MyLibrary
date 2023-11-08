@@ -2,17 +2,14 @@
 
 namespace MyLib.Models.Entities;
 
-public class ForumPost
+public class ForumReply
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
-    public string? Content { get; set; }
+    public string Reply { get; set; }
     public Guid UserId { get; set; }
-    public ApplicationUser? User { get; set; }
-    
-    
-    public string? DiscussionThread { get; set; }
-    public DateTime PostCreationDate { get; set; }
+    public ApplicationUser User { get; set; }
+    public Guid PostId { get; set; }
+    public DateTime ReplyCreationDate { get; set; }
     public int Likes { get; set;  }
-    
 }
