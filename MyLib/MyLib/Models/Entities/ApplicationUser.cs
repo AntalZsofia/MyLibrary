@@ -7,8 +7,9 @@ namespace MyLib.Models.Entities;
 public class ApplicationUser : IdentityUser<Guid>
 {
     [System.Text.Json.Serialization.JsonIgnore]
-    public List<Book> MyBooks { get; set; }
+    public List<Book>? MyBooks { get; set; }
     public DateTime ProfileCreationDate { get; set; }
     [System.Text.Json.Serialization.JsonIgnore]
-    public ICollection<ForumPost> ForumPosts { get; set; }
+    public ICollection<ForumPost>? ForumPosts { get; set; }
+    public ICollection<ForumReply>? ForumReplies { get; set; }
 }

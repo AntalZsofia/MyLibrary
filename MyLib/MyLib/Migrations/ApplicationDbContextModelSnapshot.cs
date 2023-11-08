@@ -278,12 +278,13 @@ namespace MyLib.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("DiscussionThread")
-                        .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("Likes")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("PostCreationDate")
                         .HasColumnType("timestamp with time zone");
@@ -298,6 +299,35 @@ namespace MyLib.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("ForumPosts");
+                });
+
+            modelBuilder.Entity("MyLib.Models.Entities.ForumReply", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Likes")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Reply")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("ReplyCreationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ForumReplies");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -381,9 +411,22 @@ namespace MyLib.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("MyLib.Models.Entities.ForumReply", b =>
+                {
+                    b.HasOne("MyLib.Models.Entities.ApplicationUser", "User")
+                        .WithMany("ForumReplies")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("MyLib.Models.Entities.ApplicationUser", b =>
                 {
                     b.Navigation("ForumPosts");
+
+                    b.Navigation("ForumReplies");
 
                     b.Navigation("MyBooks");
                 });

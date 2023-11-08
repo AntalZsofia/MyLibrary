@@ -18,6 +18,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
     public DbSet<Book> Books { get; set; }
     public DbSet<ApplicationUser> Users { get; set; }
     public DbSet<ForumPost> ForumPosts { get; set; }
+    public DbSet<ForumReply> ForumReplies { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -50,6 +51,12 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
 
         modelBuilder.Entity<ForumPost>()
             .HasIndex(fp => fp.DiscussionThread);
+        
+        modelBuilder.Entity<ForumReply>()
+            .HasOne(fr => fr.User)
+            .WithMany(u => u.ForumReplies)
+            .HasForeignKey(fr => fr.UserId);
+    
     }
 
     public static async Task Seed(ApplicationDbContext context, UserManager<ApplicationUser> userManager,
@@ -125,17 +132,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
                 await context.SaveChangesAsync();
             }
             
-            // // Seed discussion threads
-            // if (!context.DiscussionThreads.Any())
-            // {
-            //     var threads = "General Discussion";
-            //     
-            //
-            //     context.DiscussionThreads.AddRange(threads);
-            //     await context.SaveChangesAsync();
-            // }
-            
-            // Seed forum posts
+            //Seed forum posts
             if (!context.ForumPosts.Any())
             {
                 var user = await userManager.Users.FirstOrDefaultAsync(u => u.UserName == "Zsofi");
@@ -146,7 +143,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
                         Content = "This is a post in the Questions thread.",
                         User = user,
                         DiscussionThread = "Question",
-                        PostCreationDate = DateTime.UtcNow
+                        PostCreationDate = DateTime.UtcNow,
+                        Likes = 0
                     },
                     
                 };
@@ -161,7 +159,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
                         Content = "This is a forum post in the General Discussion thread.",
                         User = user2,
                         DiscussionThread = "General Discussion",
-                        PostCreationDate = DateTime.UtcNow
+                        PostCreationDate = DateTime.UtcNow,
+                        Likes = 0
                     },
                     
                 };

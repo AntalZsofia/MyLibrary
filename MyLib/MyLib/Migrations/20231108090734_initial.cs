@@ -173,16 +173,39 @@ namespace MyLib.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Content = table.Column<string>(type: "text", nullable: false),
+                    Content = table.Column<string>(type: "text", nullable: true),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    DiscussionThread = table.Column<string>(type: "text", nullable: false),
-                    PostCreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    DiscussionThread = table.Column<string>(type: "text", nullable: true),
+                    PostCreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Likes = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ForumPosts", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ForumPosts_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ForumReplies",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Reply = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    PostId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ReplyCreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Likes = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ForumReplies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ForumReplies_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -275,6 +298,11 @@ namespace MyLib.Migrations
                 name: "IX_ForumPosts_UserId",
                 table: "ForumPosts",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ForumReplies_UserId",
+                table: "ForumReplies",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -299,6 +327,9 @@ namespace MyLib.Migrations
 
             migrationBuilder.DropTable(
                 name: "ForumPosts");
+
+            migrationBuilder.DropTable(
+                name: "ForumReplies");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
