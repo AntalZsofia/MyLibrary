@@ -52,7 +52,7 @@
     border-radius: 5px;
     cursor: pointer;
   }
-  
+  .cancel-button,
   .post-reply-button {
     background-color: #2A9D8F;
     color: #fff;
@@ -62,6 +62,7 @@
     cursor: pointer;
     font-size: 16px;
   }
+  .cancel-button:hover,
   .post-reply-button:hover{
     background-color: #228075;
   }
