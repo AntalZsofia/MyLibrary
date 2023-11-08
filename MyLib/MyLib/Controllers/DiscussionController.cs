@@ -50,7 +50,7 @@ public class DiscussionController : ControllerBase
     
     //Get all posts
     [HttpGet("/get-all-posts")]
-    public async Task<ActionResult<PostListResponseDto>> GetAllPosts()
+    public async Task<ActionResult<PostListResponsePreviewDto>> GetAllPosts()
     {
         try
         {
@@ -62,9 +62,16 @@ public class DiscussionController : ControllerBase
                 return Ok(new Response() { Message = "No posts found." });
             }
 
-            var responseDto = new PostListResponseDto()
+            var responseDto = new PostListResponsePreviewDto()
             {
-                Posts = allPosts.ToList()
+                Posts = allPosts.Select(post => new PostResponsePreviewDto
+                {
+                    ContentPreview = TruncateContent(post.Content, 100),
+                    UserId = post.UserId,
+                    DiscussionThread = post.DiscussionThread,
+                    PostCreationDate = post.PostCreationDate,
+                    Likes = post.Likes
+                }).ToList()
             };
             return Ok(responseDto);
         }
@@ -74,5 +81,71 @@ public class DiscussionController : ControllerBase
             return StatusCode(500, new Response() { Message = "An error occurred on the server." });
         }
     }
+    //Get post by id
+    [HttpGet("/get-post/{id}")]
+    public async Task<IActionResult> GetPostById(Guid id)
+    {
+        try
+        {
+            var username = HttpContext.User.Identity!.Name;
+            var post = await _discussionService.GetPostByIdAsync(username!, id);
+
+            if (post != null)
+            {
+                return Ok(post);
+            }
+
+            return NotFound();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, new Response() { Message = "An error occurred on the server." });
+        }
+    }
     
+    
+    //Create a reply
+    [HttpPost("/create-reply/{id}")]
+    public async Task<ActionResult> CreateReply(CreateReplyDto createReplyDto, Guid id)
+    {
+        try
+        {
+            var username = HttpContext.User.Identity!.Name;
+            var createReplyResult = await _discussionService.CreateReplyAsync(createReplyDto, id, username!);
+
+            if (createReplyResult.Succeeded)
+            {
+                return Ok(createReplyResult.Response);
+            }
+
+            return BadRequest(new Response() { Message = "Could not create new reply" });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, new Response(){Message = "An error occured on the server."});
+        }
+    }
+    private string TruncateContent(string content, int maxLength)
+    {
+        if (content.Length <= maxLength)
+        {
+            return content;
+        }
+
+        // Find the last space within the character limit
+        int lastSpace = content.LastIndexOf(' ', maxLength);
+
+        // Truncate the content at the last space or maxLength
+        string truncatedContent = lastSpace > 0 ? content.Substring(0, lastSpace) : content.Substring(0, maxLength);
+
+        // Add an ellipsis (...) to indicate truncation
+        return truncatedContent + " ...";
+    }
+    
+
+
+
+
 }
