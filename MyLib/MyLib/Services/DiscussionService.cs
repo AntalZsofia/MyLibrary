@@ -31,6 +31,7 @@ public class DiscussionService : IDiscussionService
                 Content = createPostDto.Content,
                 DiscussionThread = createPostDto.DiscussionThread,
                 PostCreationDate = DateTime.UtcNow,
+                Likes = 0,
                 User = user!
                 
             };
@@ -71,6 +72,69 @@ public class DiscussionService : IDiscussionService
         {
             Console.WriteLine(e);
             throw new Exception("An error occurred on the server");
+        }
+    }
+
+    public async Task<ForumActionResult> CreateReplyAsync(CreateReplyDto createReplyDto, Guid postId, string username)
+    {
+        try
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            var newReply = new ForumReply()
+            {
+                
+                Reply = createReplyDto.Reply,
+                ReplyCreationDate = DateTime.UtcNow,
+                Likes = 0,
+                User = user,
+                PostId = postId
+            };
+            await _context.ForumReplies.AddAsync(newReply);
+            await _context.SaveChangesAsync();
+            return ForumActionResult.Succeed("Reply created successfully");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new Exception("An error occured on the server");
+        }
+        
+    }
+
+    public async Task<PostDto> GetPostByIdAsync(string username, Guid id)
+    {
+        try
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            var post = await _context.ForumPosts
+                .Include(u => u.User)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (post == null)
+            {
+                throw new Exception("There is no posts with this id");
+            }
+
+            var postFound = new PostDto()
+            {
+                Content = post.Content,
+                DiscussionThread = post.DiscussionThread,
+                Likes = post.Likes,
+                PostCreationDate = post.PostCreationDate,
+                User = user
+
+            };
+            return postFound;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new Exception("An error occured on the server");
         }
     }
 }
