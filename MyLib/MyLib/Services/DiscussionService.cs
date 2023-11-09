@@ -137,4 +137,35 @@ public class DiscussionService : IDiscussionService
             throw new Exception("An error occured on the server");
         }
     }
+
+    public async Task<List<ReplyDto>> GetAllReplyToPostById(string username, Guid id)
+    {
+        try
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            var replies = await _context.ForumReplies
+                .Where(p => p.PostId == id)
+                .Include(u => u.User)
+                .ToListAsync();
+
+            if (replies == null)
+            {
+                return new List<ReplyDto>();
+            }
+
+            var returnReplies = replies.Select(reply => new ReplyDto
+            {
+                Reply = reply.Reply,
+                User = reply.User,
+                PostCreationDate = reply.ReplyCreationDate,
+                Likes = reply.Likes 
+            }).ToList();
+            return returnReplies;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new Exception("An error occured on the server");
+        }
+    }
 }

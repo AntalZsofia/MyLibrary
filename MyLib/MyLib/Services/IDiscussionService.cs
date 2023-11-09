@@ -11,4 +11,5 @@ public interface IDiscussionService
  Task<IEnumerable<ForumPost>>GetAllPostsAsync(string username);
  Task<ForumActionResult> CreateReplyAsync(CreateReplyDto createReplyDto, Guid id, string username);
  Task<PostDto> GetPostByIdAsync(string username, Guid id);
+ Task<List<ReplyDto>> GetAllReplyToPostById(string username, Guid id);
 }
