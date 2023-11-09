@@ -88,7 +88,9 @@ public class DiscussionController : ControllerBase
         try
         {
             var username = HttpContext.User.Identity!.Name;
+
             var post = await _discussionService.GetPostByIdAsync(username!, id);
+            
 
             if (post != null)
             {
@@ -102,6 +104,30 @@ public class DiscussionController : ControllerBase
             Console.WriteLine(e);
             return StatusCode(500, new Response() { Message = "An error occurred on the server." });
         }
+    }
+
+    //Get replies to postId
+    [HttpGet("/get-replies/{id}")]
+        public async Task<IActionResult> GetRepliesByPostId(Guid id)
+        {
+            try
+            {
+                var username = HttpContext.User.Identity!.Name;
+            
+                var replies = await _discussionService.GetAllReplyToPostById(username!, id);
+            
+                if (replies != null)
+                {
+                    return Ok(replies);
+                }
+
+                return NotFound();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, new Response() { Message = "An error occurred on the server." });
+            }
     }
     
     
