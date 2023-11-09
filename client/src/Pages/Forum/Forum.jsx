@@ -1,15 +1,30 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router';
 import './Forum.css';
-import PostCard from '../../Components/PostCard/PostCard'
+import { NavLink } from 'react-router-dom';
+//import PostsPreview from '../../Components/PostsPreview/PostsPreview';
+
+export function convertDate(timestamp) {
+  const date = new Date(timestamp);
+
+  const year = date.getFullYear();
+  const month = date.toLocaleString('en-US', { month: 'long' });
+  const day = date.toLocaleString('en-US', { day: 'numeric' });
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
+
+  const formattedDate = `${year}. ${month}. ${day}. ${hours}:${minutes}:${seconds}`;
+
+  return formattedDate;
+}
+
 
 export default function Forum() {
   const [postTitle, setPostTitle] = useState('');
   const [content, setContent] = useState('');
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedPost, setSelectedPost] = useState(null);
-  const navigate = useNavigate();
+  const [newPostAdded, setNewPostAdded] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -21,7 +36,7 @@ export default function Forum() {
         setIsLoading(false);
       })
       .catch((err) => console.error("Error fetching posts", err));
-  }, [])
+  }, [newPostAdded])
 
 
 
@@ -42,6 +57,9 @@ export default function Forum() {
       if (response.ok) {
         const responseData = await response.json();
         console.log('Post added successfully:', responseData);
+        setNewPostAdded(true);
+        setContent('');
+        setPostTitle('');
       } else {
         console.error('Error sending new post:', response.statusText);
       }
@@ -50,10 +68,7 @@ export default function Forum() {
       console.error("Error sending new post", err);
     }
   }
-  const handleReadPost = (post) => {
-    setSelectedPost(post); 
-  }
-
+ 
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -88,17 +103,6 @@ export default function Forum() {
         </div>
       </div>
       <div className='post-list'>
-        {selectedPost ? (
-        <PostCard
-        key = {selectedPost.id}
-        postTitle={selectedPost.discussionThread}
-        content={selectedPost.content}
-        postCreationDate = {selectedPost.postCreationDate}
-        user={selectedPost.user.userName}
-        />
-        ) :
-        (
-          // Otherwise, show the list of posts in a table
           <table className='post-table'>
             <thead>
               <tr>
@@ -113,17 +117,19 @@ export default function Forum() {
               {posts.map((post) => (
                 <tr key={post.id}>
                   <td>{post.discussionThread}</td>
-                  <td>{post.content}</td>
-                  <td>{post.user.userName}</td>
-                  <td>{post.postCreationDate}</td>
+                  <td>{post.contentPreview}</td>
+                  <td>{post.username}</td>
+                  <td>{convertDate(post.postCreationDate)}</td>
                   <td>
-                    <button className='read-post-button' onClick={() => <PostCard />}>Read</button>
+                    <NavLink to={`/forum/${post.id}`}>
+                    <button className='read-post-button'>Read</button>
+                    </NavLink>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        )}
+        
         
       </div>
     </>
