@@ -66,11 +66,12 @@ public class DiscussionController : ControllerBase
             {
                 Posts = allPosts.Select(post => new PostResponsePreviewDto
                 {
-                    ContentPreview = TruncateContent(post.Content, 100),
-                    UserId = post.UserId,
+                    ContentPreview = TruncateContent(post.Content, 50),
+                    Username = post.User!.UserName,
                     DiscussionThread = post.DiscussionThread,
                     PostCreationDate = post.PostCreationDate,
-                    Likes = post.Likes
+                    Likes = post.Likes,
+                    Id = post.Id
                 }).ToList()
             };
             return Ok(responseDto);
@@ -92,12 +93,13 @@ public class DiscussionController : ControllerBase
             var post = await _discussionService.GetPostByIdAsync(username!, id);
             
 
-            if (post != null)
+            if (post == null)
             {
-                return Ok(post);
+                return NotFound();
             }
+          
+            return Ok(post);
 
-            return NotFound();
         }
         catch (Exception e)
         {
@@ -121,7 +123,7 @@ public class DiscussionController : ControllerBase
                     return Ok(replies);
                 }
 
-                return NotFound();
+                return Ok(new List<ReplyDto>());
             }
             catch (Exception e)
             {
