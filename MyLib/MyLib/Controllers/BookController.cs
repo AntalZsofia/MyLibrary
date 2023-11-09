@@ -59,7 +59,7 @@ public class BookController : ControllerBase
         try
         {
             var userName = HttpContext.User.Identity!.Name;
-            var book = await _bookService.GetBookByIdAsync(userName, id);
+            var book = await _bookService.GetBookByIdAsync(userName!, id);
 
             if (book != null)
             {

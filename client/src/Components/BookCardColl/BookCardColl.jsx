@@ -7,40 +7,6 @@ const BookCardColl = ({ title, author, genre, imageUrl, publishYear, description
  
   
 
-  // const handleDeleteBook = async () => {
-  //   try {
-  //     const bookToDelete = {
-  //       title,
-  //       author,
-  //       genre,
-  //       publishYear,
-  //       description,
-  //       imageUrl,
-  //     };
-  //     const response = await fetch(`https://localhost:7276/delete-book/${id}`, {
-  //       method: 'DELETE',
-  //       credentials: 'include',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(bookToDelete),
-  //     });
-  //     if (response.ok) {
-  //       const responseData = await response.json();
-  //       setBookDeleted(true);
-  //       setDeleteConfirmationVisible(false);
-       
-  //       console.log('Book deleted from the collection:', responseData);
-
-  //     } else {
-  //       console.error('Error deleting book from collection:', response.statusText);
-  //     }
-  //   } catch (err) {
-  //     console.error('Error deleting book from collection', err);
-  //   }
-  // };
-
-
 
   return (
     <div className="book-card">

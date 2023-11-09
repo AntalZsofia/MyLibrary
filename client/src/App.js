@@ -30,6 +30,7 @@ import UpdateProfile from "./Pages/Profile/UpdateProfile";
 import Logout from "./Pages/Logout/Logout";
 import ChangePassword from "./Pages/Profile/ChangePassword";
 import Forum from "./Pages/Forum/Forum.jsx";
+import PostCard from "./Components/PostCard/PostCard.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
   <Route path='/' element={<Layout />}>
@@ -40,6 +41,7 @@ const router = createBrowserRouter(
       <Route path='addbook-manual' element={<AddBookManual />} />
          </Route> 
       <Route path='/forum' element={< Forum />} />
+      <Route path='/forum/:id' element={< PostCard />} />
       <Route path='/profile' element={<Profile />} />
       <Route path='/profile/update' element={<UpdateProfile />} />
       <Route path='/profile/password' element={<ChangePassword />} />
