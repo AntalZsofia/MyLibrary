@@ -126,7 +126,7 @@ public class DiscussionService : IDiscussionService
                 DiscussionThread = post.DiscussionThread,
                 Likes = post.Likes,
                 PostCreationDate = post.PostCreationDate,
-                User = user!,
+                User = post.User!,
                 Id = id
 
             };
