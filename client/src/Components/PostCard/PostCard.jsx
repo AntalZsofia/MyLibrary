@@ -3,6 +3,7 @@ import './PostCard.css';
 import ReplyCard from '../ReplyCard/ReplyCard';
 import { useParams } from 'react-router';
 import Replies from '../Replies/Replies';
+import Like from './../../Icons/like.png';
 
 
 export function convertDate(timestamp) {
@@ -54,8 +55,9 @@ const PostCard = () => {
             <p className="post-content">Content: {post.content}</p>
             <p className="post-postCreatinDate">Posted at: {convertDate(post.postCreationDate)}</p>
             <p className="post-user">By: {post.user.userName}</p> 
-            <div className='post-buttons'>
-          <button className="post-like-button">Like</button>
+            <div className='like-button-container'>
+            <img src={Like} alt='logo' className='like'></img>
+            <p className='like-message'>Like</p>
             </div>
             </div>
             <div className='reply-posts-container'>

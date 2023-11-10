@@ -72,3 +72,20 @@
 {
     opacity: 0.9;
   }
+  .like-button-container{
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+    height: 10vh; 
+  }
+  .like{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px; /* Adjust this value to position the logo vertically */
+    width: 20px;
+    height: auto;
+  }
+  .like-message{
+    margin-left: 5px;
+  }
