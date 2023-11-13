@@ -27,6 +27,8 @@ export default function NavBar() {
         <li><NavLink to="/mybooks">My Books</NavLink></li>
         <li><NavLink to="/addbook">Add Book</NavLink></li>
         <li><NavLink to="/forum">Forum</NavLink></li>
+        {user ? <li className="right-align"><NavLink to="/admin">Admin</NavLink></li> 
+         : <li className="right-align"><NavLink to="/"></NavLink></li>}
          {!user ? <li className="right-align"><NavLink to="/login">Login</NavLink></li> 
          : <li className="right-align"><NavLink to="/profile">Profile</NavLink></li>}
         {user ? <li><NavLink to="/logout">Log Out</NavLink></li> : <li><NavLink to="/signup">Sign Up</NavLink></li>}
