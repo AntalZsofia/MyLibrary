@@ -67,7 +67,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
         {
             var roles = new List<IdentityRole<Guid>>()
             {
-                new() { Name = "User" }
+                new() { Name = "User" },
+                new() { Name = "Admin"}
             };
 
             foreach (var identityRole in roles)
@@ -89,7 +90,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
             foreach (var newUser in newUsers)
             {
                 await userManager.CreateAsync(newUser, "Abcd@1234");
-                await userManager.AddToRolesAsync(newUser, new string[] { "User" });
+                await userManager.AddToRolesAsync(newUser, new string[] { "User", "Admin" });
             }
         }
         //Seed Authors
