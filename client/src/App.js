@@ -32,6 +32,7 @@ import ChangePassword from "./Pages/Profile/ChangePassword";
 import Forum from "./Pages/Forum/Forum.jsx";
 import PostCard from "./Components/PostCard/PostCard.jsx";
 import Admin from "./Pages/Admin/Admin.jsx";
+import UserAllPosts from "./Pages/Admin/UserAllPosts.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
   <Route path='/' element={<Layout />}>
@@ -44,6 +45,7 @@ const router = createBrowserRouter(
       <Route path='/forum' element={< Forum />} />
       <Route path='/forum/:id' element={< PostCard />} />
       <Route path='/admin' element={<Admin />} />
+      <Route path='/admin/posts/:id' element={< UserAllPosts />} />
       <Route path='/profile' element={<Profile />} />
       <Route path='/profile/update' element={<UpdateProfile />} />
       <Route path='/profile/password' element={<ChangePassword />} />
