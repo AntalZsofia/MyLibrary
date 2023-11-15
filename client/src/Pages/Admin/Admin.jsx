@@ -55,15 +55,15 @@ if(isLoading){
           {users.map((user) => (
             <tr key={user.id}>
               <td>{user.email}</td>
-              <td>{user.username}</td>
+              <td>{user.user.userName}</td>
               <td>{convertDate(user.profileCreationDate)}</td>
               <td>
-                <NavLink to={`/admin/posts/${user.id}`}>
+                <NavLink to={`/admin/posts/${user.user.id}`}>
                   <button className='admin-table-button'>View</button>
                 </NavLink>
               </td>
               <td>
-                <NavLink to={`/admin/books/${user.id}`}>
+                <NavLink to={`/admin/books/${user.user.id}`}>
                   <button className='admin-table-button'>View</button>
                 </NavLink>
               </td>

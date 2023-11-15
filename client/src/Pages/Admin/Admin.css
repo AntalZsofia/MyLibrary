@@ -26,9 +26,7 @@
   color: white;
 }
 
-.admin-table-users tr:hover {
-  background-color: #ddd;
-}
+
 
 .admin-table-users td {
   border-bottom: 1px solid #ddd;
@@ -45,4 +43,7 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+}
+.admin-table-button:hover {
+    background-color: #228075;
 }
