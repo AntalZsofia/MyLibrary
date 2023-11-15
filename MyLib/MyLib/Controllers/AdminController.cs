@@ -45,7 +45,7 @@ public class AdminController : ControllerBase
         }
     }
 
-    [HttpGet("posts/{userId}")]
+    [HttpGet("/allposts/{id}")]
     public async Task<IActionResult> GetAllPostsByUser(Guid id)
     {
         try
@@ -54,12 +54,8 @@ public class AdminController : ControllerBase
             {
                 return BadRequest();
             }
-            if(!HttpContext.Request.IsHttps)
-            {
-                return BadRequest();
-            }
 
-            var result = await _adminService.GetAllPostsByUser(id);
+            var result = await _adminService.GetAllPostsByUserAsync(id);
             if(result == null)
             {
                 return NotFound();
