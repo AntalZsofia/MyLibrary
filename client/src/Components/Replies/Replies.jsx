@@ -41,6 +41,10 @@ export default function Replies({ discussionThread }) {
     fetchReplies();
   }, [id]);
 
+  if(isLoading){
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="replies-container">
       {!replies || replies.length === 0 ? (

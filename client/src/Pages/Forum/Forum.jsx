@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Forum.css';
 import { NavLink } from 'react-router-dom';
-//import PostsPreview from '../../Components/PostsPreview/PostsPreview';
+
 
 export function convertDate(timestamp) {
   const date = new Date(timestamp);
