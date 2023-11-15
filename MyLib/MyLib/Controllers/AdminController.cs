@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using MyLib.Models.ResponseDto;
 using MyLib.Services;
 
 namespace MyLib.Controllers;
@@ -43,5 +44,34 @@ public class AdminController : ControllerBase
             return StatusCode(500, "Internal server error");
         }
     }
-    
+
+    [HttpGet("posts/{userId}")]
+    public async Task<IActionResult> GetAllPostsByUser(Guid id)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            if(!HttpContext.Request.IsHttps)
+            {
+                return BadRequest();
+            }
+
+            var result = await _adminService.GetAllPostsByUser(id);
+            if(result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, new Response() { Message = "An error occurred on the server." });
+        }
+    }
 }
