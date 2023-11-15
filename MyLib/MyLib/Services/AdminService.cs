@@ -42,4 +42,39 @@ public class AdminService : IAdminService
             throw;
         }
     }
+
+    public async Task<List<UserPostsDto>> GetAllPostsByUser(Guid userId)
+    {
+        try
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+            {
+                return null;
+            }
+            var posts = await _context.ForumPosts.Where(p => p.User == user).ToListAsync();
+            var result = new List<UserPostsDto>();
+            foreach (var post in posts)
+            {
+                var postDto = new UserPostsDto()
+                {
+                    Id = post.Id,
+                    User = post.User,
+                    DiscussionThread = post.DiscussionThread,
+                    Content = post.Content,
+                    PostCreationDate = post.PostCreationDate,
+                    Likes = post.Likes,
+                };
+                result.Add(postDto);
+            }
+
+            return result;
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

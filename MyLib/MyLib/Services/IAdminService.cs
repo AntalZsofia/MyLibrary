@@ -6,4 +6,5 @@ namespace MyLib.Services;
 public interface IAdminService
 {
     Task<List<UsersResponseDto>> GetAllUsersAsync();
+    Task<List<UserPostsDto>> GetAllPostsByUser(Guid userId);
 }
