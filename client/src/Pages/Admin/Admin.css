@@ -1,0 +1,48 @@
+.admin-table-container{
+    
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #ECE4B7;
+    font-family: 'Libre Basketville', serif;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.admin-table-users {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.admin-table-users th, .admin-table-users td {
+  text-align: left;
+  padding: 8px;
+}
+
+.admin-table-users th {
+  background-color: #6F686D;
+  color: white;
+}
+
+.admin-table-users tr:hover {
+  background-color: #ddd;
+}
+
+.admin-table-users td {
+  border-bottom: 1px solid #ddd;
+}
+.admin-table-data{
+    background-color: white;
+    
+}
+.admin-table-button{
+    background-color: #2A9D8F;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}

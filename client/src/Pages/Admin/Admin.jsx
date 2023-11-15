@@ -1,4 +1,21 @@
 import React, { useEffect, useState } from 'react'
+import './Admin.css';
+import { NavLink } from 'react-router-dom';
+
+export function convertDate(timestamp) {
+  const date = new Date(timestamp);
+
+  const year = date.getFullYear();
+  const month = date.toLocaleString('en-US', { month: 'long' });
+  const day = date.toLocaleString('en-US', { day: 'numeric' });
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
+
+  const formattedDate = `${year}. ${month}. ${day}. ${hours}:${minutes}:${seconds}`;
+
+  return formattedDate;
+}
 
 export default function Admin() {
     const [isLoading, setIsLoading] = useState(true);
@@ -21,23 +38,40 @@ if(isLoading){
 }
 
   return (
-    <div>
-      <h2>User Table</h2>
-      <table>
+    <div className='admin-table-container'>
+      <h2>Users</h2>
+      <table className='admin-table-users'>
         <thead>
           <tr>
             <th>Email</th>
             <th>Username</th>
             <th>Date of Profile Creation</th>
+            <th>All Posts</th>
+            <th>All books</th>
+            <th>Action</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='admin-table-data'>
           {users.map((user) => (
             <tr key={user.id}>
               <td>{user.email}</td>
               <td>{user.username}</td>
-              <td>{user.profileCreationDate}</td>
-             
+              <td>{convertDate(user.profileCreationDate)}</td>
+              <td>
+                <NavLink to={`/admin/posts/${user.id}`}>
+                  <button className='admin-table-button'>View</button>
+                </NavLink>
+              </td>
+              <td>
+                <NavLink to={`/admin/books/${user.id}`}>
+                  <button className='admin-table-button'>View</button>
+                </NavLink>
+              </td>
+              <td>
+                <NavLink to={`/admin/delete/${user.id}`}>
+                  <button className='admin-table-button'>Delete</button>
+                </NavLink>
+              </td>
             </tr>
           ))}
         </tbody>
