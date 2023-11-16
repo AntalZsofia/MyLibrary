@@ -4,5 +4,7 @@ public enum ErrorType
 {
     Server,
     UserNotFound,
-    BookNotFound
+    BookNotFound,
+    PostNotFound,
+    RepliesNotFound,
 }
