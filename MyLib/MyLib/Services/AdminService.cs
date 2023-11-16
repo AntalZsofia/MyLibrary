@@ -81,11 +81,11 @@ public class AdminService : IAdminService
         }
     }
 
-    public async Task<DeletePostResult> DeletePostAndRepliesByUserAsync(Guid userId, Guid postId)
+    public async Task<DeletePostResult> DeletePostAndRepliesByUserAsync(string username, Guid postId)
     {
         try
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var user = await _userManager.FindByNameAsync(username);
             var post = await _context.ForumPosts
                 .Include(p => p.User)
                 .Where(p => p.User == user)
@@ -131,6 +131,27 @@ public class AdminService : IAdminService
             await _context.SaveChangesAsync();
             return DeleteUserResult.Success();
 
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task<ApplicationUser?> GetUserByPostIdAsync(Guid postId)
+    {
+        try
+        {
+            var post = _context.ForumPosts
+                .Include(p => p.User)
+                .FirstOrDefault(p => p.Id == postId);
+            if (post == null)
+            {
+                return null;
+            }
+
+            return await Task.FromResult(post.User);
         }
         catch (Exception e)
         {
