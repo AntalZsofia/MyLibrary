@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Admin.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import Modal from '../../Components/Modal/Modal';
 
 export function convertDate(timestamp) {
   const date = new Date(timestamp);
@@ -20,8 +21,11 @@ export function convertDate(timestamp) {
 export default function Admin() {
     const [isLoading, setIsLoading] = useState(true);
     const [users, setUsers] = useState([]);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [userIdToDelete, setUserIdToDelete] = useState(null);
+    const navigate = useNavigate();
 
-useEffect(() => {
+const fetchUsers = () => {
     setIsLoading(true);
     fetch('https://localhost:7276/users', {credentials: 'include'})
     .then((res) => res.json())
@@ -32,11 +36,49 @@ useEffect(() => {
         setIsLoading(false);
       })
       .catch((err) => console.error("Error fetching users", err));
-  }, [])
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+
 if(isLoading){
     return <div>Loading...</div>
 }
+const handleDeleteClick = (userId) => {
+    setShowDeleteConfirmation(true);
+    setUserIdToDelete(userId);
+  };
 
+  const closeDeleteConfirmation = () => {
+    setShowDeleteConfirmation(false);
+  };
+  const handleDeleteUser = async (userId) => {
+    try{
+      const userToDelete = users.find(user => user.user.id === userIdToDelete)
+      const response = await fetch(`https://localhost:7276/deleteuser/${userIdToDelete}`, {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userToDelete),
+      });
+      if (response.ok) {
+        const responseData = await response.json();
+        fetchUsers();
+        setShowDeleteConfirmation(false);
+        console.log('User deleted from the collection:', responseData);
+        navigate('/admin');
+      } else {
+        console.error('Error deleting user from collection:', response.statusText);
+      }
+    } catch (err) {
+      console.error('Error deleting user from collection', err);
+    }
+    closeDeleteConfirmation();
+  }
   return (
     <div className='admin-table-container'>
       <h2>Users</h2>
@@ -62,14 +104,19 @@ if(isLoading){
                 </NavLink>
               </td>
               <td>
-                <NavLink to={`/admin/delete/${user.id}`}>
-                  <button className='admin-table-button'>Delete</button>
-                </NavLink>
+                  <button className='admin-table-button' onClick={() => handleDeleteClick(user.user.id)}>Delete</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {showDeleteConfirmation && (
+        <Modal onClose={closeDeleteConfirmation}>
+        <h3>Are you sure you want to delete this user?</h3>
+        <button className="yesButton" onClick={handleDeleteUser}>Yes</button>
+        <button className="noButton" onClick={closeDeleteConfirmation}>No</button>
+      </Modal>
+      )}
     </div>
   );
   

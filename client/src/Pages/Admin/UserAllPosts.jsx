@@ -23,6 +23,7 @@ export default function UserAllPosts() {
         setPosts(data);
         setIsLoading(false);
         setUser(data[0].user.userName);
+        
       })
       .catch((err) => console.error("Error fetching posts", err));
   }, [id]);
@@ -39,13 +40,15 @@ export default function UserAllPosts() {
   const handleDeletePost = async () => {
     try {
       const postToDelete = {
+        id: posts[0].id,
         discussionThread: posts[0].discussionThread,
         content: posts[0].content,
         likes: posts[0].likes,
         postCreationDate: posts[0].postCreationDate,
+        user: posts[0].user,
       };
 
-      const response = await fetch(`https://localhost:7276/deletepost/${id}/${postId}`, {
+      const response = await fetch(`https://localhost:7276/deletepost/${posts[0].id}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: {
@@ -56,7 +59,7 @@ export default function UserAllPosts() {
       if (response.ok) {
         const responseData = await response.json();
             setShowDeleteConfirmation(false);
-        navigate(`/allposts/${id}`);
+        navigate(`/admin`);
         console.log('Post deleted from the forum:', responseData);
       } else {
         console.error("Error deleting post", response.statusText);
