@@ -1,0 +1,39 @@
+.user-allposts-table-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #ECE4B7;
+    font-family: 'Libre Basketville', serif;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.user-allposts-table {
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.user-allposts-table th, .user-allposts-table td {
+    text-align: left;
+    padding: 8px;
+}
+
+.user-allposts-table th {
+    background-color: #6F686D;
+    color: white;
+}
+
+.user-allposts-table td {
+    border-bottom: 1px solid #ddd;
+}
+
+.user-allposts-table-data {
+    background-color: white;
+}
+
+.user-allposts-table td:nth-child(2) {
+    width: 50%; /* Adjust this value to make the 'Content' column wider */
+}
