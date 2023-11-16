@@ -33,6 +33,7 @@ import Forum from "./Pages/Forum/Forum.jsx";
 import PostCard from "./Components/PostCard/PostCard.jsx";
 import Admin from "./Pages/Admin/Admin.jsx";
 import UserAllPosts from "./Pages/Admin/UserAllPosts.jsx";
+
 const router = createBrowserRouter(
   createRoutesFromElements(
   <Route path='/' element={<Layout />}>

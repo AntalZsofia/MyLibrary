@@ -47,23 +47,17 @@ if(isLoading){
             <th>Username</th>
             <th>Date of Profile Creation</th>
             <th>All Posts</th>
-            <th>All books</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody className='admin-table-data'>
-          {users.map((user) => (
-            <tr key={user.id}>
+          {users.map((user, index) => (
+            <tr key={index}>
               <td>{user.email}</td>
               <td>{user.user.userName}</td>
               <td>{convertDate(user.profileCreationDate)}</td>
               <td>
                 <NavLink to={`/admin/posts/${user.user.id}`}>
-                  <button className='admin-table-button'>View</button>
-                </NavLink>
-              </td>
-              <td>
-                <NavLink to={`/admin/books/${user.user.id}`}>
                   <button className='admin-table-button'>View</button>
                 </NavLink>
               </td>
