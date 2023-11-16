@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using MyLib.Models.Entities;
 using MyLib.Models.ResponseDto;
 using MyLib.Services;
 
@@ -71,8 +72,8 @@ public class AdminController : ControllerBase
         }
     }
     
-    [HttpDelete("/deletepost/{userId}/{postId}")]
-    public async Task<IActionResult>DeletePostByUser(Guid userId, Guid postId)
+    [HttpDelete("/deletepost/{postId}")]
+    public async Task<IActionResult>DeletePostByUser(Guid postId)
     {
         try
         {
@@ -80,8 +81,8 @@ public class AdminController : ControllerBase
             {
                 return BadRequest();
             }
-
-            var result = await _adminService.DeletePostAndRepliesByUserAsync(userId, postId);
+            var user = await _adminService.GetUserByPostIdAsync(postId);
+            var result = await _adminService.DeletePostAndRepliesByUserAsync(user!.UserName, postId);
             if (result == null)
             {
                 return NotFound();
