@@ -70,4 +70,55 @@ public class AdminController : ControllerBase
             return StatusCode(500, new Response() { Message = "An error occurred on the server." });
         }
     }
+    
+    [HttpDelete("/deletepost/{userId}/{postId}")]
+    public async Task<IActionResult>DeletePostByUser(Guid userId, Guid postId)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var result = await _adminService.DeletePostAndRepliesByUserAsync(userId, postId);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, new Response() { Message = "An error occurred on the server." });
+        }
+    }
+
+    [HttpDelete("/deleteuser/{userId}")]
+    public async Task<IActionResult> DeleteUser(Guid userId)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var result = await _adminService.DeleteUserAsync(userId);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }
