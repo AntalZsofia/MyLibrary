@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MyLib.Models;
 using MyLib.Models.Entities;
 using MyLib.Models.ResponseDto;
+using MyLib.Models.Result;
 
 namespace MyLib.Services;
 
@@ -32,7 +33,7 @@ public class AdminService : IAdminService
                     ProfileCreationDate = user.ProfileCreationDate,
                     User = user
                 };
-            result.Add(userDto);
+                result.Add(userDto);
             }
 
             return result;
@@ -50,7 +51,7 @@ public class AdminService : IAdminService
     {
         try
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString()); 
+            var user = await _userManager.FindByIdAsync(userId.ToString());
             var posts = await _context.ForumPosts
                 .Where(p => p.User == user)
                 .Include(forumPost => forumPost.User!)
@@ -79,4 +80,63 @@ public class AdminService : IAdminService
             throw;
         }
     }
+
+    public async Task<DeletePostResult> DeletePostAndRepliesByUserAsync(Guid userId, Guid postId)
+    {
+        try
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var post = await _context.ForumPosts
+                .Include(p => p.User)
+                .Where(p => p.User == user)
+                .FirstOrDefaultAsync(p => p.Id == postId);
+
+            var replies = await _context.ForumReplies
+                .Include(r => r.User)
+                .Where(r => r.PostId == postId)
+                .ToListAsync();
+            if (user == null)
+            {
+                return DeletePostResult.UserNotFound();
+            }
+
+            if (post == null)
+            {
+                return DeletePostResult.PostNotFound();
+            }
+            
+            _context.ForumPosts.Remove(post);
+            _context.ForumReplies.RemoveRange(replies);
+            await _context.SaveChangesAsync();
+            return DeletePostResult.Success();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+    }
+
+    public async Task<DeleteUserResult> DeleteUserAsync(Guid userId)
+    {
+        try
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+            {
+                return DeleteUserResult.UserNotFound();
+            }
+            await _userManager.DeleteAsync(user);
+            await _context.SaveChangesAsync();
+            return DeleteUserResult.Success();
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }
+
