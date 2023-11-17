@@ -19,7 +19,7 @@ public class DiscussionService : IDiscussionService
         _context = context;
         _userManager = userManager;
     }
-    
+
     public async Task<ForumActionResult> CreatePostAsync(CreatePostDto createPostDto, string username)
     {
         try
@@ -33,7 +33,7 @@ public class DiscussionService : IDiscussionService
                 PostCreationDate = DateTime.UtcNow,
                 Likes = 0,
                 User = user!
-                
+
             };
             await _context.ForumPosts.AddAsync(newForumPost);
             await _context.SaveChangesAsync();
@@ -87,7 +87,7 @@ public class DiscussionService : IDiscussionService
 
             var newReply = new ForumReply()
             {
-                
+
                 Reply = createReplyDto.Reply,
                 ReplyCreationDate = DateTime.UtcNow,
                 Likes = 0,
@@ -103,7 +103,7 @@ public class DiscussionService : IDiscussionService
             Console.WriteLine(e);
             throw new Exception("An error occured on the server");
         }
-        
+
     }
 
     public async Task<PostDto> GetPostByIdAsync(string username, Guid id)
@@ -159,7 +159,7 @@ public class DiscussionService : IDiscussionService
                 Reply = reply.Reply,
                 User = reply.User,
                 PostCreationDate = reply.ReplyCreationDate,
-                Likes = reply.Likes 
+                Likes = reply.Likes
             }).ToList();
             return returnReplies;
         }
@@ -168,5 +168,63 @@ public class DiscussionService : IDiscussionService
             Console.WriteLine(e);
             throw new Exception("An error occured on the server");
         }
+    }
+
+    public async Task<UpdatePostResult> UpdatePostAsync(UpdatePostDto updatePostDto, Guid id, string username)
+    {
+        try
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            var post = await _context.ForumPosts
+                .Include(u => u.User)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (post == null)
+            {
+                return UpdatePostResult.Fail("Post with given id doesnt exists.");
+            }
+
+
+            post.Content = updatePostDto.Content;
+            post.DiscussionThread = updatePostDto.DiscussionThread;
+            post.PostCreationDate = updatePostDto.PostCreationDate;
+            post.Likes = updatePostDto.Likes;
+            post.User = user!;
+
+
+            await _context.SaveChangesAsync();
+            return UpdatePostResult.Success("Post successfully updated.");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new Exception("An error occured on the server");
+
+        }
+    }
+
+    public async Task<ForumActionResult> DeletePostAsync(Guid id, string username)
+    {
+        try
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            var post = await _context.ForumPosts
+                .Include(u => u.User)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (post == null)
+            {
+                return ForumActionResult.Failed("Post with given id doesnt exists.");
+            }
+
+            _context.ForumPosts.Remove(post);
+            await _context.SaveChangesAsync();
+            return ForumActionResult.Succeed("Post successfully deleted.");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        } 
     }
 }
