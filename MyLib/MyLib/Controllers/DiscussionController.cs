@@ -173,7 +173,49 @@ public class DiscussionController : ControllerBase
     }
     
 
+//Update post
+    [HttpPut("/update-post/{id}")]
+    public async Task<ActionResult> UpdatePost(UpdatePostDto updatePostDto, Guid id)
+    {
+        try
+        {
+            var username = HttpContext.User.Identity!.Name;
+            var updatePostResult = await _discussionService.UpdatePostAsync(updatePostDto, id, username!);
 
+            if (updatePostResult.Succeeded)
+            {
+                return Ok(updatePostResult.Message);
+            }
 
+            return BadRequest(new Response() { Message = "Could not update post" });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, new Response(){Message = "An error occured on the server."});
+        }
+    }
+//Delete post
+    [HttpDelete("/delete-post/{id}")]
+    public async Task<ActionResult> DeletePost(Guid id)
+    {
+        try
+        {
+            var username = HttpContext.User.Identity!.Name;
+            var deletePostResult = await _discussionService.DeletePostAsync(id, username!);
+
+            if (deletePostResult.Succeeded)
+            {
+                return Ok(deletePostResult.Response);
+            }
+
+            return BadRequest(new Response() { Message = "Could not delete post" });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, new Response(){Message = "An error occured on the server."});
+        }
+    }
 
 }
