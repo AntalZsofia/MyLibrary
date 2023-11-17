@@ -53,6 +53,7 @@
     border-radius: 5px;
     cursor: pointer;
   }
+  
   .cancel-button,
   .post-reply-button {
     background-color: #2A9D8F;
@@ -63,6 +64,7 @@
     cursor: pointer;
     font-size: 16px;
   }
+
   .cancel-button:hover,
   .post-reply-button:hover{
     background-color: #228075;
@@ -88,4 +90,20 @@
   }
   .like-message{
     margin-left: 5px;
+  }
+ 
+  .post-more-button-container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 10vh;
+  }
+  .post-more-button{
+    background-color: #2A9D8F;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
   }
