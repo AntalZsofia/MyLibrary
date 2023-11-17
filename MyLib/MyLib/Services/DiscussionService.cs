@@ -212,12 +212,18 @@ public class DiscussionService : IDiscussionService
                 .Include(u => u.User)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
+            var replies = await _context.ForumReplies
+                .Include(r => r.User)
+                .Where(r => r.PostId == id)
+                .ToListAsync();
+            
             if (post == null)
             {
                 return ForumActionResult.Failed("Post with given id doesnt exists.");
             }
 
             _context.ForumPosts.Remove(post);
+            _context.ForumReplies.RemoveRange(replies);
             await _context.SaveChangesAsync();
             return ForumActionResult.Succeed("Post successfully deleted.");
         }
