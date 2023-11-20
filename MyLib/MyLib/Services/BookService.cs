@@ -321,8 +321,10 @@ public class BookService : IBookService
             {
                 return AddToCollectionResult.Failed("User not found");
             }
-            var user = await _userManager.FindByNameAsync(username);
-            // Create a new Book entity and populate it with data from the BookDto
+            var user = await _userManager.Users
+                .Include(u => u.CurrentlyReading)
+                .FirstOrDefaultAsync(u => u.UserName == username);
+            
             var author = await _context.Authors.FirstOrDefaultAsync(a => a.Name == bookReadingNowDto.Author);
             if (author == null)
             {
@@ -366,7 +368,10 @@ public class BookService : IBookService
                 throw new Exception("User not found.");
             }
 
-            var userBooks = user.CurrentlyReading;
+            var userBooks = user.CurrentlyReading?
+                .Where(b => b.User == user)
+                .ToList();
+            
             if (userBooks == null || !userBooks.Any())
             {
                 return new List<Book>();
