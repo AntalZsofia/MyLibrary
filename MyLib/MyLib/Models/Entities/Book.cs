@@ -32,5 +32,5 @@ public class Book
     public Guid UserId { get; set; }
     
     public ApplicationUser? User { get; set; }
-    
+    public DateTime? DateStarted { get; set; }
 }
