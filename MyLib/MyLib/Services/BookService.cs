@@ -313,7 +313,73 @@ public class BookService : IBookService
 
     }
 
+    public async Task<AddToCollectionResult> AddToCurrentlyReadingAsync(BookReadingNowDto bookReadingNowDto, string? username)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(username))
+            {
+                return AddToCollectionResult.Failed("User not found");
+            }
+            var user = await _userManager.FindByNameAsync(username);
+            // Create a new Book entity and populate it with data from the BookDto
+            var author = await _context.Authors.FirstOrDefaultAsync(a => a.Name == bookReadingNowDto.Author);
+            if (author == null)
+            {
+                author = new Author
+                {
+                    Name = bookReadingNowDto.Author!
+                };
+            }
+            var newBookToRead = new Book()
+            {
+                Author = author,
+                Title = bookReadingNowDto.Title,
+                Genre = bookReadingNowDto.Genre,
+                PublishDate = bookReadingNowDto.PublishDate,
+                User = user,
+                Description = bookReadingNowDto.Description,
+                SmallCoverImage = bookReadingNowDto.SmallCoverImage,
+                DateStarted = bookReadingNowDto.DateStarted
+                
+            };
+            
+            user?.CurrentlyReading?.Add(newBookToRead);
+            await _userManager.UpdateAsync(user!);
+            return AddToCollectionResult.Succeed("Book added to currently reading collection successfully");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
 
+    public async Task<IEnumerable<Book>> GetCurrentlyReadingBooksAsync(string username)
+    {
+        try
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            var userBooks = user.CurrentlyReading;
+            if (userBooks == null || !userBooks.Any())
+            {
+                return new List<Book>();
+            }
+
+            return userBooks;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new Exception("An error occurred on the server");
+        }
+    }
     public async Task<List<Book>> SearchBookAsync(string? query, string? username)
     {
         try
