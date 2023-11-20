@@ -81,6 +81,38 @@ export default function SelectedBook() {
         setShowDeleteConfirmation(false);
         navigate(`/selected-book/${id}`)
       };
+      const handleAddToCurrentlyReadingClick = async () => {
+        try {
+          const bookToAdd = {
+            id: selectedBook.id,
+            title: selectedBook.title,
+            author: selectedBook.author,
+            genre: selectedBook.genre,
+            publishDate: selectedBook.publishDate,
+            description: selectedBook.description,
+            smallCoverImage: selectedBook.smallCoverImage,
+          };
+          const response = await fetch('https://localhost:7276/add-to-currently-reading', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(bookToAdd),
+          });
+          if (response.ok) {
+            const responseData = await response.json();
+            console.log('Book added to currently reading:', responseData);
+            navigate('/currently-reading');
+          } else {
+            console.error('Error adding book to currently reading:', response.statusText);
+          }
+        }
+        catch (err) {
+          console.error('Error adding book to currently reading', err);
+        }
+      }
+
   return (
     <div className="selected-book-card">
       <img src={selectedBook.smallCoverImage} alt={`${selectedBook.title} cover`} className="selected-book-image" />
@@ -99,6 +131,7 @@ export default function SelectedBook() {
         <button className="delete-book-button" onClick={handleDeleteClick}>
           Delete
         </button>
+        <button className="add-to-currently-reading-button" onClick={handleAddToCurrentlyReadingClick}>Add to your CR list</button>
       </div>
       {showUpdateBook && <UpdateBook />}
       {showDeleteBook && showDeleteConfirmation && (

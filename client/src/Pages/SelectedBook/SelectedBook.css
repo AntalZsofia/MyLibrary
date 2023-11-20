@@ -48,12 +48,13 @@
   line-height: 1.4;
   }
   
-  buttons-container {
+  .buttons-container {
     display: flex;
     margin-top: 10px;
   }
   
   .update-book-button,
+  .add-to-currently-reading-button,
   .delete-book-button {
     background-color: #2A9D8F;
     color: #fff;
@@ -66,6 +67,7 @@
   }
   
   .update-book-button:hover,
+  .add-to-currently-reading-button:hover,
   .delete-book-button:hover {
     background-color: #228075;
   }
