@@ -50,6 +50,59 @@ public class BookController : ControllerBase
             return StatusCode(500, new Response() { Message = "An error occurred on the server." });
         }
     }
+    //Get currently reading books
+    [HttpGet("/currently-reading")]
+    public async Task<ActionResult<BookListResponseDto>> GetCurrentlyReading()
+    {
+        try
+        {
+            var userName = HttpContext.User.Identity!.Name;
+            var currentlyReading = await _bookService.GetCurrentlyReadingBooksAsync(userName!);
+            if (currentlyReading == null)
+            {
+                return Ok(new Response() { Message = "No books found." });
+            }
+
+            var responseDto = new BookListResponseDto
+            {
+                Books = currentlyReading.ToList()
+            };
+            return Ok(responseDto);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, new Response() { Message = "An error occurred on the server." });
+        }
+    }
+    //Add book to currently reading collection
+    [HttpPost("/add-to-currently-reading")]
+    public async Task<IActionResult> AddToCurrentlyReading([FromBody]BookReadingNowDto bookDto)
+    {
+        try
+        {
+            var username = HttpContext.User.Identity!.Name;
+            
+            var addToCurrentlyReadingResult = await _bookService.AddToCurrentlyReadingAsync(bookDto, username);
+
+            if (!addToCurrentlyReadingResult.Succeeded)
+            {
+                return BadRequest(new Response() { Message = "Failed to add the book to the currently reading collection" });
+
+            }
+            else
+            {
+                return Ok(new Response() { Message = "Book added to currently reading collection successfully" });
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, new Response() { Message = "An error occurred while adding the book to the currently reading collection" });
+        }
+    }
+    
+    
     
     //Get book by id
     
