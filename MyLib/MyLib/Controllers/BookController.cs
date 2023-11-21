@@ -51,21 +51,21 @@ public class BookController : ControllerBase
         }
     }
     //Get currently reading books
-    [HttpGet("/currently-reading")]
-    public async Task<ActionResult<BookListResponseDto>> GetCurrentlyReading()
+    [HttpGet("/reading-status/{status}")]
+    public async Task<ActionResult<BookListResponseDto>> GetReadingStatus(ReadingStatus status)
     {
         try
         {
             var userName = HttpContext.User.Identity!.Name;
-            var currentlyReading = await _bookService.GetCurrentlyReadingBooksAsync(userName!);
-            if (currentlyReading == null)
+            var readingStatus = await _bookService.GetReadingStatusAsync(userName!, status);
+            if (readingStatus == null)
             {
                 return Ok(new Response() { Message = "No books found." });
             }
 
             var responseDto = new BookListResponseDto
             {
-                Books = currentlyReading.ToList()
+                Books = readingStatus.ToList()
             };
             return Ok(responseDto);
         }
@@ -75,25 +75,32 @@ public class BookController : ControllerBase
             return StatusCode(500, new Response() { Message = "An error occurred on the server." });
         }
     }
+    
+    
     //Add book to currently reading collection
-    [HttpPost("/add-to-currently-reading")]
-    public async Task<IActionResult> AddToCurrentlyReading([FromBody]BookReadingNowDto bookDto)
+    [HttpPut("/change-reading-status/{id}")]
+    public async Task<IActionResult> UpdateReadingStatus([FromBody]BookDto bookDto, Guid id)
     {
         try
         {
             var username = HttpContext.User.Identity!.Name;
-            
-            var addToCurrentlyReadingResult = await _bookService.AddToCurrentlyReadingAsync(bookDto, username);
-
+            var book = await _bookService.GetBookByIdAsync(username!, id);
+            if (book != null)
+            {
+            var addToCurrentlyReadingResult = await _bookService.UpdateReadingStatusAsync(bookDto, username);
             if (!addToCurrentlyReadingResult.Succeeded)
             {
-                return BadRequest(new Response() { Message = "Failed to add the book to the currently reading collection" });
+                return BadRequest(new Response() { Message = "Failed to update reading status" });
 
             }
-            else
-            {
-                return Ok(new Response() { Message = "Book added to currently reading collection successfully" });
+           
+            return Ok(new Response() { Message = "Reading status updated successfully" });
+            
+                
             }
+
+            return NotFound();
+
         }
         catch (Exception e)
         {

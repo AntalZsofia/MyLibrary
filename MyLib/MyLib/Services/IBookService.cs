@@ -1,4 +1,5 @@
 ﻿using MyLib.Models.Entities;
+using MyLib.Models.Enums;
 using MyLib.Models.RequestDto;
 using MyLib.Models.Result;
 
@@ -18,6 +19,6 @@ public interface IBookService
     Task<List<Book>> SearchBookAsync(string? query, string? username);
     Task<int> GetUserBookCount(string username);
     Task<DeleteBookResult> DeleteAllBooksAsync(string username);
-    Task<AddToCollectionResult>AddToCurrentlyReadingAsync(BookReadingNowDto bookReadingNowDto, string? username);
-    Task<IEnumerable<Book>> GetCurrentlyReadingBooksAsync(string username);
+    Task<ReadingStatusResult>UpdateReadingStatusAsync(BookDto bookDto, string? username);
+    Task<IEnumerable<Book>> GetReadingStatusAsync(string username, ReadingStatus readingStatus);
 }
