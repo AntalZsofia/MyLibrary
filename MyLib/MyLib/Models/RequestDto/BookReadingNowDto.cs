@@ -1,4 +1,6 @@
-﻿namespace MyLib.Models.RequestDto;
+﻿using MyLib.Models.Enums;
+
+namespace MyLib.Models.RequestDto;
 
 public class BookReadingNowDto
 {
@@ -9,4 +11,5 @@ public class BookReadingNowDto
     public string? Description { get; set; }
     public string? SmallCoverImage { get; set; }
     public DateTime DateStarted { get; set; } = DateTime.UtcNow;
+    public ReadingStatus ReadingStatus { get; set; }
 }

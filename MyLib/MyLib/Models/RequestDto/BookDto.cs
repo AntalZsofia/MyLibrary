@@ -12,5 +12,9 @@ public class BookDto
     public string? Genre { get; set; }
     public string? Description { get; set; }
     public string? SmallCoverImage { get; set; }
+    public ReadingStatus ReadingStatus { get; set; }
+    
+    public string? Review { get; set; } 
+    public int? Rating { get; set; }
     
 }
