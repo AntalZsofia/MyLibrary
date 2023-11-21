@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MyLib.Models;
 using MyLib.Models.Entities;
+using MyLib.Models.Enums;
 using MyLib.Models.RequestDto;
 using MyLib.Models.ResponseDto;
 using MyLib.Models.Result;
@@ -199,9 +200,8 @@ public class BookService : IBookService
                 Genre = getBook.Genre,
                 Description = getBook.Description,
                 PublishDate = getBook.PublishDate,
-                SmallCoverImage = getBook.SmallCoverImage
-
-
+                SmallCoverImage = getBook.SmallCoverImage,
+                ReadingStatus = getBook.ReadingStatus,
             };
 
             return getBookById;
@@ -296,9 +296,41 @@ public class BookService : IBookService
                 PublishDate = bookDto.PublishDate,
                 User = user,
                 Description = bookDto.Description,
-                SmallCoverImage = bookDto.SmallCoverImage
+                SmallCoverImage = bookDto.SmallCoverImage,
+                
             };
+            if (bookDto.ReadingStatus == ReadingStatus.NotStarted)
+            {
+                newBook.ReadingStatus = ReadingStatus.NotStarted;
+            }
+            else if (bookDto.ReadingStatus == ReadingStatus.Reading)
+            {
+                newBook.ReadingStatus = ReadingStatus.Reading;
+                newBook.DateStarted = DateTime.UtcNow;
+            }
+            else
+            if (bookDto.ReadingStatus == ReadingStatus.Finished)
+            {
+                newBook.ReadingStatus = ReadingStatus.Finished;
+                if (bookDto.Rating != null)
+                {
+                    newBook.Rating = bookDto.Rating;
+                }
 
+                if (bookDto.Review != null)
+                {
+                    newBook.Review = bookDto.Review;
+                }
+            }
+            if (user?.MyBooks != null)
+            {
+                var bookAlreadyInCollection = user.MyBooks
+                    .FirstOrDefault(b => b.Title == bookDto.Title && b.Author == author && b.User == user);
+                if (bookAlreadyInCollection != null)
+                {
+                    return AddToCollectionResult.Failed("Book already in the collection");
+                }
+            }
             // Add the book to the database
             await _context.Books.AddAsync(newBook);
             await _context.SaveChangesAsync();
@@ -313,52 +345,34 @@ public class BookService : IBookService
 
     }
 
-    public async Task<AddToCollectionResult> AddToCurrentlyReadingAsync(BookReadingNowDto bookReadingNowDto, string? username)
+    public async Task<ReadingStatusResult> UpdateReadingStatusAsync(BookDto bookDto, string? username)
     {
         try
         {
-            if (string.IsNullOrEmpty(username))
-            {
-                return AddToCollectionResult.Failed("User not found");
-            }
-            var user = await _userManager.Users
-                .Include(u => u.CurrentlyReading)
-                .FirstOrDefaultAsync(u => u.UserName == username);
-            
-            var author = await _context.Authors.FirstOrDefaultAsync(a => a.Name == bookReadingNowDto.Author);
-            if (author == null)
-            {
-                author = new Author
-                {
-                    Name = bookReadingNowDto.Author!
-                };
-            }
-            var newBookToRead = new Book()
-            {
-                Author = author,
-                Title = bookReadingNowDto.Title,
-                Genre = bookReadingNowDto.Genre,
-                PublishDate = bookReadingNowDto.PublishDate,
-                User = user,
-                Description = bookReadingNowDto.Description,
-                SmallCoverImage = bookReadingNowDto.SmallCoverImage,
-                DateStarted = bookReadingNowDto.DateStarted
-                
-            };
-            
-            user?.CurrentlyReading?.Add(newBookToRead);
-            await _userManager.UpdateAsync(user!);
-            return AddToCollectionResult.Succeed("Book added to currently reading collection successfully");
+        var user = await _userManager.FindByNameAsync(username);
+        var bookToUpdate = await _context.Books
+            .Include(b => b.Author)
+            .FirstOrDefaultAsync(b => b.Title == bookDto.Title && b.Author.Name == bookDto.Author && b.User == user);
+
+        if (bookToUpdate != null)
+        {
+            bookDto.ReadingStatus = bookToUpdate.ReadingStatus;
+            _context.Books.Update(bookToUpdate);
+        await _context.SaveChangesAsync();
+        return ReadingStatusResult.Succeed("Reading status updated successfully");
+        }
+        return ReadingStatusResult.Failed("Book not found");
+        
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
+            throw new Exception("An error occurred on the server");
         }
     }
     
 
-    public async Task<IEnumerable<Book>> GetCurrentlyReadingBooksAsync(string username)
+    public async Task<IEnumerable<Book>> GetReadingStatusAsync(string username, ReadingStatus readingStatus)
     {
         try
         {
@@ -368,10 +382,12 @@ public class BookService : IBookService
                 throw new Exception("User not found.");
             }
 
-            var userBooks = user.CurrentlyReading?
+            var userBooks = await _context.Books
+                .Include(b => b.Author)
                 .Where(b => b.User == user)
-                .ToList();
-            
+                .Where(b => b.ReadingStatus == readingStatus)
+                .ToListAsync();
+
             if (userBooks == null || !userBooks.Any())
             {
                 return new List<Book>();
@@ -385,6 +401,8 @@ public class BookService : IBookService
             throw new Exception("An error occurred on the server");
         }
     }
+    
+    
     public async Task<List<Book>> SearchBookAsync(string? query, string? username)
     {
         try
