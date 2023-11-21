@@ -54,7 +54,7 @@ const router = createBrowserRouter(
       <Route path='/profile/update' element={<UpdateProfile />} />
       <Route path='/profile/password' element={<ChangePassword />} />
       <Route path='/selected-book/:id' element={<SelectedBook />}/>
-      <Route path='/currently-reading' element={<CurrentlyReading />} />
+      <Route path='/reading-status/Reading' element={<CurrentlyReading />} />
       <Route path='/update-book/:id' element={<UpdateBook />} />
       <Route path='/delete-book/:id' element={<DeleteBook />} />
       <Route path='/login' element={< Login />} />

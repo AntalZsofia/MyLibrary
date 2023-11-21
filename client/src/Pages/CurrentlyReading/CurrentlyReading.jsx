@@ -6,7 +6,7 @@ export default function CurrentlyReading() {
     const [currentBook, setCurrentBook] = useState([]);
 
     useEffect(() => {
-        fetch('https://localhost:7276/currently-reading', {credentials: "include"})
+        fetch('https://localhost:7276/reading-status/Reading', {credentials: "include"})
         .then((res) => res.json())
         .then((data) => {
             console.log(data);
@@ -14,6 +14,8 @@ export default function CurrentlyReading() {
         })
         .catch((err) => console.error("Error fetching user books", err));
     }, []);
+
+   
 
   return (
     <div>
