@@ -4,6 +4,8 @@ import './MyBooks.css';
 import BookCardColl from './../../Components/BookCardColl/BookCardColl.jsx'
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import SearchBooks from '../../Components/SearchBooks/SearchBooks';
+import { Outlet } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const MyBooks = () => {
   const [userBooks, setUserBooks] = useState([]);
@@ -32,7 +34,12 @@ const MyBooks = () => {
   }
   return (
     <div>
-      
+      <div className='reading-status-links'>
+        <Link to="/reading-status/Reading" className='link'>Currently Reading</Link>
+        <Link to="/reading-status/Finished" className='link'>Finished</Link>
+      </div>
+      <Outlet />
+
       <SearchBar onSearch={handleSearch} />
       {searchQuery ? (
         <SearchBooks searchQuery={searchQuery} />
