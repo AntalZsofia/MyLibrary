@@ -71,3 +71,18 @@
   .delete-book-button:hover {
     background-color: #228075;
   }
+
+  .reading-status-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .reading-status-option {
+    display: flex;
+    align-items: center;
+  }
+  
+  .reading-status-option input {
+    margin-right: 10px;
+  }
