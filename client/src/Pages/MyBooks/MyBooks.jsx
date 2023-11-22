@@ -57,6 +57,7 @@ const MyBooks = () => {
                 publishYear={book.publishDate}
                 description={book.description}
                 imageUrl={book.smallCoverImage}
+                readingStatus={book.readingStatus}
               />
             ))}
           </div>

@@ -3,6 +3,7 @@
     flex-direction: row;
     justify-content: flex-end;
     align-content: space-between;
+    gap: 20px;
 }
 
 .book-form-buttons-container{
