@@ -13,7 +13,8 @@ const BookCard = ({title, author, genre, smallCoverImage, publishDate, descripti
         genre,
         publishDate,
         description,
-        smallCoverImage
+        smallCoverImage,
+       
       }
       const response = await fetch('https://localhost:7276/add-to-collection', {
           method: 'POST',
@@ -48,6 +49,7 @@ return(
     <p className="book-genre">Genre: {genre}</p>
     <p className="book-publish-year">Published: {publishDate}</p>
     <button className="add-book-button" onClick={handleAddBook}>Add</button>
+    
     </div>
   </div>
 

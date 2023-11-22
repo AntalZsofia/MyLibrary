@@ -10,7 +10,7 @@ const Star = ({ selected = false, onClick = f => f }) => (
   );
 
 
-const BookReview = ({ title, author, genre, imageUrl, publishDate, description, readingStatus }) => {
+const BookReview = ({ id, title, author, genre, imageUrl, publishDate, description, readingStatus }) => {
     const navigate = useNavigate();
     const [showReview, setShowReview] = useState(false);
     const [rating, setRating] = useState(0);
