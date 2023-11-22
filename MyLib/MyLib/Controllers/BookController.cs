@@ -337,5 +337,36 @@ public class BookController : ControllerBase
         }
     } 
     
-    
+    //Add a review and rating to book
+    [HttpPut("/add-review/{id}")]
+    public async Task<IActionResult> AddReviewToBookById([FromBody] BookReviewDto bookReviewDto, Guid id)
+    {
+        try
+        {
+            var username = HttpContext.User.Identity!.Name;
+            var book = await _bookService.GetBookByIdAsync(username!, id);
+            
+            if (book != null)
+            {
+                var addReviewResult = await _bookService.AddReviewToBookAsync(bookReviewDto, username!);
+                if (!addReviewResult.Succeeded)
+                {
+                    return BadRequest(new Response() { Message = "Failed to add review" });
+
+                } 
+                return Ok(new Response() { Message = "Review added successfully" });
+                
+            }
+            return NotFound();
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, new Response() { Message = "An error occurred while adding the review" });
+        }
+    }
+        
+        
+        
 }
