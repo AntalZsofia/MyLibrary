@@ -35,8 +35,7 @@ const MyBooks = () => {
   return (
     <div>
       <div className='reading-status-links'>
-        <Link to="/reading-status/Reading" className='link'>Currently Reading</Link>
-        <Link to="/reading-status/Finished" className='link'>Finished</Link>
+        <Link to="/reading-status/Finished" className='link'>Reviews</Link>
       </div>
       <Outlet />
 

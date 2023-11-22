@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { NavLink, useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import Modal from '../../Components/Modal/Modal';
 import UpdateBook from '../UpdateBook/UpdateBook';
@@ -13,22 +13,22 @@ export default function SelectedBook() {
   const [showDeleteBook, setShowDeleteBook] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
-  const [bookReadingState, setBookReadingState] = useState(selectedBook.readingState || "NotStarted");
-
+  const [bookReadingStatus, setBookReadingStatus] = useState(selectedBook.readingStatus || "NotStarted");
+console.log(bookReadingStatus);
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
 
-    fetch(`https://localhost:7276/get-book/${id}`, { credentials: 'include' })
+    fetch(`https://localhost:7276/get-book/${id}`, { credentials: 'include'})
       .then(res => res.json())
       .then(data => {
         console.log(data);
         setSelectedBook(data);
-        setBookReadingState(data.readingState || "NotStarted");
+        setBookReadingStatus(data.readingStatus || "NotStarted");
       })
       .catch(err => console.log(err))
-
+    
 
   }, [id]);
 
@@ -42,6 +42,7 @@ export default function SelectedBook() {
         publishYear: selectedBook.publishYear,
         description: selectedBook.description,
         imageUrl: selectedBook.imageUrl,
+        readingStatus: selectedBook.readingStatus,
       };
       const response = await fetch(`https://localhost:7276/delete-book/${id}`, {
         method: 'DELETE',
@@ -85,17 +86,13 @@ export default function SelectedBook() {
     setShowDeleteConfirmation(false);
     navigate(`/selected-book/${id}`)
   };
+console.log(id);
 
-  const handleUpdateReadingState = async () => {
+  const handleUpdateReadingStatus = async () => {
     try {
       const bookToChange = {
-        title: selectedBook.title,
-        author: selectedBook.author,
-        genre: selectedBook.genre,
-        PublishDate: selectedBook.publishDate,
-        description: selectedBook.description,
-        smallCoverImage: selectedBook.smallCoverImage,
-        readingState: bookReadingState,
+        id: id,
+        readingStatus: bookReadingStatus,
       };
       const response = await fetch(`https://localhost:7276/change-reading-status/${id}`, {
         method: 'PUT',
@@ -142,9 +139,9 @@ export default function SelectedBook() {
             <input
               type="radio"
               value="NotStarted"
-              name="readingState"
-              checked={bookReadingState === "NotStarted"}
-              onChange={(e) => setBookReadingState(e.target.value)}
+              name="readingStatus"
+              checked={bookReadingStatus === "NotStarted"}
+              onChange={(e) => setBookReadingStatus(e.target.value)}
             />
             <label htmlFor='NotStarted'>Not Started</label>
           </div>
@@ -152,8 +149,8 @@ export default function SelectedBook() {
             <input
               type="radio"
               value="Reading"
-              name="readingState"
-              onChange={(e) => setBookReadingState(e.target.value)}
+              name="readingStatus"
+              onChange={(e) => setBookReadingStatus(e.target.value)}
             />
             <label htmlFor='Reading'>Reading</label>
             </div>
@@ -161,13 +158,13 @@ export default function SelectedBook() {
             <input
               type="radio"
               value="Finished"
-              name="readingState"
-              onChange={(e) => setBookReadingState(e.target.value)}
+              name="readingStatus"
+              onChange={(e) => setBookReadingStatus(e.target.value)}
             />
             <label htmlFor='Finished'>Finished</label>
           </div>
 
-          <button className="add-to-currently-reading-button" onClick={handleUpdateReadingState}>Update Reading Status</button>
+          <button className="add-to-currently-reading-button" onClick={handleUpdateReadingStatus}>Update Reading Status</button>
         </div>
       </div>
       {showUpdateBook && <UpdateBook />}
