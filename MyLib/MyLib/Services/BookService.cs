@@ -505,4 +505,22 @@ public class BookService : IBookService
             throw new Exception("An error occurred on the server");
         }
     }
+
+    public async Task<ReviewResult> AddReviewToBookAsync(BookReviewDto bookReviewDto, string username)
+    {
+        var user = await _userManager.FindByNameAsync(username);
+        var book = await _context.Books
+            .Include(b => b.Author)
+            .FirstOrDefaultAsync(b => b.Id == bookReviewDto.Id && b.User == user);
+
+        if (book == null)
+        {
+            return new ReviewResult() {Succeeded = false, Response = new Response() {Message = "Book not found"}};
+        }
+            book.Rating = bookReviewDto.Rating;
+            book.Review = bookReviewDto.Review;
+            _context.Books.Update(book);
+            await _context.SaveChangesAsync();
+            return ReviewResult.Succeed("Review added successfully");
+    }
 }
