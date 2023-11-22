@@ -79,7 +79,7 @@ public class BookController : ControllerBase
     
     //Add book to currently reading collection
     [HttpPut("/change-reading-status/{id}")]
-    public async Task<IActionResult> UpdateReadingStatus([FromBody]BookDto bookDto, Guid id)
+    public async Task<IActionResult> UpdateReadingStatus([FromBody]ReadingStatusDto readingStatusDto, Guid id)
     {
         try
         {
@@ -87,7 +87,7 @@ public class BookController : ControllerBase
             var book = await _bookService.GetBookByIdAsync(username!, id);
             if (book != null)
             {
-            var addToCurrentlyReadingResult = await _bookService.UpdateReadingStatusAsync(bookDto, username);
+            var addToCurrentlyReadingResult = await _bookService.UpdateReadingStatusAsync(readingStatusDto, username);
             if (!addToCurrentlyReadingResult.Succeeded)
             {
                 return BadRequest(new Response() { Message = "Failed to update reading status" });

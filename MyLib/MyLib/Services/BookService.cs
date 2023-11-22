@@ -345,18 +345,18 @@ public class BookService : IBookService
 
     }
 
-    public async Task<ReadingStatusResult> UpdateReadingStatusAsync(BookDto bookDto, string? username)
+    public async Task<ReadingStatusResult> UpdateReadingStatusAsync(ReadingStatusDto readingStatusDto, string? username)
     {
         try
         {
         var user = await _userManager.FindByNameAsync(username);
         var bookToUpdate = await _context.Books
             .Include(b => b.Author)
-            .FirstOrDefaultAsync(b => b.Title == bookDto.Title && b.Author.Name == bookDto.Author && b.User == user);
+            .FirstOrDefaultAsync(b => b.Id == readingStatusDto.Id && b.User == user);
 
         if (bookToUpdate != null)
         {
-            bookDto.ReadingStatus = bookToUpdate.ReadingStatus;
+            bookToUpdate.ReadingStatus = readingStatusDto.ReadingStatus;
             _context.Books.Update(bookToUpdate);
         await _context.SaveChangesAsync();
         return ReadingStatusResult.Succeed("Reading status updated successfully");

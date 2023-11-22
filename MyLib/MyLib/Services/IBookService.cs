@@ -19,6 +19,6 @@ public interface IBookService
     Task<List<Book>> SearchBookAsync(string? query, string? username);
     Task<int> GetUserBookCount(string username);
     Task<DeleteBookResult> DeleteAllBooksAsync(string username);
-    Task<ReadingStatusResult>UpdateReadingStatusAsync(BookDto bookDto, string? username);
+    Task<ReadingStatusResult>UpdateReadingStatusAsync(ReadingStatusDto readingStatusDto, string? username);
     Task<IEnumerable<Book>> GetReadingStatusAsync(string username, ReadingStatus readingStatus);
 }
