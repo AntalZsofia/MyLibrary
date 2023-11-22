@@ -1,0 +1,70 @@
+.modal-review {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content-review{
+    display: flex;
+    flex-direction: column;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+.review-rating-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.review-rating-title{
+    font-size: 15px;
+    font-weight: bold;
+   
+    text-align: left;
+}
+.rating-stars{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 30px;
+    
+}
+.star-selected {
+    color: yellow;
+  }
+  
+  .star-not-selected {
+    color: gray;
+  }
+.review-buttons-container{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.cancel-review-button,
+  .review-book-button{
+    background-color: #2A9D8F;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  }
+  .cancel-review-button:hover,
+  .review-book-button:hover{
+    background-color: #2A9D8F;
+  }
+  .review{
+    margin-top: 10px;
+  }
