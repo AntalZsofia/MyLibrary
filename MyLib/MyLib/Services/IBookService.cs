@@ -1,6 +1,7 @@
 ﻿using MyLib.Models.Entities;
 using MyLib.Models.Enums;
 using MyLib.Models.RequestDto;
+using MyLib.Models.ResponseDto;
 using MyLib.Models.Result;
 
 namespace MyLib.Services;
@@ -22,4 +23,5 @@ public interface IBookService
     Task<ReadingStatusResult>UpdateReadingStatusAsync(ReadingStatusDto readingStatusDto, string? username);
     Task<IEnumerable<Book>> GetReadingStatusAsync(string username, ReadingStatus readingStatus);
     Task<ReviewResult>AddReviewToBookAsync(BookReviewDto bookReviewDto, string username);
+    Task<List<BookReviewPrewDto>> GetAllReviewsAsync();
 }

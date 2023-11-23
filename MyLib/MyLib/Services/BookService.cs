@@ -385,7 +385,7 @@ public class BookService : IBookService
             var userBooks = await _context.Books
                 .Include(b => b.Author)
                 .Where(b => b.User == user)
-                .Where(b => b.ReadingStatus == readingStatus)
+                .Where(b => b.ReadingStatus == readingStatus && b.Review == null)
                 .ToListAsync();
 
             if (userBooks == null || !userBooks.Any())
@@ -522,5 +522,39 @@ public class BookService : IBookService
             _context.Books.Update(book);
             await _context.SaveChangesAsync();
             return ReviewResult.Succeed("Review added successfully");
+    }
+
+    public async Task<List<BookReviewPrewDto>> GetAllReviewsAsync()
+    {
+        try
+        {
+            var reviews = await _context.Books
+                .Include(b => b.Author)
+                .Where(b => b.Review != null)
+                .ToListAsync();
+            
+            var bookReviewPrewDtos = reviews.Select(b => MapBookReviewToDto(b)).ToList();
+            
+            return bookReviewPrewDtos;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    private BookReviewPrewDto MapBookReviewToDto(Book book)
+    {
+        return new BookReviewPrewDto()
+        {
+            Id = book.Id,
+            Title = book.Title,
+            Author = book.Author?.Name,
+            SmallCoverImage = book.SmallCoverImage,
+            Genre = book.Genre,
+            Review = book.Review,
+            Rating = book.Rating
+        };
     }
 }
