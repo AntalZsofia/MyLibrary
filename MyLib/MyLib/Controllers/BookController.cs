@@ -366,7 +366,25 @@ public class BookController : ControllerBase
             return StatusCode(500, new Response() { Message = "An error occurred while adding the review" });
         }
     }
-        
-        
+        //Get all reviews
+        [HttpGet("/reviews")]
+        public async Task<IActionResult> GetAllReviews()
+        {
+            try
+            {
+                var reviews = await _bookService.GetAllReviewsAsync();
+                if (reviews == null)
+                {
+                    return Ok(new Response() { Message = "No reviews found." });
+                }
+
+                return Ok(reviews);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
         
 }
