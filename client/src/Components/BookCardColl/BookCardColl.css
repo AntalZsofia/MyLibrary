@@ -27,3 +27,27 @@
 .more-book-button:hover {
     background-color: #228075;
     }
+
+
+    .bottom-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+    }
+    .rating-container{
+        display: flex;
+        align-items:center;
+       
+        gap: 10px;
+    }
+.icons-container{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.star-container {
+        display: flex;
+        gap: 5px;
+}
