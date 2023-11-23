@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import './BookReview.css';
 
@@ -11,7 +10,7 @@ const Star = ({ selected = false, onClick = f => f }) => (
 
 
 const BookReview = ({ id, title, author, genre, imageUrl, publishDate, description, readingStatus }) => {
-    const navigate = useNavigate();
+   
     const [showReview, setShowReview] = useState(false);
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState('');
@@ -29,8 +28,8 @@ const BookReview = ({ id, title, author, genre, imageUrl, publishDate, descripti
         try {
             const bookReview = {
                 id: id,
-                rating: rating,
-                review: review
+                review: review,
+                rating: rating
 
             }
             const response = await fetch(`https://localhost:7276/add-review/${id}`, {
@@ -44,7 +43,7 @@ const BookReview = ({ id, title, author, genre, imageUrl, publishDate, descripti
             if (response.ok) {
                 const responseData = await response.json();
                 console.log('Book review added successfully:', responseData); // Log the response data
-                navigate('/mybooks');
+                
             } else {
                 console.error('Error adding review', response.statusText);
             }
@@ -79,7 +78,12 @@ const BookReview = ({ id, title, author, genre, imageUrl, publishDate, descripti
                                     ))}
                                     </div>
                                     <div className='review-rating-title'>Review</div>
-                                    <textarea className="review" name="review" rows="4" cols="50" placeholder="Write your review here..." onChange={(e) => setReview(e.target.value)}></textarea>
+                                    <textarea className="review" 
+                                    name="review" 
+                                    rows="4" 
+                                    cols="50" 
+                                    placeholder="Write your review here..." 
+                                    onChange={(e) => setReview(e.target.value)}></textarea>
                                  </div>
                                  <div className='review-buttons-container'>
                                     <button className="review-book-button" onClick={handleReviewBook}>Submit</button>
