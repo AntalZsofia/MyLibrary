@@ -58,6 +58,7 @@ const MyBooks = () => {
                 description={book.description}
                 imageUrl={book.smallCoverImage}
                 readingStatus={book.readingStatus}
+                rating={book.rating}
               />
             ))}
           </div>

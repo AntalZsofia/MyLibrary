@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import BookReview from '../../Components/BookReview/BookReview';
 import './FinishedBooks.css';
+import AllReviews from '../../Components/AllReviews/AllReviews';
 
 export default function FinishedBook() {
     const [currentBook, setCurrentBook] = useState([]);
@@ -26,22 +27,23 @@ export default function FinishedBook() {
             ) : (
                 <div className="my-books-list">
                     {currentBook.map((book, index) => (
-                            <BookReview
-                                key={index}
-                                id={book.id}
-                                title={book.title}
-                                author={book.author.name}
-                                genre={book.genre}
-                                publishDate={book.publishDate}
-                                description={book.description}
-                                imageUrl={book.smallCoverImage}
-                                readingStatus={book.readingStatus}
-                            />
+                        <BookReview
+                            key={index}
+                            id={book.id}
+                            title={book.title}
+                            author={book.author.name}
+                            genre={book.genre}
+                            publishDate={book.publishDate}
+                            description={book.description}
+                            imageUrl={book.smallCoverImage}
+                            readingStatus={book.readingStatus}
+                        />
                     ))}
 
                 </div>
             )}
             <div className='reviewed-books-header'>My Reviews</div>
+            <AllReviews />
         </div>
     )
 }
