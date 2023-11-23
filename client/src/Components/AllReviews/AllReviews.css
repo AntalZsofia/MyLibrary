@@ -1,8 +1,7 @@
-/* FILEPATH: /c:/Users/Felhasználó/Codecool Projects/Advanced - ASP.NET/Practice/MyLibrary/MyLibrary/client/src/Components/AllReviews/AllReviews.css */
 
-/* Container for all reviews */
 .all-reviews-container {
     display: flex;
+    font-family: 'Libre Basketville', serif;   
   flex-direction: column;
     justify-content: space-between;
     margin-top: 20px;
@@ -10,7 +9,7 @@
 .review-card {
     width: 80%; 
     margin-left: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #c4c3c3;
     margin-bottom: 20px;
     padding: 15px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -35,11 +34,12 @@
 
 .review-card-title {
     font-size: 20px;
+    font-family: 'Libre Basketville', serif;   
     font-weight: bold;
 }
 
 .review-card-author {
-    font-size: 16px;
+    font-size: 16px; 
     color: #888;
 
 }

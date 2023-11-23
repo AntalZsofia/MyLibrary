@@ -68,7 +68,7 @@ const BookReview = ({ id, title, author, genre, imageUrl, publishDate, descripti
                 {showReview && (
                     <div className="modal-review">
                         <div className="modal-content-review">
-                            <span className="close" onClick={closeReview}>&times;</span>
+                            
                             <form>
                                 <div className='review-rating-container'>
                                     <div className='review-rating-title'>Rating</div>

@@ -11,12 +11,20 @@
 
 .modal-content-review{
     display: flex;
+    position: relative;
     flex-direction: column;
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
+}
+.close-button{
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  cursor: pointer;;
 }
 .review-rating-container{
     display: flex;
@@ -40,15 +48,19 @@
 }
 .star-selected {
     color: yellow;
+    font-size: 24px;
   }
   
   .star-not-selected {
     color: gray;
+    font-size: 24px;
   }
 .review-buttons-container{
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
+    gap: 10px;
+  
     margin-top: 10px;
 }
 .cancel-review-button,
