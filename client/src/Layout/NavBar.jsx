@@ -1,20 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { NavLink } from "react-router-dom";
 import useAuth from '../Hooks/useAuth';
+import { ThemeContext } from '../Context/ThemeProvider';
+import Switch from '../Components/Switch/Switch';
 
 
 export default function NavBar() {
   const { user } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
-  console.log(user);
+  const {darkMode, toggleDarkMode} = useContext(ThemeContext);
+ 
   
+  const onToggle = () => {
+    toggleDarkMode(!darkMode);
+  };
+
   const handleClick = () => {
     setMenuOpen(!menuOpen);
   }
 
    return (
     
-     <nav className='nav'>
+     <nav className={darkMode ? 'nav dark-mode' : 'nav'}>
       
       <div className='menu' onClick={handleClick}>
         <span></span>
@@ -32,6 +39,7 @@ export default function NavBar() {
          {!user ? <li className="right-align"><NavLink to="/login">Login</NavLink></li> 
          : <li className="right-align"><NavLink to="/profile">Profile</NavLink></li>}
         {user ? <li><NavLink to="/logout">Log Out</NavLink></li> : <li><NavLink to="/signup">Sign Up</NavLink></li>}
+        <Switch isToggled={darkMode} onToggle={onToggle} />
       </ul>
     </nav>
     

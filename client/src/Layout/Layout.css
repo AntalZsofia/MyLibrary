@@ -99,3 +99,15 @@ nav ul li a {
 }
   
 }
+.dark-mode-button {
+  background-color: #444;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dark-mode-button:hover {
+  background-color: #555;
+}

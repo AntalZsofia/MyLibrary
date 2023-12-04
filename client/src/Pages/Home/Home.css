@@ -17,3 +17,7 @@
     width: 300px;
     height: auto;
   }
+  .dark-mode {
+    background-color: #333;
+    color: #fff;
+  }
