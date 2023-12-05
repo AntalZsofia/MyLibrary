@@ -1,17 +1,20 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './MyBooks.css';
 import BookCardColl from './../../Components/BookCardColl/BookCardColl.jsx'
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import SearchBooks from '../../Components/SearchBooks/SearchBooks';
 import { Outlet } from 'react-router';
 import { Link } from 'react-router-dom';
+import { ThemeContext } from '../../Context/ThemeProvider.jsx';
 
 const MyBooks = () => {
   const [userBooks, setUserBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const { darkMode } = useContext(ThemeContext);
   
+  console.log(darkMode);
 
   useEffect(() => {
     setIsLoading(true);
@@ -33,8 +36,8 @@ const MyBooks = () => {
     <div>Loading...</div>
   }
   return (
-    <div>
-      <div className='reading-status-links'>
+    <div className={darkMode ? 'dark-mode' : 'light-mode'}>
+      <div className={`reading-status-links ${darkMode ? 'dark-mode' : ''}`}>
         <Link to="/reading-status/Finished" className='link'>Reviews</Link>
       </div>
       <Outlet />
@@ -44,9 +47,9 @@ const MyBooks = () => {
         <SearchBooks searchQuery={searchQuery} />
       ) : (
         !userBooks || userBooks.length === 0 ? (
-          <div className='my-books-message'>You don't have any books in your collection.</div>
+          <div className={`my-books-message ${darkMode ? 'dark-mode' : ''}`}>You don't have any books in your collection.</div>
         ) : (
-          <div className="my-books-list">
+          <div className={`my-books-list ${darkMode ? 'dark-mode' : ''}`}>
             {userBooks.map((book, index) => (
               <BookCardColl
                 key={index}
