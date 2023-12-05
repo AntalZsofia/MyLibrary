@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Route, 
   createBrowserRouter, 
   createRoutesFromElements, 
@@ -17,7 +17,7 @@ import AddBook from "./Pages/AddBook/AddBook.jsx";
 import SelectedBook from "./Pages/SelectedBook/SelectedBook.jsx";
 import DeleteBook from "./Pages/DeleteBook/DeleteBook.jsx";
 import Profile from "./Pages/Profile/Profile";
-
+import { ThemeContext } from "./Context/ThemeProvider.jsx";
 
 //import ErrorPage from "./Pages/ErrorPage/ErrorPage";
 
@@ -67,15 +67,15 @@ const router = createBrowserRouter(
 )
 export default function App(){
   const [user, setUser] = useState(null);
-  
+  const { darkMode } = useContext(ThemeContext);
   
 
 return(
-  
+  <div className={darkMode ? "dark-mode" : "light-mode"}>
     <AuthContext.Provider value={{ user, setUser }}>
     <RouterProvider router={router} />
     </AuthContext.Provider>
-  
+  </div>
 )
 }
 
