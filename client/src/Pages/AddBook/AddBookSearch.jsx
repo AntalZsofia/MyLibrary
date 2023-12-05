@@ -2,12 +2,14 @@ import React, { useState} from 'react'
 import './AddBookSearch.css';
 import './../../Components/BookCard/BookCard.css';
 import BookCard from '../../Components/BookCard/BookCard';
+import { ThemeContext } from '../../Context/ThemeProvider.jsx';
+import { useContext } from 'react';
 
 
 export default function AddBookSearch() {
 const [search, setSearch] = useState('');
 const [searchResults, setSearchResults] = useState([]);
-
+const { darkMode } = useContext(ThemeContext);
 
 const handleSearch = async () => {
   
@@ -31,20 +33,20 @@ try {
 return (
   <>
 
-  <div className='add-book-container'>
+  <div className={`add-book-container ${darkMode ? 'dark-mode' : ''}`}>
       <h2>Search Books</h2>
       <input
-        className='add-book-input'
+        className={`add-book-input ${darkMode ? 'dark-mode' : ''}`}
         type="text"
         placeholder="Enter a search term"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <button className='search-book-button' onClick={handleSearch}>Search</button>
+      <button className={`search-book-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleSearch}>Search</button>
 
       </div>
 
-      <div className='book-card-container'>
+      <div className={`book-card-container ${darkMode ? 'dark-mode' : ''}`}>
        
         {searchResults.map((result, index) => (
           <BookCard

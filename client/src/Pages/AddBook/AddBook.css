@@ -12,3 +12,14 @@
 .link active{
     text-decoration: underline;
 }
+.link.dark-mode {
+  display:flex;
+  flex-direction: row;
+    text-decoration: none;
+    color: #fff; /* Set the default color for links */
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size:22px;
+    font-weight: bolder;
+    font-family: 'Libre Basketville', serif;    
+}

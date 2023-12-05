@@ -1,9 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './BookCard.css';
+import { ThemeContext } from '../../Context/ThemeProvider.jsx';
+import { useContext } from 'react';
 
 const BookCard = ({ title, author, genre, smallCoverImage, publishDate, description }) => {
   const navigate = useNavigate();
+  const { darkMode } = useContext(ThemeContext);
 
   const handleAddBook = async () => {
     try {
@@ -40,7 +43,7 @@ const BookCard = ({ title, author, genre, smallCoverImage, publishDate, descript
   return (
 
 
-    <div className="book-card">
+    <div className={`book-card ${darkMode ? 'dark-mode' : ''}`}>
       <img src={smallCoverImage} alt={`${title} cover`} className="book-image" />
 
       <div className='book-details'>
@@ -49,7 +52,7 @@ const BookCard = ({ title, author, genre, smallCoverImage, publishDate, descript
         <p className="book-genre">Genre: {genre}</p>
         <p className="book-publish-year">Published: {publishDate}</p>
         <div className="book-card-buttons-container">
-          <button className="add-book-button" onClick={handleAddBook}>Add</button>
+          <button className={`add-book-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleAddBook}>Add</button>
         </div>
       </div>
     </div>
