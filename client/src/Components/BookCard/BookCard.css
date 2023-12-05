@@ -22,6 +22,17 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   
 }
+.book-card.dark-mode {
+  display: flex;
+  flex: 0 0 350px;
+  width: 350px; /* Set a fixed width for the card */
+  background-color: #4b4a4a;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+}
 
 /* Book image styles */
 .book-image {

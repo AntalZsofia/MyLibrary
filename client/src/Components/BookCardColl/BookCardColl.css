@@ -31,9 +31,21 @@
     cursor: pointer;
     font-size: 16px;
 }
+.more-book-button.dark-mode{
+    background-color: #a688fa;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
 
 .more-book-button:hover {
     background-color: #228075;
+}
+.more-book-button.dark-mode:hover {
+    background-color: #7b5fda;
 }
 
 

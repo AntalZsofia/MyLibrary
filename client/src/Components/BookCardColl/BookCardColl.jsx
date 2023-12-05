@@ -3,6 +3,8 @@ import './BookCardColl.css';
 import { NavLink } from "react-router-dom";
 import openBook from './../../Icons/open-book.png';
 import checked from './../../Icons/checked.png';
+import { ThemeContext } from '../../Context/ThemeProvider.jsx';
+import { useContext } from 'react';
 
 const Star = ({ selected = false, onClick = f => f }) => (
   <div onClick={onClick} className={selected ? 'star-selected' : 'star-not-selected'}>
@@ -12,12 +14,12 @@ const Star = ({ selected = false, onClick = f => f }) => (
 
 
 const BookCardColl = ({ title, author, genre, imageUrl, publishYear, description, id, readingStatus, rating }) => {
-
+  const { darkMode } = useContext(ThemeContext);
 
 
 
   return (
-    <div className="book-card">
+    <div className={`book-card ${darkMode ? 'dark-mode' : ''}`}>
       <div className="image-and-rating-container">
       <img src={imageUrl} alt={`${title} cover`} className="book-image" />
 
@@ -40,7 +42,7 @@ const BookCardColl = ({ title, author, genre, imageUrl, publishYear, description
               {readingStatus === 'Reading' && <img src={openBook} alt="Reading" style={{ width: '40px', height: '40px' }} />}
               {readingStatus === 'Finished' && <img src={checked} alt="Finished" style={{ width: '40px', height: '40px' }} />}
               <NavLink to={`/selected-book/${id}`}>
-                <button className="more-book-button">More</button>
+                <button className={`more-book-button ${darkMode ? 'dark-mode'  :''}`}>More</button>
               </NavLink>
             </div>
        
