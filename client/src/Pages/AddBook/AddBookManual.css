@@ -9,6 +9,9 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
+  .add-book-container.dark-mode{
+    background-color: #4B4A4A;
+  }
   
   /* Form header */
   .add-book-header {
@@ -77,11 +80,18 @@
     cursor: pointer;
     font-size: 16px;
   }
+  .add-book-button.dark-mode{
+    background-color: #a688fa;
+    color: #fff;
+  }
   
   .add-book-button:hover {
   background-color: #228075;
   }
 
+  .add-book-button.dark-mode:hover {
+    background-color: #7b5fda;;
+  }
   /*add-book links */
   .add-book-links {
     display: flex;
@@ -90,13 +100,22 @@
     margin-bottom: 20px;
    
 }
-
+.add-book-cover-input.dark-mode{
+  background-color: #4b4a4a;
+  color: #fff;
+}
 .link {
   
     text-decoration: none;
     color: #000; /* Set the default color for links */
     padding-left: 10px;
     padding-right: 10px;
+}
+.link.dark-mode {
+  text-decoration: none;
+  color: #fff; /* Set the default color for links */
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .link:hover {

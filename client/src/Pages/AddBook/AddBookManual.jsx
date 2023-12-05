@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './AddBookManual.css';
+import { ThemeContext } from '../../Context/ThemeProvider.jsx';
+import { useContext } from 'react';
 
 const AddBookManual = () => {
     const [bookTitle, setBookTitle] = useState ('');
@@ -8,6 +10,7 @@ const AddBookManual = () => {
     const [bookDescription, setBookDescription] = useState('');
     const [bookPublished, setBookPublished] = useState('');
     const[bookCover, setBookCover] = useState('');
+    const { darkMode } = useContext(ThemeContext);
 
     const handleAddBook = async () => {
         try{
@@ -49,13 +52,13 @@ const AddBookManual = () => {
   return (
     <>
   
-     <div className='add-book-container'>
+     <div className={`add-book-container ${darkMode ? 'dark-mode' : ''}`}>
      <h2 className="add-book-header">Add a New Book to Your Collection</h2>
 
      <div>
        <label className="add-book-label" htmlFor="bookTitle">Title:</label>
        <input
-       className="add-book-input"
+       className={`add-book-input ${darkMode ? 'dark-mode' : ''}`}
          type="text"
          id="bookTitle"
          value={bookTitle}
@@ -65,7 +68,7 @@ const AddBookManual = () => {
      <div>
        <label htmlFor="bookAuthor">Author:</label>
        <input
-       className="add-book-input"
+       className={`add-book-input ${darkMode ? 'dark-mode' : ''}`}
          type="text"
          id="bookAuthor"
          value={bookAuthor}
@@ -75,7 +78,7 @@ const AddBookManual = () => {
      <div>
        <label htmlFor="bookGenre">Genre:</label>
        <input
-       className="add-book-input"
+       className={`add-book-input ${darkMode ? 'dark-mode' : ''}`}
          id="bookGenre"
          value={bookGenre}
          onChange={(e) => setBookGenre(e.target.value)}
@@ -84,7 +87,7 @@ const AddBookManual = () => {
      <div>
        <label htmlFor="bookDescription">Description:</label>
        <textarea
-       className="add-book-textarea"
+       className={`add-book-textarea ${darkMode ? 'dark-mode' : ''}`}
          type="text"
          id="bookDescription"
          value={bookDescription}
@@ -95,7 +98,7 @@ const AddBookManual = () => {
      <div>
        <label htmlFor="bookPublished">Published:</label>
        <input
-       className="add-book-input"
+       className={`add-book-input ${darkMode ? 'dark-mode' : ''}`}
          type="text"
          id="bookPublished"
          value={bookPublished}
@@ -105,14 +108,14 @@ const AddBookManual = () => {
      <div>
        <label htmlFor="bookCover">Cover:</label>
        <input
-       className="add-book-cover-input"
+       className={`add-book-cover-input ${darkMode ? 'dark-mode' : ''}`}
          type="file"
          id="bookCover"
          value={bookCover}
          onChange={(e) => setBookCover(e.target.files[0])}
        />
      </div>
-     <button className="add-book-button" onClick={handleAddBook}>Add Book</button>
+     <button className={`add-book-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleAddBook}>Add Book</button>
      </div>
      </>
   );
