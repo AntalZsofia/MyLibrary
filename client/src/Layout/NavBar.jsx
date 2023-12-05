@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import useAuth from '../Hooks/useAuth';
 import { ThemeContext } from '../Context/ThemeProvider';
 import Switch from '../Components/Switch/Switch';
+import './Layout.css';
 
 
 export default function NavBar() {
@@ -21,7 +22,7 @@ export default function NavBar() {
 
    return (
     
-     <nav className={darkMode ? 'nav dark-mode' : 'nav'}>
+     <nav className={`Layout nav ${darkMode ? 'dark-mode' : ''}`}>
       
       <div className='menu' onClick={handleClick}>
         <span></span>

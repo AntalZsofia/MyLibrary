@@ -17,6 +17,11 @@
   border-radius: 4px;
   box-sizing: border-box;
 }
+.search-book-input.dark-mode{
+    background-color: #4b4a4a;
+    color: #fff;
+
+}
 
 .search-book-button {
   background-color: #2A9D8F;
@@ -28,7 +33,15 @@
   font-size: 16px; 
   max-height: 40px;
 }
+.search-book-button.dark-mode{
+  background-color: #a688fa;
+    color: #fff;
+}
     
 .search-book-button:hover {
     background-color: #228075;
     }
+
+.search-book-button.dark-mode:hover {
+  background-color: #7b5fda;
+}

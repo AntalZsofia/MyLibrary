@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: flex-start; /* Spacing between all links */
   padding: 0.5rem;
-  background-color: #6F686D;
+  background-color: #565264;
   font-weight: bold;
   font-size: 1.5rem;
   font-family: 'Libre Basketville', serif;
@@ -110,4 +110,59 @@ nav ul li a {
 
 .dark-mode-button:hover {
   background-color: #555;
+}
+
+.Layout nav ul.dark-mode {
+  background-color: #333;
+  color: #fff;
+}
+
+.Layout nav ul li.dark-mode {
+  color: #fff;
+}
+
+.Layout nav ul a.dark-mode {
+  color: #fff;
+}
+
+.Layout nav ul a:hover.dark-mode {
+  color: #aaa;
+}
+
+.Layout nav ul a.active.dark-mode {
+  color: #aaa;
+}
+
+nav .menu.dark-mode {
+  background-color: #333;
+}
+
+nav .menu span.dark-mode {
+  background-color: #fff;
+}
+
+@media (max-width: 768px) {
+  nav .menu.dark-mode {
+    background-color: #333;
+  }
+
+  .Layout nav ul.dark-mode {
+    background-color: #333;
+  }
+
+  nav ul li.dark-mode {
+    color: #fff;
+  }
+
+  nav ul li a.dark-mode {
+    color: #fff;
+  }
+}
+
+.dark-mode-button.dark-mode {
+  background-color: #555;
+}
+
+.dark-mode-button:hover.dark-mode {
+  background-color: #666;
 }
