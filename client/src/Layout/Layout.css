@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: flex-start; /* Spacing between all links */
   padding: 0.5rem;
-  background-color: #565264;
+  background-color: #5F5449;
   font-weight: bold;
   font-size: 1.5rem;
   font-family: 'Libre Basketville', serif;
@@ -129,7 +129,24 @@ nav ul li a {
   color: #aaa;
 }
 
-.Layout nav ul a.active.dark-mode {
+.Layout nav.dark-mode ul {
+  background-color: #4b4a4a;
+  color: #fff;
+}
+
+.Layout nav.dark-mode ul li {
+  color: #fff;
+}
+
+.Layout nav.dark-mode ul a {
+  color: #fff;
+}
+
+.Layout nav.dark-mode ul a:hover {
+  color: #aaa;
+}
+
+.Layout nav.dark-mode ul a.active {
   color: #aaa;
 }
 
@@ -137,7 +154,7 @@ nav .menu.dark-mode {
   background-color: #333;
 }
 
-nav .menu span.dark-mode {
+nav .menu.dark-mode span {
   background-color: #fff;
 }
 
@@ -146,18 +163,31 @@ nav .menu span.dark-mode {
     background-color: #333;
   }
 
-  .Layout nav ul.dark-mode {
+  .Layout nav.dark-mode ul {
     background-color: #333;
   }
 
-  nav ul li.dark-mode {
+  nav.dark-mode ul li {
     color: #fff;
   }
+
+  nav.dark-mode ul li a {
+    color: #fff;
+  }
+}
+
+.dark-mode-button.dark-mode {
+  background-color: #555;
+}
+
+.dark-mode-button:hover.dark-mode {
+  background-color: #666;
+}
 
   nav ul li a.dark-mode {
     color: #fff;
   }
-}
+
 
 .dark-mode-button.dark-mode {
   background-color: #555;
