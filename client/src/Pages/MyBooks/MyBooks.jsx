@@ -38,7 +38,7 @@ const MyBooks = () => {
   return (
     <div className={darkMode ? 'dark-mode' : 'light-mode'}>
       <div className={`reading-status-links ${darkMode ? 'dark-mode' : ''}`}>
-        <Link to="/reading-status/Finished" className='link'>Reviews</Link>
+        <Link to="/reading-status/Finished" className={`link ${darkMode ? 'dark-mode' : ''}`}>Reviews</Link>
       </div>
       <Outlet />
 

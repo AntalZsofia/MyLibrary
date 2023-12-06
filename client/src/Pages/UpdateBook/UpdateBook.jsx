@@ -2,13 +2,15 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import{ useParams } from 'react-router-dom';
 import BookForm from '../../Components/BookForm/BookForm';
+import { useContext } from 'react';
+import { ThemeContext } from '../../Context/ThemeProvider';
 
 
 export default function UpdateBook() {
 const [book, setBook] = useState();
 const { id } = useParams();
 const [isLoading, setIsLoading] = useState(true);
-
+const { darkMode } = useContext(ThemeContext);
 
 useEffect(() => {
   setIsLoading(true);

@@ -4,6 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 import Modal from '../../Components/Modal/Modal';
 import UpdateBook from '../UpdateBook/UpdateBook';
 import './SelectedBook.css';
+import { useContext } from 'react';
+import { ThemeContext } from '../../Context/ThemeProvider';
 
 export default function SelectedBook() {
 
@@ -17,6 +19,7 @@ export default function SelectedBook() {
 console.log(bookReadingStatus);
   const navigate = useNavigate();
   const { id } = useParams();
+  const { darkMode } = useContext(ThemeContext);
 
   useEffect(() => {
 
@@ -117,10 +120,10 @@ console.log(id);
   }
 
   return (
-    <div className="selected-book-card">
+    <div className={`selected-book-card ${darkMode ? 'dark-mode' : ''}`}>
       <img src={selectedBook.smallCoverImage} alt={`${selectedBook.title} cover`} className="selected-book-image" />
 
-      <div className="selected-book-details">
+      <div className={`selected-book-details ${darkMode ? 'dark-mode' : ''}`}>
         <h2 className="selected-book-title">{selectedBook.title}</h2>
         <p className="selected-book-author">Author: {selectedBook.author}</p>
         <p className="selected-book-genre">Genre: {selectedBook.genre}</p>
@@ -128,14 +131,14 @@ console.log(id);
         <p className="selected-book-description">Description: {selectedBook.description}</p>
         <div className="buttons-container">
         </div>
-        <button className="update-book-button" onClick={handleUpdateClick}>
+        <button className={`update-book-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleUpdateClick}>
           Update
         </button>
-        <button className="delete-book-button" onClick={handleDeleteClick}>
+        <button className={`delete-book-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleDeleteClick}>
           Delete
         </button>
         <div className='reading-status-container'>
-          <div className='reading-status-option'>
+          <div className="reading-status-option">
             <input
               type="radio"
               value="NotStarted"
@@ -145,7 +148,7 @@ console.log(id);
             />
             <label htmlFor='NotStarted'>Not Started</label>
           </div>
-          <div className='reading-status-option'>
+          <div className="reading-status-option">
             <input
               type="radio"
               value="Reading"
@@ -154,7 +157,7 @@ console.log(id);
             />
             <label htmlFor='Reading'>Reading</label>
             </div>
-          <div className='reading-status-option'>
+          <div className="reading-status-option">
             <input
               type="radio"
               value="Finished"
@@ -164,7 +167,7 @@ console.log(id);
             <label htmlFor='Finished'>Finished</label>
           </div>
 
-          <button className="add-to-currently-reading-button" onClick={handleUpdateReadingStatus}>Update Reading Status</button>
+          <button className={`add-to-currently-reading-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleUpdateReadingStatus}>Update Reading Status</button>
         </div>
       </div>
       {showUpdateBook && <UpdateBook />}

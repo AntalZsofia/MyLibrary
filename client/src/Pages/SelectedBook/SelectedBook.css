@@ -6,6 +6,13 @@
     margin: 10px;
     border-radius: 5px;
   }
+  .selected-book-card.dark-mode {
+    background-color: #4b4a4a;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 5px;
+  }
   
   .selected-book-image-container {
     margin-right: 20px;
@@ -26,6 +33,9 @@
   
   .selected-book-details {
     flex: 1;
+  }
+  .selected-book-details.dark-mode{
+    background-color: #4b4a4a;
   }
   
   .selected-book-title {
@@ -65,6 +75,11 @@
     cursor: pointer;
     font-size: 16px;
   }
+  .update-book-button.dark-mode,
+  .add-to-currently-reading-button.dark-mode,
+  .delete-book-button.dark-mode{
+    background-color: #a688fa;
+  }
   
   .update-book-button:hover,
   .add-to-currently-reading-button:hover,
@@ -72,6 +87,11 @@
     background-color: #228075;
   }
 
+.update-book-button.dark-mode:hover,
+  .add-to-currently-reading-button.dark-mode:hover,
+  .delete-book-button.dark-mode:hover{
+    background-color: #7c5dfa;
+  }
   .reading-status-container {
     display: flex;
     justify-content:start;
