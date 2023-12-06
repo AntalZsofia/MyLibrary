@@ -113,9 +113,7 @@
 }
 .link.dark-mode {
   text-decoration: none;
-  color: #fff; /* Set the default color for links */
-  padding-left: 10px;
-  padding-right: 10px;
+  color: #fff; 
 }
 
 .link:hover {
