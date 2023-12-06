@@ -1,11 +1,14 @@
 import React from 'react'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ThemeContext } from '../../Context/ThemeProvider';
+import { useContext } from 'react';
 
 export default function PostForm( {post, onFormSubmit}) {
     const [content, setContent] = useState(post ? post.content : '');
     const [discussionThread, setDiscussionThread] = useState(post ? post.discussionThread : '');
     const navigate = useNavigate();
+    const { darkMode } = useContext(ThemeContext);
 
 
 const handleCancelClick = () => {
@@ -26,8 +29,8 @@ const handleFormSubmit = async () => {
     };
 }
   return (
-    <div className='update-post-form-container'>
-    <div className="update-post-form">
+    <div className={`update-post-form-container ${darkMode ? 'dark-mode' : ''}`}>
+    <div className={`update-post-form ${darkMode ? 'dark-mode' : ''}`}>
       <h1>{post ? 'Update Post' : 'Create Post'}</h1>
       <label htmlFor="discussionThread">Discussion Thread</label>
       <input
@@ -45,7 +48,7 @@ const handleFormSubmit = async () => {
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
-      <div className="form-actions">
+      <div className={`form-actions ${darkMode ? 'dark-mode' : ''}`}>
         <button type="button" onClick={handleCancelClick}>
           Cancel
         </button>

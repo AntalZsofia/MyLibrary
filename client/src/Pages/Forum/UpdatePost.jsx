@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import PostForm from '../../Components/PostForm/PostForm';
+import { ThemeContext } from '../../Context/ThemeProvider';
+import { useContext } from 'react';
 
 export default function UpdatePost() {
 
   const { id } = useParams();
   const [post, setPost] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const { darkMode } = useContext(ThemeContext);
 
   const getPost = () => {
     setIsLoading(true);

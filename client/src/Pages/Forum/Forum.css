@@ -10,6 +10,9 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+.add-post-container.dark-mode{
+    background-color: #4b4a4a;
+}
 
 .add-content-textarea {
     width: 100%;
@@ -31,6 +34,8 @@
 
 .add-post-button {
     background-color: #2A9D8F;
+    font-family: 'Libre Basketville', serif;
+    
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -38,9 +43,17 @@
     cursor: pointer;
     font-size: 16px;
 }
+.add-post-button.dark-mode{
+    background-color: #a688fa;
+    color: #fff;
+
+}
 
 .add-post-button:hover {
     background-color: #228075;
+}
+.add-post-button.dark-mode:hover{
+    background-color: #7b5fda;
 }
 
 .post-table {
@@ -60,10 +73,17 @@
     background-color: #ECE4B7;
     font-weight: bold;
 }
+.post-table.dark-mode th{
+    background-color: #4b4a4a;
+    color: #fff;
+}
 
 
 .post-table tr:hover {
     background-color: #ddd;
+}
+.post-table.dark-mode tr:hover{
+    background-color: #7a7979;
 }
 
 
@@ -79,7 +99,14 @@
     cursor: pointer;
     transition: background-color 0.3s;
 }
+.read-post-button.dark-mode{
+    background-color: #a688fa;
+    color: #fff;
+}
 
 .read-post-button:hover {
     background-color: #228075;
+}
+.read-post-button.dark-mode:hover{
+    background-color: #7b5fda;
 }

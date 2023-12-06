@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import './Forum.css';
 import { NavLink } from 'react-router-dom';
+import { ThemeContext } from '../../Context/ThemeProvider';
+import { useContext } from 'react';
 
 
 export function convertDate(timestamp) {
@@ -25,6 +27,7 @@ export default function Forum() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [newPostAdded, setNewPostAdded] = useState(false);
+  const { darkMode } = useContext(ThemeContext);
 
   useEffect(() => {
     setIsLoading(true);
@@ -75,11 +78,11 @@ export default function Forum() {
   }
   return (
     <>
-      <div className='add-post-container'>
+      <div className={`add-post-container ${darkMode ? 'dark-mode' : ''}`}>
         <div>
           <label className="add-post-label" htmlFor="postTitle">Title:</label>
           <input
-            className="add-book-input"
+            className={`add-book-input ${darkMode ? 'dark-mode' : ''}`}
             type="text"
             id="postTitle"
             value={postTitle}
@@ -89,7 +92,7 @@ export default function Forum() {
         <label className="add-content-label" htmlFor="content">Content:</label>
         <div>
           <textarea
-            className="add-content-textarea"
+            className={`add-content-textarea ${darkMode ? 'dark-mode' : ''}`}
             type="text"
             id="content"
             value={content}
@@ -98,12 +101,12 @@ export default function Forum() {
           />
         </div>
         <div className='post-buttons-container'>
-          <button className="add-post-button" onClick={handleAddPost}>Add Post</button>
+          <button className={`add-post-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleAddPost}>Add Post</button>
          
         </div>
       </div>
-      <div className='post-list'>
-          <table className='post-table'>
+      <div className={`post-list ${darkMode ? 'dark-mode' : ''}`}>
+          <table className={`post-table ${darkMode ? 'dark-mode' : ''}`}>
             <thead>
               <tr>
                 <th>Title</th>
@@ -122,7 +125,7 @@ export default function Forum() {
                   <td>{convertDate(post.postCreationDate)}</td>
                   <td>
                     <NavLink to={`/forum/${post.id}`}>
-                    <button className='read-post-button'>Read</button>
+                    <button className={`read-post-button ${darkMode ? 'dark-mode' : ''}`}>Read</button>
                     </NavLink>
                   </td>
                 </tr>
