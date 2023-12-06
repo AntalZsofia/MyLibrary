@@ -3,6 +3,8 @@ import './Profile';
 import { useNavigate } from 'react-router';
 import useAuth from '../../Hooks/useAuth';
 import { isValidUsername, isValidEmail } from '../../Utility/Validation';
+import { ThemeContext } from '../../Context/ThemeProvider';
+import { useContext } from 'react';
 
 export default function UpdateProfile() {
 
@@ -16,6 +18,7 @@ export default function UpdateProfile() {
     const navigate = useNavigate();
     const { setUser } = useAuth();
     const [error, setError] = useState("");
+    const { darkMode } = useContext(ThemeContext);
 
 useEffect(() => {
     fetch('https://localhost:7276/api/user/me', {credentials: 'include'})
@@ -76,13 +79,13 @@ useEffect(() => {
         return <div>Loading...</div>;
       }
   return (
-   <div className='update-profile-container'>
-    <h2 className='update-profile-header'>Update Profile</h2>
+   <div className={`update-profile-container ${darkMode ? 'dark-mode' : ''}`}>
+    <h2 className={`update-profile-header ${darkMode ? 'dark-mode' : ''}`}>Update Profile</h2>
     <h5>After changing your profile details, you need to log in again</h5>
     <div>
-       <label className="update-profile-label" htmlFor="username"></label>
+       <label className={`update-profile-label ${darkMode ? 'dark-mode' : ''}`} htmlFor="username"></label>
        <input
-       className="update-profile-input"
+       className={`update-profile-input ${darkMode ? 'dark-mode' : ''}`}
          type="text"
          id="username"
          placeholder='Username'
@@ -93,7 +96,7 @@ useEffect(() => {
      <div>
        <label className="update-profile-label" htmlFor="email"></label>
        <input
-       className="update-profile-input"
+       className={`update-profile-input ${darkMode ? 'dark-mode' : ''}`}
          type="text"
          id="email"
          placeholder='Email'
@@ -102,8 +105,8 @@ useEffect(() => {
        />
      </div>
      <div className='update-profile-button-container'>
-     <button className="update-profile-button" onClick={handleUpdateProfile}>Update Profile</button>
-     <button className="update-profile-button" onClick={handleCancel}>Cancel</button>
+     <button className={`update-profile-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleUpdateProfile}>Update Profile</button>
+     <button className={`update-profile-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleCancel}>Cancel</button>
      {isUpdateSuccessful ? <p className="success-message">Profile update successful</p> : null}
         {error ? <p className='error-message'>{error}</p> : null}
      </div>

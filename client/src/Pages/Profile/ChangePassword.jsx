@@ -3,6 +3,8 @@ import './Profile.css';
 import { useNavigate } from 'react-router';
 import useAuth from '../../Hooks/useAuth';
 import { isValidPassword } from '../../Utility/Validation';
+import { ThemeContext } from '../../Context/ThemeProvider';
+import { useContext } from 'react';
 
 export default function ChangePassword() {
     const [oldPassword, setOldPassword] = useState('');
@@ -11,6 +13,7 @@ export default function ChangePassword() {
     const { setUser } = useAuth();
     const [error, setError] = useState("");
     const[isPasswordChangeSuccessful, setIsPasswordChangeSuccessful] = useState(false);
+    const { darkMode } = useContext(ThemeContext);
 
 const handleChangePassword = async () => {
     try{
@@ -50,25 +53,25 @@ const handleCancel = ()=> {
 
   return (
     <div>
-      <div className='change-password-container'>
+      <div className={`change-password-container ${darkMode ? 'dark-mode' : ''}`}>
       <h2>Change Password</h2>
       <h5>After changing your password, you need to log in again</h5>
       <input
-      className='update-profile-input'
+      className={`update-profile-input ${darkMode ? 'dark-mode' : ''}`}
         type="password"
         placeholder="Old Password"
         value={oldPassword}
         onChange={(e) => setOldPassword(e.target.value)}
       />
       <input
-      className='update-profile-input'
+      className={`update-profile-input ${darkMode? 'dark-mode' : ''}`}
         type="password"
         placeholder="New Password"
         value={newPassword}
         onChange={(e) => setNewPassword(e.target.value)}
       />
-      <button className='profile-button' onClick={handleChangePassword}>Change Password</button>
-      <button className='profile-button' onClick={handleCancel}>Cancel</button>
+      <button className={`profile-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleChangePassword}>Change Password</button>
+      <button className={`profile-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleCancel}>Cancel</button>
       {isPasswordChangeSuccessful ? <p className="success-message">Password change successful</p> : null}
         {error ? <p className='error-message'>{error}</p> : null}
       </div>

@@ -21,6 +21,10 @@
     align-items: center;
     justify-content: center;
   }
+  .modal.dark-mode{
+    background-color: #4b4a4a;
+
+  }
   
   .close-modal {
     position: absolute;
@@ -56,4 +60,13 @@
     }
 .noButton:hover {
      background-color: #228075;
+}
+.yesButton.dark-mode,
+.noButton.dark-mode{
+  background-color: #a688fa;
+}
+
+.yesButton.dark-mode:hover,
+.noButton.dark-mode:hover{
+  background-color: #7b5fda;
 }

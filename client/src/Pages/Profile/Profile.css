@@ -8,6 +8,9 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+.profile-card-container.dark-mode{
+    background-color: #4b4a4a;
+}
 .profile-buttons-container{
     display: flex;
     flex-direction: row;
@@ -16,6 +19,9 @@
 .profile-header{
     text-align: center;
     font-family: 'Libre Basketville',serif;
+}
+.profile-header.dark-mode{
+    background-color: #4b4a4a; 
 }
 .change-password-container,
 .update-profile-container{
@@ -28,6 +34,14 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+.change-password-container.dark-mode,
+.update-profile-container.dark-mode{
+    background-color: #4b4a4a;
+}
+.update-profile-header.dark-mode{
+    background-color: #4b4a4a;
+}
+
 .update-profile-label{
     display: block;
     margin-bottom: 6px;
@@ -54,10 +68,19 @@
     cursor: pointer;
     font-size: 16px;
   }
+  .profile-button.dark-mode,
+  .update-profile-button.dark-mode{
+    background-color: #a688fa;
+    color: #fff;
+  }
   
   /* Registration Button Hover Effect */
   .update-profile-button:hover,
   .profile-button:hover {
     background-color: #228075;
   }
+  .profile-button.dark-mode:hover,
+    .update-profile-button.dark-mode:hover{
+        background-color: #7d5fff;
+    }
  

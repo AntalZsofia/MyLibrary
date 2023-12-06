@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router';
 import './Profile.css';
 import Modal from '../../Components/Modal/Modal';
 import ChangePassword from './ChangePassword';
+import { ThemeContext } from '../../Context/ThemeProvider';
+import { useContext } from 'react';
 
 export default function Profile() {
     const [username, setUsername] = useState('');
@@ -16,6 +18,7 @@ export default function Profile() {
     const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
     const [userBooks, setUserBooks] = useState([]);
     const navigate = useNavigate();
+    const { darkMode } = useContext(ThemeContext);
 
     useEffect(() => {
 fetch('https://localhost:7276/api/user/me', {credentials: 'include'})
@@ -95,16 +98,16 @@ const getAllBooks = () => {
       {isLoading ? (
         <p>Loading...</p>
         ) : (
-          <div className='profile-card-container'>
-          <h1 className='profile-header'>Profile</h1>
+          <div className={`profile-card-container ${darkMode ? 'dark-mode' : ''}`}>
+          <h1 className={`profile-header ${darkMode ? 'dark-mode' : ''}`}>Profile</h1>
           <p>Username: {username}</p>
           <p>Email: {email}</p>
           <p>Joined: {joinedDate.slice(0, 10)}</p>
           <p>Books saved in your Collection: {booksCount}</p>
 <div className='profile-buttons-container'>
-          <button className='profile-button' onClick={handleUpdateProfile}>Update Profile</button>
-          <button className='profile-button' onClick={handleDeleteBooks}>Delete All Books</button>
-          <button className='profile-button' onClick={toggleChangePassword}>
+          <button className={`profile-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleUpdateProfile}>Update Profile</button>
+          <button className={`profile-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleDeleteBooks}>Delete All Books</button>
+          <button className={`profile-button ${darkMode ? 'dark-mode' : ''}`} onClick={toggleChangePassword}>
                         {isChangingPassword ? 'Cancel Change Password' : 'Change Password'}
                     </button>
 </div>
@@ -113,8 +116,8 @@ const getAllBooks = () => {
         {showDeleteAllBooks && showDeleteConfirmation && (
         <Modal onClose={closeDeleteConfirmation}>
         <h3>Are you sure you want to delete all your books?</h3>
-        <button className="yesButton" onClick={handleDeleteAllBooks}>Yes</button>
-        <button className="noButton" onClick={closeDeleteConfirmation}>No</button>
+        <button className={`yesButton ${darkMode ? 'dark-mode' : ''}`} onClick={handleDeleteAllBooks}>Yes</button>
+        <button className={`noButton ${darkMode ? 'dark-mode' : ''}`} onClick={closeDeleteConfirmation}>No</button>
       </Modal>
       )}
         </div>
