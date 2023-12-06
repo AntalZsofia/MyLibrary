@@ -49,11 +49,18 @@
     font-size: 18px;
     color: #333;
 }
+.review-card-rating.dark-mode{
+    color: #fff;
+}
 
 .review-card-review {
     margin-top: 10px;
     font-size: 16px;
     color: #333;
+}
+
+.review-card-review.dark-mode{
+    color: #fff;
 }
 .review-buttons-container {
     display: flex;
@@ -71,8 +78,17 @@
     font-size: 16px;
     margin-left: 10px;
 }
+.review-card-edit-button.dark-mode,
+.review-card-delete-button.dark-mode{
+    background-color: #a688fa;
+    color: #fff;
+}
 
 .review-card-edit-button:hover,
 .review-card-delete-button:hover{
     background-color: #21867a;
+}
+.review-card-edit-button.dark-mode:hover,
+.review-card-delete-button.dark-mode:hover{
+    background-color: #7b5fda;
 }

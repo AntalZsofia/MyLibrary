@@ -34,7 +34,7 @@ border-radius: 34px;
 
 } */
 input:checked + .slider{
-    background-color: #4e4e4e;
+    background-color: #636262;
 }
 input:checked + .slider:before{
     transform: translateX(26px);
