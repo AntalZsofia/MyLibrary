@@ -25,6 +25,16 @@
     background-color: #6F686D;
     color: white;
 }
+.user-allposts-table.dark-mode {
+    background-color: #333;
+    color: white;
+
+}
+.user-allposts-table-data.dark-mode {
+    background-color: #333;
+    color: white;
+
+}
 
 .user-allposts-table td {
     border-bottom: 1px solid #ddd;

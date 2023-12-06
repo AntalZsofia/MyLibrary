@@ -4,6 +4,8 @@ import './UserAllPosts.css';
 import { useState, useEffect } from 'react';
 import Modal from '../../Components/Modal/Modal';
 import { convertDate } from '../Admin/Admin';
+import { ThemeContext } from '../../Context/ThemeProvider';
+import { useContext } from 'react';
 
 export default function UserAllPosts() {
   const [isLoading, setIsLoading] = useState(true);
@@ -13,6 +15,7 @@ export default function UserAllPosts() {
   const [postId, setPostId] = useState(null);  
   const { id } = useParams();
   const navigate = useNavigate();
+  const { darkMode } = useContext(ThemeContext);
  
   useEffect(() => {
     setIsLoading(true);
@@ -75,9 +78,9 @@ export default function UserAllPosts() {
     return <div>Loading...</div>;
   }
   return (
-    <div className='user-allposts-table-container'>
+    <div className={`-allposts-table-container ${darkMode ? 'dark-mode' : ''}`}>
       <h2>Posts by {user} </h2>
-      <table className='user-allposts-table'>
+      <table className={`user-allposts-table ${darkMode ? 'dark-mode' : ''}`}>
         <thead>
           <tr>
             <th>Discussion Thread</th>
@@ -87,7 +90,7 @@ export default function UserAllPosts() {
             <th>Action</th>
           </tr>
         </thead>
-        <tbody className='user-allposts-table-data'>
+        <tbody className={`user-allposts-table-data ${darkMode ? 'dark-mode' : ''}`}>
           {!posts || posts.length === 0 ? (<div>User has no posts yet</div>)
           :
           (posts.map((post, index) => (
@@ -97,7 +100,7 @@ export default function UserAllPosts() {
               <td>{convertDate(post.postCreationDate)}</td>
               <td>{post.likes}</td>
               <td>
-                  <button className='admin-table-button' onClick={handleDeleteClick}>Delete</button>
+                  <button className={`admin-table-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleDeleteClick}>Delete</button>
               </td>
             </tr>
           )))}
