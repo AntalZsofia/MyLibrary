@@ -71,7 +71,7 @@ const handleClick = () => {
             </div>
             <div className='post-more-button-container'>
             {postUser.userName.username === user.userName && (
-              <button className={`post-more-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleClick}>More</button>
+              <button className={`post-more-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleClick}>Update</button>
             )}
             </div>
       </div>

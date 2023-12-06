@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 import './BookReview.css';
+import { useContext } from 'react';
+import { ThemeContext } from '../../Context/ThemeProvider';
 
 const Star = ({ selected = false, onClick = f => f }) => (
     <div onClick={onClick} className={selected ? 'star-selected' : 'star-not-selected'}>
@@ -14,6 +16,7 @@ const BookReview = ({ id, title, author, genre, imageUrl, publishDate, descripti
     const [showReview, setShowReview] = useState(false);
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState('');
+    const { darkMode } = useContext(ThemeContext);
 
     const openReview = () => {
         setShowReview(true);
@@ -56,7 +59,7 @@ const BookReview = ({ id, title, author, genre, imageUrl, publishDate, descripti
     return (
 
 
-        <div className="book-card">
+        <div className={`book-card ${darkMode ? 'dark-mode' : ''}`}>
             <img src={imageUrl} alt={`${title} cover`} className="book-image" />
 
             <div className='book-details'>
@@ -64,13 +67,13 @@ const BookReview = ({ id, title, author, genre, imageUrl, publishDate, descripti
                 <p className="book-author">Author: {author} </p>
                 <p className="book-genre">Genre: {genre}</p>
                 <p className="book-publish-year">Published: {publishDate}</p>
-                <button className="add-book-button" onClick={openReview}>Write Review</button>
+                <button className={`add-book-button ${darkMode ? 'dark-mode' : ''}`} onClick={openReview}>Write Review</button>
                 {showReview && (
-                    <div className="modal-review">
-                        <div className="modal-content-review">
+                    <div className={`modal-review ${darkMode ? 'dark-mode' : ''}`}>
+                        <div className={`modal-content-review ${darkMode ? 'dark-mode' : ''}`}>
                             
                             <form>
-                                <div className='review-rating-container'>
+                                <div className={`review-rating-container ${darkMode ? 'dark-mode' : ''}`}>
                                     <div className='review-rating-title'>Rating</div>
                                     <div className='rating-stars'>
                                     {[...Array(5)].map((n, i) => (
@@ -78,7 +81,7 @@ const BookReview = ({ id, title, author, genre, imageUrl, publishDate, descripti
                                     ))}
                                     </div>
                                     <div className='review-rating-title'>Review</div>
-                                    <textarea className="review" 
+                                    <textarea className={`review ${darkMode ? 'dark-mode' : ''}`} 
                                     name="review" 
                                     rows="4" 
                                     cols="50" 
@@ -86,8 +89,8 @@ const BookReview = ({ id, title, author, genre, imageUrl, publishDate, descripti
                                     onChange={(e) => setReview(e.target.value)}></textarea>
                                  </div>
                                  <div className='review-buttons-container'>
-                                    <button className="review-book-button" onClick={handleReviewBook}>Submit</button>
-                                    <button className='cancel-review-button' onClick={closeReview}>Cancel</button>
+                                    <button className={`review-book-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleReviewBook}>Submit</button>
+                                    <button className={`cancel-review-button ${darkMode ? 'dark-mode' : ''}`} onClick={closeReview}>Cancel</button>
                             </div>
                             </form>
                     </div>

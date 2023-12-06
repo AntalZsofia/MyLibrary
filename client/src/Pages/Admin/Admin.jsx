@@ -116,8 +116,8 @@ const handleDeleteClick = (userId) => {
       {showDeleteConfirmation && (
         <Modal onClose={closeDeleteConfirmation}>
         <h3>Are you sure you want to delete this user?</h3>
-        <button className="yesButton" onClick={handleDeleteUser}>Yes</button>
-        <button className="noButton" onClick={closeDeleteConfirmation}>No</button>
+        <button className={`yesButton ${darkMode ? 'dark-mode' : ''}`} onClick={handleDeleteUser}>Yes</button>
+        <button className={`noButton ${darkMode ? 'dark-mode' : ''}`} onClick={closeDeleteConfirmation}>No</button>
       </Modal>
       )}
     </div>

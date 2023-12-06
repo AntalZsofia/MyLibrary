@@ -1,11 +1,11 @@
 .post-card-container {
-    border: 1px solid #ccc;
+   
     padding: 20px;
     margin: 0 0 20px;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    transition: box-shadow 0.3s ease-in-out;
+    
   }
   .post-card-container.dark-mode{
     background-color: #333;
