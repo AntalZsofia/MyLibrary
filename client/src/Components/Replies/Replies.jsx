@@ -3,6 +3,8 @@ import { useParams } from 'react-router';
 import './Replies.css';
 import ReplyCard from '../ReplyCard/ReplyCard';
 import Like from './../../Icons/like.png';
+import { ThemeContext } from '../../Context/ThemeProvider';
+import { useContext } from 'react';
 
 export function convertDate(timestamp) {
   const date = new Date(timestamp);
@@ -24,6 +26,7 @@ export default function Replies({ discussionThread }) {
   const [replies, setReplies] = useState([]);
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const { darkMode } = useContext(ThemeContext);
 
   const fetchReplies = () => {
     setIsLoading(true);
@@ -46,22 +49,22 @@ export default function Replies({ discussionThread }) {
   }
 
   return (
-    <div className="replies-container">
+    <div className={`replies-container ${darkMode ? 'dark-mode' : ''}`}>
       {!replies || replies.length === 0 ? (
         <div className='no-reply-message'>Be the first one to reply</div>
       ) : (
         <>
-          <ul className="replies-list">
+          <ul className={`replies-list ${darkMode ? 'dark-mode' : ''}`}>
             {replies.map((reply) => (
-              <li key={reply.id} className="reply-item">
+              <li key={reply.id} className={`reply-item ${darkMode ? 'dark-mode' : ''}`}>
                 <div className="reply-header">
                   <h4>Re: {discussionThread}</h4>
                 </div>
                 <div className="reply-content">{reply.reply}</div>
-                <div className='reply-postCreationDate'>Answered at: {convertDate(reply.postCreationDate)}</div>
-                <div className='reply-user'>By: {reply.user.userName}</div>
+                <div className= {`reply-postCreationDate ${darkMode ? 'dark-mode' : ''}`}>Answered at: {convertDate(reply.postCreationDate)}</div>
+                <div className={`reply-user ${darkMode ? 'dark-mode' : ''}`}>By: {reply.user.userName}</div>
                 <div className='like-button-container'>
-            <img src={Like} alt='logo' className='like'></img>
+            <img src={Like} alt='logo' className={`like ${darkMode ? 'dark-mode' : ''}`}></img>
             <p className='like-message'>Like</p>
             </div>
               </li>

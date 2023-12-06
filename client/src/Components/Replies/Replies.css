@@ -1,5 +1,9 @@
 .replies-container {
     margin-top: 20px;
+    
+  }
+  .replies-container.dark-mode{
+    background-color: #333;
   }
   
   .replies-list {
@@ -9,9 +13,14 @@
   
   .reply-item {
     margin-bottom: 20px;
+    background-color: #ffffff;
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 8px;
+  }
+  .reply-item.dark-mode{
+    background-color: #4b4a4a;
+    border: 1px solid #faf9f9;
   }
   
   .reply-header {
@@ -29,9 +38,17 @@
       color: #555;
       margin-bottom: 10px;
   }
+  .reply-postCreationDate.dark-mode{
+    color: #838282;
+    background-color: #4b4a4a;
+  }
   .reply-user{
     font-size: 14px;
     color: #555;
+  }
+  .reply-user.dark-mode{
+    color: #838282;
+    background-color: #4b4a4a;
   }
   .no-reply-message{
     text-align: center;
@@ -39,4 +56,7 @@
     font-size:25px;
     font-weight: bold;
     margin-top: 30px;
+  }
+  .like.dark-mode{
+    background-color: #4b4a4a;
   }

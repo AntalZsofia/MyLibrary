@@ -5,7 +5,8 @@ import { useNavigate, useParams } from 'react-router';
 import Replies from '../Replies/Replies';
 import Like from './../../Icons/like.png';
 import useAuth from '../../Hooks/useAuth';
-
+import { ThemeContext } from '../../Context/ThemeProvider';
+import { useContext } from 'react';
 
 export function convertDate(timestamp) {
   const date = new Date(timestamp);
@@ -30,6 +31,7 @@ const PostCard = () => {
   const { user } = useAuth();
   const [postUser, setPostUser] = useState('');
   const navigate = useNavigate();
+  const { darkMode } = useContext(ThemeContext);
 
 
   useEffect(() => {
@@ -56,9 +58,9 @@ const handleClick = () => {
 
   return (
     <>
-      <div className="post-card-container">
+      <div className={`post-card-container ${darkMode ? 'dark-mode' : ''}`}>
 
-        <div className="post-details">
+        <div className={`post-details ${darkMode ? 'dark-mode' : ''}`}>
           <p className="post-postTitle">Title: {post.discussionThread}</p>
           <p className="post-content">Content: {post.content}</p>
           <p className="post-postCreatinDate">Posted at: {convertDate(post.postCreationDate)}</p>
@@ -69,7 +71,7 @@ const handleClick = () => {
             </div>
             <div className='post-more-button-container'>
             {postUser.userName.username === user.userName && (
-              <button className='post-more-button' onClick={handleClick}>More</button>
+              <button className={`post-more-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleClick}>More</button>
             )}
             </div>
       </div>
