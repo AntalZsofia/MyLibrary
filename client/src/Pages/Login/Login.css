@@ -59,7 +59,14 @@
   cursor: pointer;
   transition: background-color 0.3s;
 }
+.login-card button.dark-mode{
+  background-color: #a688fa;
+  color: #fff;
+}
 
 .login-card button:hover {
   background-color: #228075;
+}
+.login-card button.dark-mode:hover {
+  background-color: #7b5fda;
 }

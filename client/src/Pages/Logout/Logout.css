@@ -17,3 +17,9 @@
 .logout-button:hover{
     background-color: #228075;
 }
+.logout-button.dark-mode{
+    background-color: #a688fa;
+}
+.logout-button.dark-mode:hover{
+    background-color: #7b5fda;
+}

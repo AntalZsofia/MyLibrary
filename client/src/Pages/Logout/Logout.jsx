@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import './Logout.css';
 import useAuth from '../../Hooks/useAuth';
+import { ThemeContext } from '../../Context/ThemeProvider';
+import { useContext } from 'react';
 
 
 
@@ -9,6 +11,7 @@ const Logout = () => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const { setUser } = useAuth();
+    const { darkMode } = useContext(ThemeContext);
   
     const handleLogout = async () => {
       setIsLoading(true);
@@ -38,7 +41,7 @@ const Logout = () => {
         <h2>Logout</h2>
         <p>Are you sure you want to log out?</p>
         <button
-          className={`logout-button ${isLoading ? 'loading' : ''}`}
+          className={`logout-button ${isLoading ? 'loading' : ''} ${darkMode ? 'dark-mode' : ''}`}
           onClick={handleLogout}
           disabled={isLoading}
         >

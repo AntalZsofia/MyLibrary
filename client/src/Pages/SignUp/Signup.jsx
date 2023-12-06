@@ -4,6 +4,8 @@ import './SignUp.css';
 import useAuth from './../../Hooks/useAuth';
 import { isValidUsername, isValidPassword, isValidEmail } from '../../Utility/Validation';
 import Account from './../../Icons/account.png';
+import { ThemeContext } from '../../Context/ThemeProvider';
+import { useContext } from 'react';
 
 function Registration() {
   const [userName, setUserName] = useState('');
@@ -13,6 +15,7 @@ function Registration() {
   const { setUser } = useAuth();
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { darkMode } = useContext(ThemeContext);
 
   const handleRegistration = () => {
     if(!isValidUsername(userName)){
@@ -60,15 +63,15 @@ function Registration() {
   };
 
   return (
-    <div className="registration-container">
-      <div className="registration-card">
+    <div className={`registration-container ${darkMode ? 'dark-mode' : ''}`}>
+      <div className={`registration-card ${darkMode ? 'dark-mode' : ''}`}>
       <div className="icon-container">
           <img src={Account} alt="Account" className="account-icon" />
         </div>
         <h2>Registration</h2>
         <input
           type="text"
-          className="registration-input"
+          className={`registration-input ${darkMode ? 'dark-mode' : ''}`}
           placeholder="Username"
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
@@ -76,7 +79,7 @@ function Registration() {
         />
         <input
           type="password"
-          className="registration-input"
+          className={`registration-input ${darkMode ? 'dark-mode' : ''}`}
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -84,12 +87,12 @@ function Registration() {
         />
         <input
           type="email"
-          className="registration-input"
+          className={`registration-input ${darkMode ? 'dark-mode' : ''}`}
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <button className="registration-button" onClick={handleRegistration}>
+        <button className={`registration-button ${darkMode ? 'dark-mode' : ''}`} onClick={handleRegistration}>
           Register
         </button>
         {isRegistrationSuccessful ? <p className="success-message">Registration successful</p> : null}

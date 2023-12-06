@@ -62,10 +62,17 @@
     cursor: pointer;
     transition: background-color 0.3s;
   }
+  .registration-button.dark-mode {
+    background-color: #a688fa;
+    color: white;
+  }
   
   /* Registration Button Hover Effect */
   .registration-button:hover {
     background-color: #228075;
+  }
+  .registration-button.dark-mode:hover {
+    background-color: #7b5fda;
   }
  .error-message{
   color: red;
