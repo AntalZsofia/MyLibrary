@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import './Admin.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Modal from '../../Components/Modal/Modal';
+import { ThemeContext } from '../../Context/ThemeProvider';
+import { useContext } from 'react';
 
 export function convertDate(timestamp) {
   const date = new Date(timestamp);
@@ -24,6 +26,7 @@ export default function Admin() {
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [userIdToDelete, setUserIdToDelete] = useState(null);
     const navigate = useNavigate();
+    const { darkMode } = useContext(ThemeContext);
 
 const fetchUsers = () => {
     setIsLoading(true);
@@ -80,9 +83,9 @@ const handleDeleteClick = (userId) => {
     closeDeleteConfirmation();
   }
   return (
-    <div className='admin-table-container'>
+    <div className={`admin-table-container ${darkMode ? 'dark-mode' : ''}`}>
       <h2>Users</h2>
-      <table className='admin-table-users'>
+      <table className={`admin-table-users ${darkMode ? 'dark-mode' : ''}`}>
         <thead>
           <tr>
             <th>Email</th>
@@ -92,7 +95,7 @@ const handleDeleteClick = (userId) => {
             <th>Action</th>
           </tr>
         </thead>
-        <tbody className='admin-table-data'>
+        <tbody className={`admin-table-data ${darkMode ? 'dark-mode' : ''}`}>
           {users.map((user, index) => (
             <tr key={index}>
               <td>{user.email}</td>
@@ -100,11 +103,11 @@ const handleDeleteClick = (userId) => {
               <td>{convertDate(user.profileCreationDate)}</td>
               <td>
                 <NavLink to={`/admin/posts/${user.user.id}`}>
-                  <button className='admin-table-button'>View</button>
+                  <button className={`admin-table-button ${darkMode ? 'dark-mode' : ''}`}>View</button>
                 </NavLink>
               </td>
               <td>
-                  <button className='admin-table-button' onClick={() => handleDeleteClick(user.user.id)}>Delete</button>
+                  <button className={`admin-table-button ${darkMode ? 'dark-mode' : ''}`} onClick={() => handleDeleteClick(user.user.id)}>Delete</button>
               </td>
             </tr>
           ))}

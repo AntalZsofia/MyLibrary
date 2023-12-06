@@ -10,6 +10,9 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+.admin-table-container.dark-mode{
+    background-color: #4b4a4a;
+}
 .admin-table-users {
   border-collapse: collapse;
   width: 100%;
@@ -35,6 +38,10 @@
     background-color: white;
     
 }
+.admin-table-data.dark-mode{
+    background-color: #333;
+    color: #fff;
+}
 .admin-table-button{
     background-color: #2A9D8F;
     color: #fff;
@@ -46,4 +53,11 @@
 }
 .admin-table-button:hover {
     background-color: #228075;
+}
+.admin-table-button.dark-mode{
+    background-color: #a688fa;
+    color: #fff;
+}
+.admin-table-button.dark-mode:hover{
+    background-color: #7b5fda;
 }
