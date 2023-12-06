@@ -16,6 +16,12 @@
     transition: 0.3s;
     
 }
+.review-card.dark-mode{
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #fff;
+
+}
 
 .review-card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);

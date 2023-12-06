@@ -3,9 +3,12 @@ import { useState } from 'react';
 import BookReview from '../../Components/BookReview/BookReview';
 import './FinishedBooks.css';
 import AllReviews from '../../Components/AllReviews/AllReviews';
+import { useContext } from 'react';
+import { ThemeContext } from '../../Context/ThemeProvider';
 
 export default function FinishedBook() {
     const [currentBook, setCurrentBook] = useState([]);
+    const { darkMode } = useContext(ThemeContext);
 
     useEffect(() => {
         fetch('https://localhost:7276/reading-status/Finished', { credentials: "include" })
@@ -21,9 +24,9 @@ export default function FinishedBook() {
 
     return (
         <div>
-            <div className='review-books-header'>Books to review</div>
+            <div className={`review-books-header ${darkMode ? 'dark-mode' : ''}`}>Books to review</div>
             {!currentBook || currentBook.length === 0 ? (
-                <div className='my-books-message'>You don't have any books in your finished reading collection.</div>
+                <div className={`my-books-message ${darkMode ? 'dark-mode' : ''}`}>You don't have any books in your finished reading collection.</div>
             ) : (
                 <div className="my-books-list">
                     {currentBook.map((book, index) => (
@@ -42,7 +45,7 @@ export default function FinishedBook() {
 
                 </div>
             )}
-            <div className='reviewed-books-header'>My Reviews</div>
+            <div className={`reviewed-books-header ${darkMode ? 'dark-mode' : ''}`}>My Reviews</div>
             <AllReviews />
         </div>
     )
