@@ -24,4 +24,6 @@ public interface IBookService
     Task<IEnumerable<Book>> GetReadingStatusAsync(string username, ReadingStatus readingStatus);
     Task<ReviewResult>AddReviewToBookAsync(BookReviewDto bookReviewDto, string username);
     Task<List<BookReviewPrewDto>> GetAllReviewsAsync();
+    Task<List<BookSearchResultDto>> GetBooksBySameAuthorAsync(string author, string title, string username,
+        IConfiguration configuration);
 }

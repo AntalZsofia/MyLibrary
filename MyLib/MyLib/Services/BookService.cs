@@ -436,6 +436,81 @@ public class BookService : IBookService
         }
     }
 
+    public async Task<List<BookSearchResultDto>> GetBooksBySameAuthorAsync(string author, string title, string username,
+        IConfiguration configuration)
+    {
+        try
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            string? apiKey = configuration.GetSection("GoogleBooksApi")["ApiKey"];
+            // Define the Google Books API endpoint
+            string apiUrl = $"https://www.googleapis.com/books/v1/volumes?q={Uri.EscapeDataString(author)}&key={apiKey}";
+
+            // Make the HTTP request to the Google Books API
+            HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string json = await response.Content.ReadAsStringAsync();
+                var searchResult = JsonConvert.DeserializeObject<GoogleBooksApiResponse>(json);
+
+                if (searchResult.Items != null && searchResult.Items.Count > 0)
+                {
+                    // Extract the relevant information from the API response
+                    var books = new List<BookSearchResultDto>();
+
+                    foreach (var item in searchResult.Items)
+                    {
+                        var book = new BookSearchResultDto
+                        {
+                            Title = item.VolumeInfo.Title,
+                            Author = item.VolumeInfo.Authors != null ? string.Join(", ", item.VolumeInfo.Authors) : null,
+                            PublishDate = item.VolumeInfo.PublishedDate,
+                            Genre = item.VolumeInfo.Categories != null
+                                ? string.Join(", ", item.VolumeInfo.Categories)
+                                : null,
+                            Description = item.VolumeInfo.Description,
+                            SmallCoverImage = item.VolumeInfo.ImageLinks?.SmallThumbnail
+                        };
+
+                        books.Add(book);
+                    }
+                        var recommendedBooks = books
+                            .Where(b => b.Author == author && b.Title != title)
+                            .Take(3)
+                            .ToList();
+                            
+                     
+                        var booksDto = recommendedBooks.Select(b => new BookSearchResultDto()
+                        {
+                            Author = b.Author!,
+                            Title = b.Title,
+                            Genre = b.Genre,
+                            Description = b.Description,
+                            PublishDate = b.PublishDate,
+                            SmallCoverImage = b.SmallCoverImage
+                            
+                        }).ToList();
+                    return booksDto;
+                    
+                }
+            }
+
+            // Handle API errors or no results found
+            return null;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new Exception("An error occurred while searching for books.");
+        }
+    }
+
     public async Task<int> GetUserBookCount(string username)
     {
         try
