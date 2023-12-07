@@ -157,6 +157,7 @@ public class BookService : IBookService
             var userBooks = await _context.Books
                 .Include(b => b.Author)
                 .Where(b => b.User == user)
+                .OrderBy(b =>b.Title)
                 .ToListAsync();
 
             if (userBooks == null || !userBooks.Any())
