@@ -180,8 +180,8 @@ console.log(id);
       {showDeleteBook && showDeleteConfirmation && (
         <Modal onClose={closeDeleteConfirmation}>
           <h3>Are you sure you want to delete this book?</h3>
-          <button className="yesButton" onClick={handleDeleteBook}>Yes</button>
-          <button className="noButton" onClick={closeDeleteConfirmation}>No</button>
+          <button className={`yesButton ${darkMode ? 'dark-mode' : ''}`} onClick={handleDeleteBook}>Yes</button>
+          <button className={`noButton ${darkMode ? 'dark-mode' : ''}`} onClick={closeDeleteConfirmation}>No</button>
         </Modal>
       )}
     </div>

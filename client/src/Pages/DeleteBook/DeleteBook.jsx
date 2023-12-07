@@ -2,12 +2,15 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import{ useParams } from 'react-router-dom';
 import Modal from './../../Components/Modal/Modal'
+import { ThemeContext } from '../../Context/ThemeProvider';
+import { useContext } from 'react';
 
 export default function DeleteBook() {
     const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
     const [book, setBook] = useState();
     const { id } = useParams();
     const [isLoading, setIsLoading] = useState(true);
+    const { darkMode } = useContext(ThemeContext);
 
     useEffect(() => {
         setIsLoading(true);
@@ -77,8 +80,8 @@ export default function DeleteBook() {
         {isDeleteConfirmationVisible && (
             <Modal onClose={closeDeleteConfirmation}>
             <h3>Are you sure you want to delete this book?</h3>
-            <button className="yesButton" onClick={handleDeleteBook}>Yes</button>
-            <button className="noButton" onClick={closeDeleteConfirmation}>No</button>
+            <button className={`yesButton ${darkMode ? 'dark-mode' : ''}`} onClick={handleDeleteBook}>Yes</button>
+            <button className={`noButton ${darkMode ? 'dark-mode' : ''}`} onClick={closeDeleteConfirmation}>No</button>
           </Modal>
           )}
 
