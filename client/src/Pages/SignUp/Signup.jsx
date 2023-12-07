@@ -4,6 +4,7 @@ import './SignUp.css';
 import useAuth from './../../Hooks/useAuth';
 import { isValidUsername, isValidPassword, isValidEmail } from '../../Utility/Validation';
 import Account from './../../Icons/account.png';
+import AccountDarkMode from './../../Icons/account-dark-mode.png';
 import { ThemeContext } from '../../Context/ThemeProvider';
 import { useContext } from 'react';
 
@@ -66,7 +67,7 @@ function Registration() {
     <div className={`registration-container ${darkMode ? 'dark-mode' : ''}`}>
       <div className={`registration-card ${darkMode ? 'dark-mode' : ''}`}>
       <div className="icon-container">
-          <img src={Account} alt="Account" className="account-icon" />
+          <img src={darkMode? AccountDarkMode : Account} alt="Account" className="account-icon" />
         </div>
         <h2>Registration</h2>
         <input
