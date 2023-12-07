@@ -6,6 +6,7 @@ import UpdateBook from '../UpdateBook/UpdateBook';
 import './SelectedBook.css';
 import { useContext } from 'react';
 import { ThemeContext } from '../../Context/ThemeProvider';
+import BookRecommendation from '../../Components/BookRecommendation/BookRecommendation';
 
 export default function SelectedBook() {
 
@@ -20,6 +21,8 @@ console.log(bookReadingStatus);
   const navigate = useNavigate();
   const { id } = useParams();
   const { darkMode } = useContext(ThemeContext);
+  const [author, setAuthor] = useState('');
+  const [title, setTitle] = useState('');
 
   useEffect(() => {
 
@@ -29,6 +32,8 @@ console.log(bookReadingStatus);
         console.log(data);
         setSelectedBook(data);
         setBookReadingStatus(data.readingStatus || "NotStarted");
+        setAuthor(data.author);
+        setTitle(data.title);
       })
       .catch(err => console.log(err))
     
@@ -120,6 +125,7 @@ console.log(id);
   }
 
   return (
+    <>
     <div className={`selected-book-card ${darkMode ? 'dark-mode' : ''}`}>
       <img src={selectedBook.smallCoverImage} alt={`${selectedBook.title} cover`} className="selected-book-image" />
 
@@ -179,5 +185,9 @@ console.log(id);
         </Modal>
       )}
     </div>
+      <BookRecommendation 
+      author={author}
+      title={title} />
+      </>
   )
 }
