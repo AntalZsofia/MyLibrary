@@ -3,6 +3,8 @@ import './BookCardColl.css';
 import { NavLink } from "react-router-dom";
 import openBook from './../../Icons/open-book.png';
 import checked from './../../Icons/checked.png';
+import checkedDarkMode from './../../Icons/checked-dark-mode.png';
+import openBookDarkMode from './../../Icons/open-book-dark-mode.png';
 import { ThemeContext } from '../../Context/ThemeProvider.jsx';
 import { useContext } from 'react';
 
@@ -39,8 +41,8 @@ const BookCardColl = ({ title, author, genre, imageUrl, publishYear, description
 
           
             <div className="buttons-container">
-              {readingStatus === 'Reading' && <img src={openBook} alt="Reading" className={`reading-icon ${darkMode ? 'dark-mode' : ''}`} />}
-              {readingStatus === 'Finished' && <img src={checked} alt="Finished" className={`finished-icon ${darkMode ? 'dark-mode' : ''}`} />}
+              {readingStatus === 'Reading' && <img src={darkMode? openBookDarkMode : openBook} alt="Reading" className='reading-icon' />}
+              {readingStatus === 'Finished' && <img src={darkMode ? checkedDarkMode : checked} alt="Finished" className='finished-icon' />}
               <NavLink to={`/selected-book/${id}`}>
                 <button className={`more-book-button ${darkMode ? 'dark-mode'  :''}`}>More</button>
               </NavLink>

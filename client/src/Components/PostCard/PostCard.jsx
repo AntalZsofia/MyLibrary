@@ -4,6 +4,7 @@ import ReplyCard from '../ReplyCard/ReplyCard';
 import { useNavigate, useParams } from 'react-router';
 import Replies from '../Replies/Replies';
 import Like from './../../Icons/like.png';
+import LikeDarkMode from './../../Icons/like-dark-mode.png';
 import useAuth from '../../Hooks/useAuth';
 import { ThemeContext } from '../../Context/ThemeProvider';
 import { useContext } from 'react';
@@ -66,7 +67,7 @@ const handleClick = () => {
           <p className="post-postCreatinDate">Posted at: {convertDate(post.postCreationDate)}</p>
           <p className="post-user">By: {post.user.userName}</p>
           <div className='like-button-container'>
-            <img src={Like} alt='logo' className='like'></img>
+            <img src={darkMode? LikeDarkMode : Like} alt='logo' className='like'></img>
             <p className='like-message'>Like</p>
             </div>
             <div className='post-more-button-container'>

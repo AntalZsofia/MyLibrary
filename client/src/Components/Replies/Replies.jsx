@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import './Replies.css';
 import ReplyCard from '../ReplyCard/ReplyCard';
 import Like from './../../Icons/like.png';
+import LikeDarkMode from './../../Icons/like-dark-mode.png';
 import { ThemeContext } from '../../Context/ThemeProvider';
 import { useContext } from 'react';
 
@@ -64,7 +65,7 @@ export default function Replies({ discussionThread }) {
                 <div className= {`reply-postCreationDate ${darkMode ? 'dark-mode' : ''}`}>Answered at: {convertDate(reply.postCreationDate)}</div>
                 <div className={`reply-user ${darkMode ? 'dark-mode' : ''}`}>By: {reply.user.userName}</div>
                 <div className='like-button-container'>
-            <img src={Like} alt='logo' className={`like ${darkMode ? 'dark-mode' : ''}`}></img>
+            <img src={darkMode ? LikeDarkMode : Like} alt='logo' className={`like ${darkMode ? 'dark-mode' : ''}`}></img>
             <p className='like-message'>Like</p>
             </div>
               </li>

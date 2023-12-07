@@ -3,6 +3,7 @@ import useAuth from './../../Hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import Account from './../../Icons/account.png';
+import AccountDarkMode from './../../Icons/account-dark-mode.png';
 import { ThemeContext } from '../../Context/ThemeProvider';
 import { useContext } from 'react';
 
@@ -52,7 +53,7 @@ function Login() {
     <div className={`login-container ${darkMode ? 'dark-mode' : ''}`}>
       <div className={`login-card ${darkMode ? 'dark-mode' : ''}`}>
         <div className={`icon-container ${darkMode ? 'dark-mode' : ''}`}>
-          <img src={Account} alt="Account" className="account-icon" />
+          <img src={darkMode ? AccountDarkMode : Account} alt="Account" className="account-icon" />
         </div>
         <h2>Login</h2>
         <input
