@@ -387,4 +387,25 @@ public class BookController : ControllerBase
             }
         }
         
+        //Get books by same author
+        [HttpGet("/same-author/{author}-{title}")]
+        public async Task<IActionResult> GetBooksBySameAuthor(string author, string title)
+        {
+            try
+            {
+                var username = HttpContext.User.Identity!.Name;
+                var books = await _bookService.GetBooksBySameAuthorAsync( author, title, username!, _configuration);
+                if (books == null)
+                {
+                    return Ok(new Response() { Message = "No books found." });
+                }
+
+                return Ok(books);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
 }
