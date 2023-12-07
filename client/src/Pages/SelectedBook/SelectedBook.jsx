@@ -11,13 +11,12 @@ import BookRecommendation from '../../Components/BookRecommendation/BookRecommen
 export default function SelectedBook() {
 
   const [selectedBook, setSelectedBook] = useState({});
-  console.log(selectedBook);
   const [showUpdateBook, setShowUpdateBook] = useState(false);
   const [showDeleteBook, setShowDeleteBook] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
   const [bookReadingStatus, setBookReadingStatus] = useState(selectedBook.readingStatus || "NotStarted");
-console.log(bookReadingStatus);
+
   const navigate = useNavigate();
   const { id } = useParams();
   const { darkMode } = useContext(ThemeContext);
@@ -29,7 +28,6 @@ console.log(bookReadingStatus);
     fetch(`https://localhost:7276/get-book/${id}`, { credentials: 'include'})
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         setSelectedBook(data);
         setBookReadingStatus(data.readingStatus || "NotStarted");
         setAuthor(data.author);
@@ -94,7 +92,7 @@ console.log(bookReadingStatus);
     setShowDeleteConfirmation(false);
     navigate(`/selected-book/${id}`)
   };
-console.log(id);
+
 
   const handleUpdateReadingStatus = async () => {
     try {
