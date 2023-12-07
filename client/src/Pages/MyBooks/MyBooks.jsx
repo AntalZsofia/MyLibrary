@@ -14,7 +14,7 @@ const MyBooks = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const { darkMode } = useContext(ThemeContext);
   
-  console.log(darkMode);
+  
 
   useEffect(() => {
     setIsLoading(true);

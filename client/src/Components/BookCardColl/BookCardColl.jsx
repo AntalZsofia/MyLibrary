@@ -39,8 +39,8 @@ const BookCardColl = ({ title, author, genre, imageUrl, publishYear, description
 
           
             <div className="buttons-container">
-              {readingStatus === 'Reading' && <img src={openBook} alt="Reading" style={{ width: '40px', height: '40px' }} />}
-              {readingStatus === 'Finished' && <img src={checked} alt="Finished" style={{ width: '40px', height: '40px' }} />}
+              {readingStatus === 'Reading' && <img src={openBook} alt="Reading" className={`reading-icon ${darkMode ? 'dark-mode' : ''}`} />}
+              {readingStatus === 'Finished' && <img src={checked} alt="Finished" className={`finished-icon ${darkMode ? 'dark-mode' : ''}`} />}
               <NavLink to={`/selected-book/${id}`}>
                 <button className={`more-book-button ${darkMode ? 'dark-mode'  :''}`}>More</button>
               </NavLink>

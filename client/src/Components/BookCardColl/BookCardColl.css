@@ -68,8 +68,24 @@
     align-items: center;
     gap: 20px;
 }
+.reading-icon,
+.finished-icon{
+    width: 40px;
+    height: 40px;
+}
+/* .reading-icon.dark-mode,
+.finished-icon.dark-mode{
+    filter: invert(1);
+
+} */
+/* img.dark-mode{
+    filter: invert(1);
+} */
 
 .star-container {
     display: flex;
     gap: 5px;
 }
+/* .buttons-container img.dark-mode{
+    filter: invert(1);
+} */
