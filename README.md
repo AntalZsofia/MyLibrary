@@ -1,10 +1,11 @@
-﻿MyLibrary - Book Management System App
+﻿# MyLibrary - Book Management System App
 
 ## Overview
 
 MyLibrary is a user-friendly application designed to help book enthusiasts organize and manage their book collections.
-With this app, you can create virtual bookshelves, categorize your books, and keep track of your reading materials 
-efficiently.
+With this app, you can keep track of your reading materials, share your thought with other users about books, mark your
+current reading progress and give a rate and review when you finish reading. You can also search for books by title, 
+genre, author, or ISBN efficiently.
 
 ## Table of Contents
 
@@ -15,12 +16,11 @@ efficiently.
 
 ## Features
 
-- **Create Bookshelves:** 
-Organize your books by creating multiple virtual bookshelves. You can have separate bookshelves for different genres,
- authors, or any categorization that suits your preferences.
+- **User Registration:** Create an account to get started. Registration may require providing your 
+email address and name.
 
 - **Add Books:** 
-Easily add books to your bookshelves by providing book details such as title, author, publication date, and genre. 
+Easily add books to your collection by providing book details such as title, author, publication date, and genre. 
 You can also include additional information like the book's cover image or ISBN.
 
 - **Update Book Information:** Edit and update book details whenever needed. This feature is handy when you want 
@@ -35,6 +35,18 @@ them in your collection.
 - **User-Friendly Interface:** The app offers an intuitive and user-friendly interface, making it easy for users of all
  levels to navigate and manage their book collections.
 
+- **Responsive Design:** The app is designed to be responsive and accessible on all devices, including desktops, 
+mobile phones, and tablets.
+
+- **Secure Authentication:** User authentication is handled with JSON Web Tokens (JWT) for security.
+
+- **Rate and Review:** Rate and review books you've read to share your thoughts with other users.
+
+- **Reading Progress:** Mark your current reading progress and update it whenever you finish reading.
+
+- **Share Books:** Share books with other users to recommend your favorites or share your thoughts.
+
+- **Dark-mode:** The app offers a dark-mode option for users who prefer a darker color scheme.
 
 
 
@@ -46,13 +58,10 @@ To get started with the Book Management System App, follow these steps:
 1. **Registration:** Create an account or log in if you already have one. Registration may require providing your 
 email address and setting a password.
 
-2. **Create Bookshelves:** Start by creating bookshelves that match your categorization preferences. 
-You can create bookshelves for genres, authors, or any other criteria you prefer.
-
-3. **Add Books:** Begin adding books to your bookshelves. Fill in the book details, and you can even upload cover 
+2. **Add Books:** Begin adding books to your collection. Fill in the book details, and you can even upload cover 
 images or scan ISBN barcodes to auto-populate book information.
 
-4. **Manage Your Collection:** Use the app to manage your book collection efficiently. Update book details, 
+3. **Manage Your Collection:** Use the app to manage your book collection efficiently. Update book details, 
 remove books, or search for specific titles with ease.
 
 
@@ -68,3 +77,4 @@ remove books, or search for specific titles with ease.
 
 - **Authentication:** User authentication is handled with [JSON Web Tokens (JWT)](https://jwt.io/) for security.
 
+## Website Preview
