@@ -3,7 +3,7 @@
 ## Overview
 
 MyLibrary is a user-friendly application designed to help book enthusiasts organize and manage their book collections.
-With this app, you can keep track of your reading materials, share your thought with other users about books, mark your
+With this app, you can keep track of your reading materials, share your thoughts with other users about books, mark your
 current reading progress and give a rate and review when you finish reading. You can also search for books by title, 
 genre, author, or ISBN efficiently.
 
@@ -78,3 +78,12 @@ remove books, or search for specific titles with ease.
 - **Authentication:** User authentication is handled with [JSON Web Tokens (JWT)](https://jwt.io/) for security.
 
 ## Website Preview
+
+- **Forum Page:**
+-![] https://imgur.com/a/eL0d6e3
+
+- **MyBooks Page:**
+- ![] https://imgur.com/a/sxlkdVr
+
+- **Review Page: **
+- ![] https://imgur.com/a/rMQTfFZ
