@@ -83,7 +83,8 @@ remove books, or search for specific titles with ease.
 ![MyBooks Page](https://imgur.com/a/sxlkdVr)
 
 - **Review Page:**
-![Review Page](https://imgur.com/a/rMQTfFZ)
+![](https://imgur.com/qdOeDCG)
+![](https://imgur.com/qxJ4KEG)
 
 - **Forum Page:**
 ![Forum Page](https://imgur.com/a/eL0d6e3)
