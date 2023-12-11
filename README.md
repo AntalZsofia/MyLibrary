@@ -80,10 +80,10 @@ remove books, or search for specific titles with ease.
 ## Website Preview
 
 - **Forum Page:**
--![] https://imgur.com/a/eL0d6e3
+-![](https://imgur.com/a/eL0d6e3)
 
 - **MyBooks Page:**
-- ![] https://imgur.com/a/sxlkdVr
+- ![](https://imgur.com/a/sxlkdVr)
 
-- **Review Page: **
-- ![] https://imgur.com/a/rMQTfFZ
+- **Review Page:**
+- ![](https://imgur.com/a/rMQTfFZ)
