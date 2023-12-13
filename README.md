@@ -83,10 +83,11 @@ remove books, or search for specific titles with ease.
 ![mybooks](pics%20to%20readme%2Fmybooks.jpg)
 ![mybooks_dark](pics%20to%20readme%2Fmybooks_dark.jpg)
 - **Review Page:**
-![](https://imgur.com/qdOeDCG)
-![](https://imgur.com/qxJ4KEG)
+![reviews.jpg](pics%20to%20readme%2Freviews.jpg)
+![reviews_dark.jpg](pics%20to%20readme%2Freviews_dark.jpg)
 
 - **Forum Page:**
-![Forum Page](https://imgur.com/a/eL0d6e3)
+![forum.jpg](pics%20to%20readme%2Fforum.jpg)
+![forum_dark.jpg](pics%20to%20readme%2Fforum_dark.jpg)
 
 
