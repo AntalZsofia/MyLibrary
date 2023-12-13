@@ -80,8 +80,8 @@ remove books, or search for specific titles with ease.
 ## Website Preview
 
 - **MyBooks Page:**
-![MyBooks Page](https://imgur.com/a/sxlkdVr)
-
+![mybooks](pics%20to%20readme%2Fmybooks.jpg)
+![mybooks_dark](pics%20to%20readme%2Fmybooks_dark.jpg)
 - **Review Page:**
 ![](https://imgur.com/qdOeDCG)
 ![](https://imgur.com/qxJ4KEG)
