@@ -1,4 +1,4 @@
-﻿# MyLibrary - Book Management System App
+﻿# MyLibrary - Book Management System App ![books.gif](pics%20to%20readme%2Fbooks.gif)
 
 ## Overview
 
