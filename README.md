@@ -84,12 +84,6 @@ remove books, or search for specific titles with ease.
 - **MyBooks Page:**
 ![mybooks](pics%20to%20readme%2Fmybooks.jpg)
 ![mybooks_dark](pics%20to%20readme%2Fmybooks_dark.jpg)
-- **Review Page:**
-![reviews.jpg](pics%20to%20readme%2Freviews.jpg)
-![reviews_dark.jpg](pics%20to%20readme%2Freviews_dark.jpg)
 
-- **Forum Page:**
-![forum.jpg](pics%20to%20readme%2Fforum.jpg)
-![forum_dark.jpg](pics%20to%20readme%2Fforum_dark.jpg)
 
 
